@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Innocreation Purchase Order</title>
+    <style>
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            font: 13px Arial, sans-serif;
+            background: #eef2f7;
+            color: #172739;
+            margin: 0
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font: inherit
+        }
+
+        button {
+            cursor: pointer;
+            background: #214f7f;
+            color: white;
+            border: 0;
+            border-radius: 5px;
+            padding: 10px 15px
+        }
+
+        .toolbar {
+            max-width: 1000px;
+            margin: 20px auto;
+            display: flex;
+            gap: 10px;
+            align-items: center
+        }
+
+        .toolbar span {
+            margin-right: auto
+        }
+
+        .sheet {
+            max-width: 1000px;
+            margin: 0 auto 30px;
+            padding: 32px;
+            background: white;
+            box-shadow: 0 4px 24px #243b5314
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #222;
+            padding-bottom: 14px;
+            margin-bottom: 20px
+        }
+
+        .brand {
+            text-align: center;
+            font-family: Georgia, serif;
+            letter-spacing: 3px
+        }
+
+        .brand strong {
+            font-size: 38px;
+            display: block;
+            letter-spacing: -3px
+        }
+
+        h1 {
+            font-weight: 400;
+            font-size: 30px;
+            margin: 0 20px
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed
+        }
+
+        td,
+        th {
+            border: 1px solid #b0c8e6
+        }
+
+        th {
+            background: #b9cee7;
+            font-size: 12px;
+            padding: 8px 3px
+        }
+
+        td {
+            padding: 3px
+        }
+
+        .meta th {
+            background: white;
+            text-align: left;
+            padding: 5px;
+            font-size: 12px
+        }
+
+        .meta td {
+            height: 27px
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            border: 0;
+            background: transparent;
+            padding: 5px;
+            color: inherit;
+            min-width: 0
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: 2px solid #578dca;
+            background: #f4f8ff
+        }
+
+        input[type=radio] {
+            width: auto
+        }
+
+        input[type=number] {
+            text-align: right
+        }
+
+        .items td {
+            height: 30px
+        }
+
+        .items td:first-child {
+            text-align: right
+        }
+
+        .items input,
+        .items select {
+            font-size: 12px;
+            padding: 5px 1px
+        }
+
+        .number {
+            text-align: right;
+            font-variant-numeric: tabular-nums
+        }
+
+        .weight {
+            display: flex;
+            align-items: center
+        }
+
+        .weight input {
+            width: 50%
+        }
+
+        .weight select {
+            width: 50%
+        }
+
+        .bottom {
+            display: flex;
+            gap: 20px;
+            margin: 16px 0
+        }
+
+        .currency {
+            flex: 1
+        }
+
+        .currency select {
+            width: 95px;
+            border: 1px solid #b0c8e6
+        }
+
+        .totals {
+            width: 40%
+        }
+
+        .totals td {
+            height: 24px
+        }
+
+        .totals th {
+            background: white;
+            text-align: left;
+            font-weight: 400;
+            width: 55%;
+            border: 0;
+            padding: 3px
+        }
+
+        .totals input {
+            padding: 3px
+        }
+
+        .totals tr:last-child {
+            font-weight: bold;
+            background: #edf3fa
+        }
+
+        .purpose {
+            border: 2px solid #5b8fd5;
+            padding: 8px;
+            margin: 16px 0 5px
+        }
+
+        .purpose textarea {
+            height: 65px;
+            resize: vertical
+        }
+
+        .signatures {
+            display: grid;
+            grid-template-columns: 1fr 1.4fr 1.1fr;
+            gap: 3px
+        }
+
+        .signature {
+            border: 2px solid #5b8fd5
+        }
+
+        .signature h3 {
+            font-size: 11px;
+            text-align: center;
+            border-bottom: 2px solid #5b8fd5;
+            margin: 0;
+            padding: 7px 3px;
+            min-height: 30px
+        }
+
+        .signature .body {
+            padding: 16px 7px 6px
+        }
+
+        .signature label {
+            display: flex;
+            align-items: center;
+            font-size: 11px
+        }
+
+        .signature input {
+            flex: 1;
+            width: 50%;
+            font-size: 11px;
+            padding: 3px
+        }
+
+        .hint {
+            font-size: 12px;
+            color: #60748b;
+            line-height: 1.5
+        }
+
+        .catalog {
+            max-width: 1000px;
+            margin: 20px auto;
+            background: white;
+            padding: 25px
+        }
+
+        .catalog h2 {
+            font-size: 18px
+        }
+
+        .catalog button {
+            margin-top: 12px
+        }
+
+        .printvalue {
+            display: none
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 9mm
+        }
+
+        @media(max-width:720px) {
+            .toolbar {
+                padding: 0 15px;
+                flex-wrap: wrap
+            }
+
+            .sheet {
+                padding: 15px;
+                min-width: 760px
+            }
+
+            .scroll {
+                overflow: auto
+            }
+
+            .catalog {
+                overflow: auto
+            }
+
+            .bottom {
+                gap: 10px
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                color: black;
+                font-size: 10px
+            }
+
+            .toolbar,
+            .catalog,
+            .hint {
+                display: none !important
+            }
+
+            .sheet {
+                box-shadow: none;
+                margin: 0;
+                padding: 0;
+                min-width: 0;
+                max-width: none
+            }
+
+            header {
+                margin-bottom: 16px;
+                padding-bottom: 10px
+            }
+
+            h1 {
+                font-size: 25px
+            }
+
+            .brand strong {
+                font-size: 32px
+            }
+
+            .meta th,
+            th {
+                font-size: 10px
+            }
+
+            .meta td {
+                height: 23px
+            }
+
+            .items td {
+                height: 26px
+            }
+
+            .items input {
+                font-size: 10px
+            }
+
+            .items select,
+            .currency select {
+                display: none
+            }
+
+            .printvalue {
+                display: inline;
+                white-space: normal;
+                overflow-wrap: anywhere;
+                font-size: 10px
+            }
+
+            input,
+            textarea {
+                font-size: 10px;
+                padding: 3px
+            }
+
+            .items th {
+                padding: 6px 2px
+            }
+
+            .bottom {
+                margin: 12px 0
+            }
+
+            .totals td {
+                height: 20px
+            }
+
+            .purpose {
+                margin-top: 12px
+            }
+
+            .purpose textarea {
+                height: 55px
+            }
+
+            .signature .body {
+                padding-top: 16px
+            }
+
+            .signature h3 {
+                font-size: 9px
+            }
+
+            .signature label,
+            .signature input {
+                font-size: 9px
+            }
+
+            .signature input {
+                padding: 2px
+            }
+
+            tr,
+            .purpose,
+            .signatures {
+                break-inside: avoid
+            }
+
+            th {
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact
+            }
+
+            .weight {
+                display: block
+            }
+
+            .weight input {
+                width: 45%
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="toolbar"><span>Purchase Order</span><button id="add">+ Add row</button><button id="edit">Edit item
+            list</button><button id="print">Print / Save PDF</button></div>
+    <div class="scroll">
+        <main class="sheet">
+            <header>
+                <div class="brand"><strong>IN</strong>INNOCREATION</div>
+                <h1>Purchase Order</h1>
+            </header>
+            <table class="meta">
+                <colgroup>
+                    <col style="width:18%">
+                    <col style="width:28%">
+                    <col style="width:23%">
+                    <col style="width:31%">
+                </colgroup>
+                <tbody id="meta"></tbody>
+                <tr>
+                    <th>Supplier Address:</th>
+                    <td><textarea aria-label="Supplier address" rows="2"></textarea></td>
+                    <th>Delivery Address:</th>
+                    <td><textarea aria-label="Delivery address" rows="2"></textarea></td>
+                </tr>
+            </table>
+            <table class="items">
+                <colgroup>
+                    <col style="width:4%">
+                    <col style="width:11%">
+                    <col style="width:26%">
+                    <col style="width:11%">
+                    <col style="width:8%">
+                    <col style="width:7%">
+                    <col style="width:10%">
+                    <col style="width:12%">
+                    <col style="width:11%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Item Code</th>
+                        <th>Item Description</th>
+                        <th>Weight / Unit</th>
+                        <th>UOM</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                        <th>Amount</th>
+                        <th>Remark</th>
+                    </tr>
+                </thead>
+                <tbody id="rows"></tbody>
+            </table>
+            <div class="bottom">
+                <div class="currency">Currency: <select aria-label="Currency">
+                        <option>MMK</option>
+                        <option>THB</option>
+                        <option>USD</option>
+                    </select><span class="printvalue"></span></div>
+                <table class="totals">
+                    <tr>
+                        <th>Subtotal:</th>
+                        <td class="number" id="subtotal">0.00</td>
+                    </tr>
+                    <tr>
+                        <th><label for="discount">Discount (amount):</label></th>
+                        <td><input id="discount" type="number" min="0" step="any" placeholder="0.00"></td>
+                    </tr>
+                    <tr>
+                        <th><label for="tax">Tax (%):</label></th>
+                        <td><input id="tax" type="number" min="0" step="any" placeholder="0"></td>
+                    </tr>
+                    <tr>
+                        <th>Tax amount:</th>
+                        <td class="number" id="taxAmount">0.00</td>
+                    </tr>
+                    <tr>
+                        <th><label for="delivery">Delivery Charges:</label></th>
+                        <td><input id="delivery" type="number" min="0" step="any" placeholder="0.00"></td>
+                    </tr>
+                    <tr>
+                        <th>Total Amount:</th>
+                        <td class="number" id="total">0.00</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="purpose"><strong>Purpose / Reason for Purchase:</strong><textarea
+                    aria-label="Purpose or reason for purchase"></textarea></div>
+            <div class="signatures" id="signatures"></div>
+            <p class="hint">Select a description to fill its code. Sample codes must be replaced before use. Amount =
+                Qty × Price. Tax applies after the amount discount; delivery charges are added afterward. Data is kept
+                only while this page stays open.</p>
+        </main>
+    </div>
+    <section class="catalog" id="catalog" hidden>
+        <h2>Item list</h2>
+        <p class="hint">Enter actual item codes and descriptions. Use unique codes. Applying changes updates the order
+            dropdowns.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Description</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody id="master"></tbody>
+        </table><button id="addItem">+ Add item</button> <button id="apply">Apply item list</button>
+        <p id="status" role="status"></p>
+    </section>
+    <script>
+        'use strict';
+        let items = [{code: 'SAMPLE-001', description: 'Deep Sleep Essential Oil'}, {code: 'SAMPLE-002', description: 'First Date Essential Oil'}, {code: 'SAMPLE-003', description: 'Green Rain Essential Oil'}];
+        function el(tag, text) {const e = document.createElement(tag); if (text !== undefined) e.textContent = text; return e}
+        function field(label, type = 'text') {const input = el('input'); input.type = type; input.setAttribute('aria-label', label); if (type === 'number') {input.min = '0'; input.step = 'any'} return input}
+        [['Requesting Dep:', 'PO No:'], ['Requested By:', 'PO Date & Time:'], ['Supplier Site Code:', 'Supplier Phone No:'], ['Supplier Name:', 'Quotation Attached:']].forEach((pair, i) => {const row = el('tr'); pair.forEach((label, j) => {row.append(el('th', label)); const cell = el('td'); if (i === 3 && j === 1) {['Yes', 'No'].forEach(v => {const l = el('label', v + ' '); const radio = field('Quotation attached ' + v, 'radio'); radio.name = 'quotation'; radio.value = v; l.prepend(radio); cell.append(l)}); const count = field('Number of quotations', 'number'); count.placeholder = 'Number of quotations'; cell.append(count)} else {cell.append(field(label, i === 1 && j === 1 ? 'datetime-local' : 'text'))} row.append(cell)}); document.querySelector('#meta').append(row)});
+        function options(select, entries, placeholder) {select.replaceChildren(); if (placeholder) select.add(new Option(placeholder, '')); entries.forEach(([text, value]) => select.add(new Option(text, value)))}
+        function syncPrint() {document.querySelectorAll('select').forEach(select => {if (select.nextElementSibling?.classList.contains('printvalue')) select.nextElementSibling.textContent = select.selectedOptions[0]?.value ? select.selectedOptions[0].textContent : ''})}
+        function drop(label, key, entries, placeholder) {const select = el('select'); select.dataset.key = key; select.setAttribute('aria-label', label); options(select, entries, placeholder); return select}
+        function appendSelect(cell, select) {cell.append(select, el('span')); cell.lastChild.className = 'printvalue'; return select}
+        function row() {const n = document.querySelector('#rows').children.length + 1; const tr = el('tr'); tr.append(el('td', n)); const code = el('td'); code.className = 'code'; tr.append(code); const desc = el('td'); const select = appendSelect(desc, drop('Item description row ' + n, 'description', items.map(i => [i.description, i.code]), 'Select description…')); tr.append(desc); select.onchange = () => {code.textContent = select.value; syncPrint()}; const weight = el('td'); const wrap = el('div'); wrap.className = 'weight'; wrap.append(field('Weight row ' + n, 'number')); appendSelect(wrap, drop('Weight unit row ' + n, 'weightUnit', ['pcs', 'kg', 'oz'].map(v => [v, v]), 'Unit')); weight.append(wrap); tr.append(weight); const uom = el('td'); appendSelect(uom, drop('UOM row ' + n, 'uom', ['pcs', 'kg', 'oz', 'pck', 'box', 'bottle'].map(v => [v.toUpperCase(), v]), 'Select')); tr.append(uom);['qty', 'price'].forEach(key => {const td = el('td'); const input = field(key + ' row ' + n, 'number'); input.dataset.key = key; td.append(input); tr.append(td)}); const amount = el('td'); amount.className = 'number amount'; tr.append(amount); const remark = el('td'); remark.append(field('Remark row ' + n)); tr.append(remark); document.querySelector('#rows').append(tr)}
+        const money = n => n.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}); const num = e => Math.max(0, Number(e.value) || 0);
+        function calculate() {let subtotal = 0; document.querySelectorAll('#rows tr').forEach(tr => {const qty = tr.querySelector('[data-key=qty]'), price = tr.querySelector('[data-key=price]'); const amount = Math.round(num(qty) * num(price) * 100) / 100; subtotal += amount; tr.querySelector('.amount').textContent = qty.value !== '' || price.value !== '' ? money(amount) : ''}); const discount = num(document.querySelector('#discount')); const base = Math.max(0, subtotal - discount); const tax = Math.round(base * num(document.querySelector('#tax'))) / 100; document.querySelector('#subtotal').textContent = money(subtotal); document.querySelector('#taxAmount').textContent = money(tax); document.querySelector('#total').textContent = money(base + tax + num(document.querySelector('#delivery'))); document.querySelector('#discount').setCustomValidity(discount > subtotal ? 'Discount cannot exceed subtotal.' : '')}
+        ['Purchase Request No:', 'Checked By - Accountant Supervisor', 'Approved By CEO / Authorized Person'].forEach((title, i) => {const box = el('section'); box.className = 'signature'; const heading = el('h3', title); box.append(heading); if (i === 0) heading.append(field('Purchase request number')); const body = el('div'); body.className = 'body';['Signature', 'Name', 'Position', 'Date'].forEach(label => {const l = el('label', label + ':'); const input = field(title + ' ' + label, label === 'Date' ? 'date' : 'text'); if (label === 'Position') input.value = i === 1 ? 'Accountant Supervisor' : i === 2 ? 'CEO / Authorized Person' : ''; l.append(input); body.append(l)}); box.append(body); document.querySelector('#signatures').append(box)});
+        function master(item = {code: '', description: ''}) {const tr = el('tr');['code', 'description'].forEach(key => {const td = el('td'); const input = field('Item ' + key); input.dataset.key = key; input.value = item[key]; td.append(input); tr.append(td)}); const td = el('td'); const remove = el('button', 'Remove'); remove.onclick = () => tr.remove(); td.append(remove); tr.append(td); document.querySelector('#master').append(tr)}
+        for (let i = 0; i < 12; i++)row(); items.forEach(master); document.querySelector('#add').onclick = row; document.querySelector('#edit').onclick = () => {const panel = document.querySelector('#catalog'); panel.hidden = !panel.hidden; if (!panel.hidden) panel.scrollIntoView({behavior: 'smooth'})}; document.querySelector('#addItem').onclick = () => master(); document.querySelector('#apply').onclick = () => {const next = [...document.querySelectorAll('#master tr')].map(tr => Object.fromEntries([...tr.querySelectorAll('input')].map(e => [e.dataset.key, e.value.trim()]))); const status = document.querySelector('#status'); if (next.some(i => !i.code || !i.description) || new Set(next.map(i => i.code)).size !== next.length) {status.textContent = 'Enter a unique code and description for every item.'; return } items = next; document.querySelectorAll('#rows select[data-key=description]').forEach(select => {const old = select.value; options(select, items.map(i => [i.description, i.code]), 'Select description…'); select.value = old; select.closest('tr').querySelector('.code').textContent = select.value}); syncPrint(); status.textContent = 'Item list applied.'}; document.querySelector('.sheet').addEventListener('input', calculate); document.querySelector('.sheet').addEventListener('change', syncPrint); document.querySelector('#print').onclick = () => {calculate(); const invalid = [...document.querySelectorAll('.sheet input')].find(e => !e.checkValidity()); if (invalid) {invalid.reportValidity(); return } syncPrint(); window.print()}; window.addEventListener('beforeprint', () => {calculate(); syncPrint()});
+    </script>
+</body>
+
+</html>
