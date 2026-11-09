@@ -1,8 +1,5 @@
 require('dotenv').config();
 const express = require('express');
-if (process.env.NODE_ENV === 'production') {
-    app.set('trust proxy', 1);
-}
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const helmet = require('helmet');
@@ -39,6 +36,9 @@ async function start() {
     }, pool.pool);
     await store.onReady();
     const app = express();
+    if (process.env.NODE_ENV === 'production') {
+        app.set('trust proxy', 1);
+    }
     app.disable('x-powered-by');
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, 'views'));
