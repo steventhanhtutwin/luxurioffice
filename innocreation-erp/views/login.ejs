@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="my">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Login | Innocreation ERP</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/profile.css">
+</head>
+
+<body>
+    <main class="login-layout">
+        <section class="brand">
+            <div class="wordmark">INNOCREATION</div>
+            <div>
+                <p class="eyebrow">OPERATIONS WORKSPACE</p>
+                <h1>Better operations.<br>Every day.</h1>
+                <p>လုပ်ငန်းစီမံခန့်ခွဲမှုအတွက် တစ်နေရာတည်းမှာ စတင်လိုက်ပါ။</p>
+            </div><small>MEMORI · LUXURI · GENTLEMEN’S CLUB · FLORAL</small>
+        </section>
+        <section class="form-area">
+            <form method="post" action="/login" class="card">
+                <p class="eyebrow">WELCOME BACK</p>
+                <h2>အကောင့်ဝင်ရန်</h2>
+                <p class="muted">သင့်အကောင့်ဖြင့် ERP စနစ်သို့ ဝင်ရောက်ပါ။</p>
+                <% if(typeof success!=='undefined' && success){ %>
+                    <div class="profile-success" role="status">
+                        <%= success %>
+                    </div>
+                    <% } %>
+                        <% if(error){ %>
+                            <div class="error" role="alert">
+                                <%= error %>
+                            </div>
+                            <% } %><input type="hidden" name="_csrf" value="<%= csrf %>"><label
+                                    for="username">Username</label><input id="username" name="username"
+                                    autocomplete="username" maxlength="100" value="<%= username %>" required
+                                    autofocus><label for="password">Password</label><input id="password" name="password"
+                                    type="password" autocomplete="current-password" maxlength="256" required><button
+                                    type="submit">Login ဝင်မည် →</button>
+                                <p class="hint">အကောင့်လိုအပ်ပါက စနစ်စီမံခန့်ခွဲသူကို ဆက်သွယ်ပါ။</p>
+            </form>
+        </section>
+    </main>
+</body>
+
+</html>

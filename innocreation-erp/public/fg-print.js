@@ -1,0 +1,1 @@
+(()=>{const print=async()=>{await document.fonts.ready;window.print();};document.getElementById('print-document')?.addEventListener('click',print);if(new URLSearchParams(location.search).get('autoprint')==='1')print();})();

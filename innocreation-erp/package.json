@@ -1,0 +1,29 @@
+{
+  "name": "innocreation-erp",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "setup": "node scripts/setup.js",
+    "create-admin": "node scripts/create-admin.js",
+    "test": "node --test",
+    "setup-raw-oil": "node scripts/setup-raw-oil.js",
+    "setup-fg": "node scripts/setup-fg.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "exceljs": "^4.4.0",
+    "express": "^5.1.0",
+    "express-mysql-session": "^3.0.3",
+    "express-rate-limit": "^7.5.0",
+    "express-session": "^1.18.1",
+    "helmet": "^8.1.0",
+    "mysql2": "^3.14.0",
+    "puppeteer-core": "^25.16.0"
+  }
+}

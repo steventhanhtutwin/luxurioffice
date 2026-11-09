@@ -1,0 +1,5 @@
+const readline=require('node:readline/promises');
+const pool=require('../db');
+const {hashPassword}=require('../password');
+const rl=readline.createInterface({input:process.stdin,output:process.stdout});
+(async()=>{try{console.log('Local setup only. Password input is visible; do not share screenshots.');const username=(await rl.question('Admin username: ')).trim();const name=(await rl.question('Display name: ')).trim();const password=await rl.question('New password (5+ characters): ');const confirm=await rl.question('Confirm password: ');if(!username||username.length>100||!name||name.length>150||password.length<5||password.length>256||password!==confirm)throw new Error('Check username, name, password length and confirmation.');await pool.execute('INSERT INTO users (username,display_name,password_hash,role) VALUES (?,?,?,?)',[username,name,await hashPassword(password),'admin']);console.log('Admin created. Run: npm start');}catch(err){console.error('Admin creation failed:',err.code==='ER_DUP_ENTRY'?'Username already exists.':err.message);process.exitCode=1;}finally{rl.close();await pool.end();}})();

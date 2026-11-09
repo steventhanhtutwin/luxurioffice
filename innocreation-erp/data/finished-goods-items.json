@@ -1,0 +1,3686 @@
+[
+  {
+    "code": "FG-000253",
+    "name": "Aqua 3ml Memori Perfume Roller",
+    "category": "Perfume Roller",
+    "size_ml": 3
+  },
+  {
+    "code": "FG-000255",
+    "name": "Berry Bliss Dream 3ml Memori Perfume Roller",
+    "category": "Perfume Roller",
+    "size_ml": 3
+  },
+  {
+    "code": "FG-000256",
+    "name": "Black 35 3ml Memori Perfume Roller",
+    "category": "Perfume Roller",
+    "size_ml": 3
+  },
+  {
+    "code": "FG-000257",
+    "name": "Black Rose 3ml Memori Perfume Roller",
+    "category": "Perfume Roller",
+    "size_ml": 3
+  },
+  {
+    "code": "FG-000258",
+    "name": "Charming 20 3ml Memori Perfume Roller",
+    "category": "Perfume Roller",
+    "size_ml": 3
+  },
+  {
+    "code": "FG-000259",
+    "name": "Coco 3ml Memori Perfume Roller",
+    "category": "Perfume Roller",
+    "size_ml": 3
+  },
+  {
+    "code": "FG-000260",
+    "name": "Dream With You 3ml Memori Perfume Roller",
+    "category": "Perfume Roller",
+    "size_ml": 3
+  },
+  {
+    "code": "FG-000261",
+    "name": "Elegant Red 3ml Memori Perfume Roller",
+    "category": "Perfume Roller",
+    "size_ml": 3
+  },
+  {
+    "code": "FG-000262",
+    "name": "Emerald Tea 3ml Memori Perfume Roller",
+    "category": "Perfume Roller",
+    "size_ml": 3
+  },
+  {
+    "code": "FG-000263",
+    "name": "Eternal 3ml Memori Perfume Roller",
+    "category": "Perfume Roller",
+    "size_ml": 3
+  },
+  {
+    "code": "FG-000264",
+    "name": "Gentlemen 3ml Memori Perfume Roller",
+    "category": "Perfume Roller",
+    "size_ml": 3
+  },
+  {
+    "code": "FG-000265",
+    "name": "Italian Summer 3ml Memori Perfume Roller",
+    "category": "Perfume Roller",
+    "size_ml": 3
+  },
+  {
+    "code": "FG-000266",
+    "name": "Leather Market Blue 3ml Memori Perfume Roller",
+    "category": "Perfume Roller",
+    "size_ml": 3
+  },
+  {
+    "code": "FG-000268",
+    "name": "Loving Violet 3ml Memori Perfume Roller",
+    "category": "Perfume Roller",
+    "size_ml": 3
+  },
+  {
+    "code": "FG-000270",
+    "name": "Pink Candy 3ml Memori Perfume Roller",
+    "category": "Perfume Roller",
+    "size_ml": 3
+  },
+  {
+    "code": "FG-000272",
+    "name": "Roman Bay 3ml Memori Perfume Roller",
+    "category": "Perfume Roller",
+    "size_ml": 3
+  },
+  {
+    "code": "FG-000276",
+    "name": "Thanaka 3ml Memori Perfume Roller",
+    "category": "Perfume Roller",
+    "size_ml": 3
+  },
+  {
+    "code": "FG-000279",
+    "name": "You Are My Queen 3ml Memori Perfume Roller",
+    "category": "Perfume Roller",
+    "size_ml": 3
+  },
+  {
+    "code": "FG-000098",
+    "name": "Daisy 5ml Flora Perfume",
+    "category": "Perfume",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000099",
+    "name": "Hannie 5ml Flora Perfume",
+    "category": "Perfume",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000100",
+    "name": "Kantkaw 5ml Flora Perfume",
+    "category": "Perfume",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000103",
+    "name": "Padauk 5ml Flora Perfume",
+    "category": "Perfume",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000101",
+    "name": "Peachie 5ml Flora Perfume",
+    "category": "Perfume",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000102",
+    "name": "Peony 5ml Flora Perfume",
+    "category": "Perfume",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000104",
+    "name": "Tulip 5ml Flora Perfume",
+    "category": "Perfume",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000002",
+    "name": "Deep Sleep 5ml Aroma Oil",
+    "category": "Aroma Collection Oil",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000003",
+    "name": "Detox Mind 5ml Aroma Oil",
+    "category": "Aroma Collection Oil",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000004",
+    "name": "First Date 5ml Aroma Oil",
+    "category": "Aroma Collection Oil",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000005",
+    "name": "Green Rain 5ml Aroma Oil",
+    "category": "Aroma Collection Oil",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000006",
+    "name": "Kalaw Villa 5ml Aroma Oil",
+    "category": "Aroma Collection Oil",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000008",
+    "name": "Positive Vibes 5ml Aroma Oil",
+    "category": "Aroma Collection Oil",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000009",
+    "name": "Rain Forest 5ml Aroma Oil",
+    "category": "Aroma Collection Oil",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000012",
+    "name": "Wake Me Up 5ml Aroma Oil",
+    "category": "Aroma Collection Oil",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000013",
+    "name": "Executive Suite 5ml Hotel Oil",
+    "category": "Hotel Collection Oil",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000014",
+    "name": "Pool Side 5ml Hotel Oil",
+    "category": "Hotel Collection Oil",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000015",
+    "name": "The Emporium 5ml Hotel Oil",
+    "category": "Hotel Collection Oil",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000016",
+    "name": "The Lobby 5ml Hotel Oil",
+    "category": "Hotel Collection Oil",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000017",
+    "name": "The Tea Room 5ml Hotel Oil",
+    "category": "Hotel Collection Oil",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000686",
+    "name": "Berry Bliss Dream 5ml Memori Oil Perfume",
+    "category": "Oil Perfume",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000690",
+    "name": "Black Rose 5ml Memori Oil Perfume",
+    "category": "Oil Perfume",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000689",
+    "name": "Bon Bon 5ml Memori Oil Perfume",
+    "category": "Oil Perfume",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000710",
+    "name": "Charming 20 5ml Memori Oil Perfume",
+    "category": "Oil Perfume",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000694",
+    "name": "Emerald Tea 5ml Memori Oil Perfume",
+    "category": "Oil Perfume",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000684",
+    "name": "Eros Fusion 5ml Memori Oil Perfume",
+    "category": "Oil Perfume",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000693",
+    "name": "Eternal 5ml Memori Oil Perfume",
+    "category": "Oil Perfume",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000685",
+    "name": "Iris 5ml Memori Oil Perfume",
+    "category": "Oil Perfume",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000687",
+    "name": "Italian Summer 5ml Memori Oil Perfume",
+    "category": "Oil Perfume",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000692",
+    "name": "Leather Market Blue 5ml Memori Oil Perfume",
+    "category": "Oil Perfume",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000706",
+    "name": "Loving Violet 5ml Memori Oil Perfume",
+    "category": "Oil Perfume",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000707",
+    "name": "Pink Candy 5ml Memori Oil Perfume",
+    "category": "Oil Perfume",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000691",
+    "name": "Rosewood 5ml Memori Oil Perfume",
+    "category": "Oil Perfume",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000688",
+    "name": "Tiffany 5ml Memori Oil Perfume",
+    "category": "Oil Perfume",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000709",
+    "name": "Thanaka 5ml Memori Oil Perfume",
+    "category": "Oil Perfume",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000717",
+    "name": "Her Golden Crown 5ml Memori Oil Perfume",
+    "category": "Oil Perfume",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000719",
+    "name": "You Are My Queen 5ml Memori Oil Perfume",
+    "category": "Oil Perfume",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000562",
+    "name": "Bon Bon 5ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000564",
+    "name": "Summer Blue 5ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000563",
+    "name": "The Florist 5ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000653",
+    "name": "A Day In London 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000611",
+    "name": "Aqua 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000658",
+    "name": "Aventus Horizon 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000627",
+    "name": "Beachside Bonfire 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000558",
+    "name": "Berry 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000610",
+    "name": "Berry Bliss Dream 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000494",
+    "name": "Black 35 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000475",
+    "name": "Black Rose 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000434",
+    "name": "Bon Bon 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000559",
+    "name": "Brave 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000474",
+    "name": "Charming 20 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000439",
+    "name": "Coco 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000446",
+    "name": "Dream With You 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000440",
+    "name": "Elegant Red 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000535",
+    "name": "Emerald Tea 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000628",
+    "name": "Emily 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000442",
+    "name": "Eros Fusion 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000454",
+    "name": "Eternal 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000629",
+    "name": "Eternal Exclusive 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000477",
+    "name": "Falling In Love 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000659",
+    "name": "Gallery 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000630",
+    "name": "Garadenia Serenade 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000492",
+    "name": "Gentlemen 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000606",
+    "name": "Grey 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000441",
+    "name": "Her Golden Crown 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000631",
+    "name": "Her Golden Crown Exclusive 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000573",
+    "name": "Iris 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000548",
+    "name": "Italian Summer 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000436",
+    "name": "Jasmine Bloom 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000605",
+    "name": "Juicy 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000654",
+    "name": "Leather Market 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000443",
+    "name": "Leather Market Blue 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000609",
+    "name": "London 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000538",
+    "name": "Loving Violet 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000560",
+    "name": "Marine 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000561",
+    "name": "Mimosa 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000497",
+    "name": "No1 - 5ml The Perfect Pair",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000448",
+    "name": "No1 (5ml) Memori Perfume Package",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000498",
+    "name": "No2 - 5ml The Perfect Pair",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000449",
+    "name": "No2 (5ml) Memori Perfume Package",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000499",
+    "name": "No3 - 5ml The Perfect Pair",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000450",
+    "name": "No3 (5ml) Memori Perfume Package",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000500",
+    "name": "No4 - 5ml The Perfect Pair",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000451",
+    "name": "No4 (5ml) Memori Perfume Package",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000501",
+    "name": "No5 - 5ml The Perfect Pair",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000452",
+    "name": "No5 (5ml) Memori Perfume Package",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000502",
+    "name": "No6 - 5ml The Perfect Pair",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000503",
+    "name": "No7 - 5ml The Perfect Pair",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000533",
+    "name": "Peachie Pie 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000478",
+    "name": "Pink Candy 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000444",
+    "name": "Roman Bay 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000438",
+    "name": "Rosewood 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000493",
+    "name": "Silent 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000608",
+    "name": "Spring 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000537",
+    "name": "Story Of Her 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000445",
+    "name": "Summer Blue 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000632",
+    "name": "Summer Blue Exclusive 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000655",
+    "name": "Sunkiss 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000455",
+    "name": "Thanaka 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000437",
+    "name": "The Florist 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000433",
+    "name": "Tiffany 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000435",
+    "name": "To Herself 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000557",
+    "name": "To Herself Exclusive 5ml Memori Perfume",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000447",
+    "name": "Tropical Mist 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000534",
+    "name": "Tulip Garden 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000607",
+    "name": "Ultra 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000483",
+    "name": "Vanilla De Paris 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000456",
+    "name": "Velvet 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000612",
+    "name": "You Are My Queen 5ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 5
+  },
+  {
+    "code": "FG-000025",
+    "name": "Deep Sleep 10ml Aroma Oil",
+    "category": "Aroma Collection Oil",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000026",
+    "name": "Detox Mind 10ml Aroma Oil",
+    "category": "Aroma Collection Oil",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000027",
+    "name": "First Date 10ml Aroma Oil",
+    "category": "Aroma Collection Oil",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000613",
+    "name": "France Lavender 10ml Aroma Oil",
+    "category": "Aroma Collection Oil",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000028",
+    "name": "Green Rain 10ml Aroma Oil",
+    "category": "Aroma Collection Oil",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000029",
+    "name": "Kalaw Villa 10ml Aroma Oil",
+    "category": "Aroma Collection Oil",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000031",
+    "name": "Positive Vibes 10ml Aroma Oil",
+    "category": "Aroma Collection Oil",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000032",
+    "name": "Rain Forest 10ml Aroma Oil",
+    "category": "Aroma Collection Oil",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000034",
+    "name": "Wake Me Up 10ml Aroma Oil",
+    "category": "Aroma Collection Oil",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000018",
+    "name": "Botanic Spa 10ml Hotel Oil",
+    "category": "Hotel Collection Oil",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000019",
+    "name": "Executive Suite 10ml Hotel Oil",
+    "category": "Hotel Collection Oil",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000602",
+    "name": "Fresh Sunday 10ml Hotel Oil",
+    "category": "Hotel Collection Oil",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000041",
+    "name": "Passion Fruit 10ml Hotel Collection Oil",
+    "category": "Hotel Collection Oil",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000020",
+    "name": "Pool Side 10ml Hotel Oil",
+    "category": "Hotel Collection Oil",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000021",
+    "name": "The Emporium 10ml Hotel Oil",
+    "category": "Hotel Collection Oil",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000022",
+    "name": "The Lobby 10ml Hotel Oil",
+    "category": "Hotel Collection Oil",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000023",
+    "name": "The Tea Room 10ml Hotel Oil",
+    "category": "Hotel Collection Oil",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000496",
+    "name": "White Tea 10ml Hotel Oil",
+    "category": "Hotel Collection Oil",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000042",
+    "name": "Rosemary Twist 10ml Limited Edition Oil",
+    "category": "Limited Edition Oil",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000043",
+    "name": "Sweet Melon 10ml Limited Edition Oil",
+    "category": "Limited Edition Oil",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000044",
+    "name": "Taguu Floral 10ml Limited Edition Oil",
+    "category": "Limited Edition Oil",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000045",
+    "name": "Yuzu Crush 10ml Limited Edition Oil",
+    "category": "Limited Edition Oil",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000151",
+    "name": "A Letter From Love 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000155",
+    "name": "Adventure 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000112",
+    "name": "Aqua 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000144",
+    "name": "Aura 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000351",
+    "name": "Aventus Horizon 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000113",
+    "name": "Beachside Bonfire 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000114",
+    "name": "Berry Bliss Dream 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000145",
+    "name": "Black 35 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000115",
+    "name": "Black Rose 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000149",
+    "name": "Bloom 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000148",
+    "name": "Bon Bon 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000601",
+    "name": "Brave 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000116",
+    "name": "Charming 20 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000143",
+    "name": "Coco 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000352",
+    "name": "Crush Hour 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000119",
+    "name": "Dream With You 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000120",
+    "name": "Elegant Red 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000121",
+    "name": "Emerald Tea 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000633",
+    "name": "Emily 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000122",
+    "name": "Eros Fusion 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000123",
+    "name": "Eternal 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000350",
+    "name": "Eternal Dream 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000124",
+    "name": "Falling In Love 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000152",
+    "name": "Gallery 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000634",
+    "name": "Garadenia Serenade 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000136",
+    "name": "Gentlemen 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000508",
+    "name": "Grantinar 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000616",
+    "name": "Grey 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000390",
+    "name": "Her Golden Crown 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000576",
+    "name": "Iris 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000125",
+    "name": "Italian Summer 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000385",
+    "name": "Jasmine Bloom 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000615",
+    "name": "Juicy 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000656",
+    "name": "Leather Market 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000126",
+    "name": "Leather Market Blue 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000586",
+    "name": "London 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000146",
+    "name": "Loving Violet 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000128",
+    "name": "Lush Safari 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000600",
+    "name": "Marine 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000371",
+    "name": "Mega Sea 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000621",
+    "name": "Peachie Pie 10ml Memori Perfume (EDP)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000130",
+    "name": "Peachie Pie 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000131",
+    "name": "Pink Candy 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000132",
+    "name": "Rangoon Sabal 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000622",
+    "name": "Roman Bay 10ml Memori Perfume (EDP)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000133",
+    "name": "Roman Bay 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000391",
+    "name": "Rosewood 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000354",
+    "name": "Sandalwood 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000405",
+    "name": "Santal In The Nature 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000134",
+    "name": "Seaside Harmony 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000507",
+    "name": "Sii Passionate 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000150",
+    "name": "Silent 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000153",
+    "name": "Smoked Forest 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000587",
+    "name": "Spring 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000356",
+    "name": "Story Of Her 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000427",
+    "name": "Summer Blue 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000135",
+    "name": "Thanaka 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000387",
+    "name": "The Florist 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000657",
+    "name": "The Library 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000137",
+    "name": "Tiffany 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000389",
+    "name": "To Herself 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000138",
+    "name": "Tropical Mist 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000536",
+    "name": "Tulip Garden 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000139",
+    "name": "Tuscan Hill 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000585",
+    "name": "Ultra 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000382",
+    "name": "Vanilla De Paris 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000140",
+    "name": "Velvet 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000141",
+    "name": "You Are My Queen 10ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000280",
+    "name": "Black Rose 10ml Memori Perfume Roller",
+    "category": "Perfume Roller",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000281",
+    "name": "Charming 20 10ml Memori Perfume Roller",
+    "category": "Perfume Roller",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000282",
+    "name": "Dream With You 10ml Memori Perfume Roller",
+    "category": "Perfume Roller",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000283",
+    "name": "Elegant Red 10ml Memori Perfume Roller",
+    "category": "Perfume Roller",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000284",
+    "name": "Eternal 10ml Memori Perfume Roller",
+    "category": "Perfume Roller",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000287",
+    "name": "Pink Candy 10ml Memori Perfume Roller",
+    "category": "Perfume Roller",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000288",
+    "name": "White Bouquet 10ml Memori Perfume Roller",
+    "category": "Perfume Roller",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000289",
+    "name": "You Are My Queen 10ml Memori Perfume Roller",
+    "category": "Perfume Roller",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000038",
+    "name": "Lavender 10ml Single Oil",
+    "category": "Single Oil",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000037",
+    "name": "Lemongrass 10ml Single Oil",
+    "category": "Single Oil",
+    "size_ml": 10
+  },
+  {
+    "code": "FG-000234",
+    "name": "Aqua 15ml Memori Perfume Oil",
+    "category": "Perfume Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000236",
+    "name": "Berry Bliss Dream 15ml Memori Perfume Oil",
+    "category": "Perfume Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000237",
+    "name": "Black Rose 15ml Memori Perfume Oil",
+    "category": "Perfume Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000361",
+    "name": "Bon Bon 15ml Memori Perfume Oil",
+    "category": "Perfume Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000532",
+    "name": "Charming 20 15ml Memori Perfume Oil",
+    "category": "Perfume Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000238",
+    "name": "Coco 15ml Memori Perfume Oil",
+    "category": "Perfume Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000403",
+    "name": "Crush Hour 15ml Memori Perfume Oil",
+    "category": "Perfume Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000239",
+    "name": "Dream With You 15ml Memori Perfume Oil",
+    "category": "Perfume Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000364",
+    "name": "Elegant Red 15ml Memori Perfume Oil",
+    "category": "Perfume Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000240",
+    "name": "Emerald Tea 15ml Memori Perfume Oil",
+    "category": "Perfume Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000241",
+    "name": "Eros Fusion 15ml Memori Perfume Oil",
+    "category": "Perfume Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000242",
+    "name": "Eternal 15ml Memori Perfume Oil",
+    "category": "Perfume Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000243",
+    "name": "Falling In Love 15ml Memori Perfume Oil",
+    "category": "Perfume Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000362",
+    "name": "Gentlemen 15ml Memori Perfume Oil",
+    "category": "Perfume Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000400",
+    "name": "Her Golden Crown 15ml Memori Perfume Oil",
+    "category": "Perfume Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000574",
+    "name": "Iris 15ml Memori Perfume Oil",
+    "category": "Perfume Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000244",
+    "name": "Italian Summer 15ml Memori Perfume Oil",
+    "category": "Perfume Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000395",
+    "name": "Jasmine Bloom 15ml Memori Perfume Oil",
+    "category": "Perfume Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000472",
+    "name": "Leather Market Blue 15ml Memori Perfume Oil",
+    "category": "Perfume Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000365",
+    "name": "Library 15ml Memori Perfume Oil",
+    "category": "Perfume Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000529",
+    "name": "Loving Violet 15ml Memori Perfume Oil",
+    "category": "Perfume Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000247",
+    "name": "Pink Candy 15ml Memori Perfume Oil",
+    "category": "Perfume Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000401",
+    "name": "Rosewood 15ml Memori Perfume Oil",
+    "category": "Perfume Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000359",
+    "name": "Silent 15ml Memori Perfume Oil",
+    "category": "Perfume Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000249",
+    "name": "Thanaka 15ml Memori Perfume Oil",
+    "category": "Perfume Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000397",
+    "name": "The Florist 15ml Memori Perfume Oil",
+    "category": "Perfume Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000250",
+    "name": "Tiffany 15ml Memori Perfume Oil",
+    "category": "Perfume Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000399",
+    "name": "To Herself 15ml Memori Perfume Oil",
+    "category": "Perfume Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000363",
+    "name": "Urban Wood 15ml Memori Perfume Oil",
+    "category": "Perfume Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000392",
+    "name": "Vanilla De Paris 15ml Memori Perfume Oil",
+    "category": "Perfume Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000481",
+    "name": "White Tea 15ml Memori Perfume Oil",
+    "category": "Perfume Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000252",
+    "name": "You Are My Queen 15ml Memori Perfume Oil",
+    "category": "Perfume Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000046",
+    "name": "Deep Sleep 15ml Aroma Oil",
+    "category": "Aroma Collection Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000047",
+    "name": "Detox Mind 15ml Aroma Oil",
+    "category": "Aroma Collection Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000048",
+    "name": "Green Rain 15ml Aroma Oil",
+    "category": "Aroma Collection Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000049",
+    "name": "Rain Forest 15ml Aroma Oil",
+    "category": "Aroma Collection Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000051",
+    "name": "Wake Me Up 15ml Aroma Oil",
+    "category": "Aroma Collection Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000052",
+    "name": "Executive Suite 15ml Hotel Oil",
+    "category": "Hotel Collection Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000053",
+    "name": "Pool Side 15ml Hotel Oil",
+    "category": "Hotel Collection Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000054",
+    "name": "The Emporium 15ml Hotel Oil",
+    "category": "Hotel Collection Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000055",
+    "name": "The Lobby 15ml Hotel Oil",
+    "category": "Hotel Collection Oil",
+    "size_ml": 15
+  },
+  {
+    "code": "FG-000105",
+    "name": "Daisy 30ml Flora Perfume",
+    "category": "Perfume",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000106",
+    "name": "Hannie 30ml Flora Perfume",
+    "category": "Perfume",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000107",
+    "name": "Kantkaw 30ml Flora Perfume",
+    "category": "Perfume",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000110",
+    "name": "Padauk 30ml Flora Perfume",
+    "category": "Perfume",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000108",
+    "name": "Peachie 30ml Flora Perfume",
+    "category": "Perfume",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000109",
+    "name": "Peony 30ml Flora Perfume",
+    "category": "Perfume",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000111",
+    "name": "Tulip 30ml Flora Perfume",
+    "category": "Perfume",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000056",
+    "name": "Deep Sleep 30ml Aroma Oil",
+    "category": "Aroma Collection Oil",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000057",
+    "name": "Detox Mind 30ml Aroma Oil",
+    "category": "Aroma Collection Oil",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000058",
+    "name": "First Date 30ml Aroma Oil",
+    "category": "Aroma Collection Oil",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000059",
+    "name": "Green Rain 30ml Aroma Oil",
+    "category": "Aroma Collection Oil",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000061",
+    "name": "Positive Vibes 30ml Aroma Oil",
+    "category": "Aroma Collection Oil",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000062",
+    "name": "Rain Forest 30ml Aroma Oil",
+    "category": "Aroma Collection Oil",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000064",
+    "name": "Wake Me Up 30ml Aroma Oil",
+    "category": "Aroma Collection Oil",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000067",
+    "name": "Botanic Spa 30ml Hotel Oil",
+    "category": "Hotel Collection Oil",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000068",
+    "name": "Executive Suite 30ml Hotel Oil",
+    "category": "Hotel Collection Oil",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000069",
+    "name": "Pool Side 30ml Hotel Oil",
+    "category": "Hotel Collection Oil",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000070",
+    "name": "The Emporium 30ml Hotel Oil",
+    "category": "Hotel Collection Oil",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000071",
+    "name": "The Lobby 30ml Hotel Oil",
+    "category": "Hotel Collection Oil",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000072",
+    "name": "The Tea Room 30ml Hotel Oil",
+    "category": "Hotel Collection Oil",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000462",
+    "name": "Lavender 30ml Message Oil",
+    "category": "Massage Oil",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000554",
+    "name": "Bon Bon 30ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000589",
+    "name": "Charming 20 30ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000598",
+    "name": "Coco 30ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000588",
+    "name": "Emerald Tea 30ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000590",
+    "name": "Eros Fusion 30ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000591",
+    "name": "Gentlemen 30ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000592",
+    "name": "Her Golden Crown 30ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000596",
+    "name": "Italian Summer 30ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000593",
+    "name": "Jasmine Bloom 30ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000597",
+    "name": "Loving Violet 30ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000599",
+    "name": "Peachie Pie 30ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000594",
+    "name": "Rosewood 30ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000555",
+    "name": "Summer Blue 30ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000556",
+    "name": "The Florist 30ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000595",
+    "name": "Tulip Garden 30ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000340",
+    "name": "A Day In London 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000158",
+    "name": "Aqua 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000159",
+    "name": "Aura 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000160",
+    "name": "Beachside Bonfire 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000553",
+    "name": "Berry 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000162",
+    "name": "Berry Bliss Dream 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000163",
+    "name": "Black 35 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000164",
+    "name": "Black Rose 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000711",
+    "name": "Bold 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000166",
+    "name": "Bon Bon 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000551",
+    "name": "Brave 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000167",
+    "name": "Charming 20 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000479",
+    "name": "Coastal Breez 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000168",
+    "name": "Coco 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000343",
+    "name": "Crush Hour 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000171",
+    "name": "Dream With You 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000172",
+    "name": "Elegant Red 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000173",
+    "name": "Emerald Tea 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000174",
+    "name": "Eros Fusion 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000175",
+    "name": "Eternal 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000521",
+    "name": "Eternal Exclusive 30ml Memori Perfume",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000176",
+    "name": "Falling In Love 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000178",
+    "name": "Gentlemen 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000581",
+    "name": "Grey 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000380",
+    "name": "Her Golden Crown 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000504",
+    "name": "Her Golden Crown Exclusive 30ml Memori Perfume",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000547",
+    "name": "Iris 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000180",
+    "name": "Italian Summer 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000375",
+    "name": "Jasmine Bloom 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000580",
+    "name": "Juicy 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000181",
+    "name": "Leather Market 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000182",
+    "name": "Leather Market Blue 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000578",
+    "name": "London 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000184",
+    "name": "Loving Violet 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000185",
+    "name": "Lush Safari 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000550",
+    "name": "Marine 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000549",
+    "name": "Mimosa 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000189",
+    "name": "Peachie Pie 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000190",
+    "name": "Pink Candy 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000552",
+    "name": "Pomelo 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000191",
+    "name": "Rangoon Sabal 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000192",
+    "name": "Roman Bay 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000381",
+    "name": "Rosewood 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000345",
+    "name": "Sandalwood 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000193",
+    "name": "Santal In The Nature 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000194",
+    "name": "Seaman In The 90's 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000195",
+    "name": "Seaside Harmony 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000196",
+    "name": "Silent 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000579",
+    "name": "Spring 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000347",
+    "name": "Story Of Her 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000198",
+    "name": "Story Of Yulong 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000404",
+    "name": "Summer Blue 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000505",
+    "name": "Summer Blue Exclusive 30ml Memori Perfume",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000344",
+    "name": "Sunkiss 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000199",
+    "name": "Thanaka 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000377",
+    "name": "The Florist 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000200",
+    "name": "The Library 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000201",
+    "name": "Tiffany 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000379",
+    "name": "To Herself 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000506",
+    "name": "To Herself Exclusive 30ml Memori Perfume",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000202",
+    "name": "Tropical Mist 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000203",
+    "name": "Tulip Garden 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000577",
+    "name": "Ultra 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000372",
+    "name": "Vanilla De Paris 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000480",
+    "name": "White Bouquet 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000207",
+    "name": "You Are My Queen 30ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000291",
+    "name": "Bagan Sunrise 40ml Reed Diffuser",
+    "category": "Reed Diffuser",
+    "size_ml": 40
+  },
+  {
+    "code": "FG-000408",
+    "name": "Cherry Blossom 40ml Reed Diffuser",
+    "category": "Reed Diffuser",
+    "size_ml": 40
+  },
+  {
+    "code": "FG-000637",
+    "name": "Detox Mind 40ml Reed Diffuser",
+    "category": "Reed Diffuser",
+    "size_ml": 40
+  },
+  {
+    "code": "FG-000407",
+    "name": "First Date 40ml Reed Diffuser",
+    "category": "Reed Diffuser",
+    "size_ml": 40
+  },
+  {
+    "code": "FG-000636",
+    "name": "Lemongrass 40ml Reed Diffuser",
+    "category": "Reed Diffuser",
+    "size_ml": 40
+  },
+  {
+    "code": "FG-000409",
+    "name": "Passion Fruit 40ml Reed Diffuser",
+    "category": "Reed Diffuser",
+    "size_ml": 40
+  },
+  {
+    "code": "FG-000410",
+    "name": "The Emporium 40ml Reed Diffuser",
+    "category": "Reed Diffuser",
+    "size_ml": 40
+  },
+  {
+    "code": "FG-000635",
+    "name": "The Lobby 40ml Reed Diffuser",
+    "category": "Reed Diffuser",
+    "size_ml": 40
+  },
+  {
+    "code": "FG-000567",
+    "name": "Cherry Blossom 50ml Reed Diffuser",
+    "category": "Reed Diffuser",
+    "size_ml": 50
+  },
+  {
+    "code": "FG-000570",
+    "name": "Detox Garden 50ml Reed Diffuser",
+    "category": "Reed Diffuser",
+    "size_ml": 50
+  },
+  {
+    "code": "FG-000568",
+    "name": "First Date 50ml Reed Diffuser",
+    "category": "Reed Diffuser",
+    "size_ml": 50
+  },
+  {
+    "code": "FG-000569",
+    "name": "Lavender & Bergamot 50ml Reed Diffuser",
+    "category": "Reed Diffuser",
+    "size_ml": 50
+  },
+  {
+    "code": "FG-000566",
+    "name": "Passion Fruit 50ml Reed Diffuser",
+    "category": "Reed Diffuser",
+    "size_ml": 50
+  },
+  {
+    "code": "FG-000571",
+    "name": "Relax Mind 50ml Reed Diffuser",
+    "category": "Reed Diffuser",
+    "size_ml": 50
+  },
+  {
+    "code": "FG-000565",
+    "name": "The Emporium 50ml Reed Diffuser",
+    "category": "Reed Diffuser",
+    "size_ml": 50
+  },
+  {
+    "code": "FG-000572",
+    "name": "Velvet Rosewood 50ml Reed Diffuser",
+    "category": "Reed Diffuser",
+    "size_ml": 50
+  },
+  {
+    "code": "FG-000073",
+    "name": "Deep Sleep 50ml Aroma Room Spray",
+    "category": "Aroma Collection Spray",
+    "size_ml": 50
+  },
+  {
+    "code": "FG-000074",
+    "name": "Detox Mind 50ml Aroma Room Spray",
+    "category": "Aroma Collection Spray",
+    "size_ml": 50
+  },
+  {
+    "code": "FG-000075",
+    "name": "First Date 50ml Aroma Room Spray",
+    "category": "Aroma Collection Spray",
+    "size_ml": 50
+  },
+  {
+    "code": "FG-000429",
+    "name": "Green Rain 50ml Aroma Room Spray",
+    "category": "Aroma Collection Spray",
+    "size_ml": 50
+  },
+  {
+    "code": "FG-000077",
+    "name": "Positive Vibes 50ml Aroma Room Spray",
+    "category": "Aroma Collection Spray",
+    "size_ml": 50
+  },
+  {
+    "code": "FG-000078",
+    "name": "Rain Forest 50ml Aroma Room Spray",
+    "category": "Aroma Collection Spray",
+    "size_ml": 50
+  },
+  {
+    "code": "FG-000459",
+    "name": "Sandalwood 50ml Aroma Room Spray",
+    "category": "Aroma Collection Spray",
+    "size_ml": 50
+  },
+  {
+    "code": "FG-000080",
+    "name": "Wake Me Up 50ml Aroma Room Spray",
+    "category": "Aroma Collection Spray",
+    "size_ml": 50
+  },
+  {
+    "code": "FG-000458",
+    "name": "Botanic Spa 50ml Hotel Room Spray",
+    "category": "Hotel Collection Spray",
+    "size_ml": 50
+  },
+  {
+    "code": "FG-000081",
+    "name": "Executive Suite 50ml Hotel Room Spray",
+    "category": "Hotel Collection Spray",
+    "size_ml": 50
+  },
+  {
+    "code": "FG-000082",
+    "name": "Lemon Cha 50ml Hotel Room Spray",
+    "category": "Hotel Collection Spray",
+    "size_ml": 50
+  },
+  {
+    "code": "FG-000083",
+    "name": "Passion Fruit 50ml Hotel Room Spray",
+    "category": "Hotel Collection Spray",
+    "size_ml": 50
+  },
+  {
+    "code": "FG-000084",
+    "name": "Pool Side 50ml Hotel Room Spray",
+    "category": "Hotel Collection Spray",
+    "size_ml": 50
+  },
+  {
+    "code": "FG-000085",
+    "name": "Tea Lounge 50ml Hotel Room Spray",
+    "category": "Hotel Collection Spray",
+    "size_ml": 50
+  },
+  {
+    "code": "FG-000086",
+    "name": "The Emporium 50ml Hotel Room Spray",
+    "category": "Hotel Collection Spray",
+    "size_ml": 50
+  },
+  {
+    "code": "FG-000087",
+    "name": "The Lobby 50ml Hotel Room Spray",
+    "category": "Hotel Collection Spray",
+    "size_ml": 50
+  },
+  {
+    "code": "FG-000088",
+    "name": "The Tea Room 50ml Hotel Room Spray",
+    "category": "Hotel Collection Spray",
+    "size_ml": 50
+  },
+  {
+    "code": "FG-000089",
+    "name": "White Tea 50ml Hotel Room Spray",
+    "category": "Hotel Collection Spray",
+    "size_ml": 50
+  },
+  {
+    "code": "FG-000661",
+    "name": "Wood Sage 50ml Hotel Room Spray",
+    "category": "Hotel Collection Spray",
+    "size_ml": 50
+  },
+  {
+    "code": "FG-000708",
+    "name": "Emerald Tea & Peach 50ml Hotel Room Spray",
+    "category": "Hotel Collection Spray",
+    "size_ml": 50
+  },
+  {
+    "code": "FG-000461",
+    "name": "Dream With You 50ml Perfume Room Spray",
+    "category": "Perfume Room Spray",
+    "size_ml": 50
+  },
+  {
+    "code": "FG-000460",
+    "name": "Tiffany 50ml Perfume Room Spray",
+    "category": "Perfume Room Spray",
+    "size_ml": 50
+  },
+  {
+    "code": "FG-000076",
+    "name": "Lemongrass 50ml Single Room Spray",
+    "category": "Single Spray",
+    "size_ml": 50
+  },
+  {
+    "code": "FG-000718",
+    "name": "Detox Mind 100ml Aroma Oil",
+    "category": "Aroma Collection Oil",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000582",
+    "name": "Cherry Blossom 100ml Reed Diffuser",
+    "category": "Reed Diffuser",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000524",
+    "name": "Detox Garden 100ml Reed Diffuser",
+    "category": "Reed Diffuser",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000523",
+    "name": "Relax Mind 100ml Reed Diffuser",
+    "category": "Reed Diffuser",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000539",
+    "name": "The Emporium 100ml Reed Diffuser",
+    "category": "Reed Diffuser",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000540",
+    "name": "The Emporium 100ml Reed Diffuser Refill",
+    "category": "Reed Diffuser",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000522",
+    "name": "Velvet Rosewood 100ml Reed Diffuser",
+    "category": "Reed Diffuser",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000090",
+    "name": "Green Rain 100ml Aroma Room Spray Refill",
+    "category": "Aroma Collection Spray",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000091",
+    "name": "Only You 100ml Aroma Room Spray Refill",
+    "category": "Aroma Collection Spray",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000092",
+    "name": "Rain Forest 100ml Aroma Room Spray Refill",
+    "category": "Aroma Collection Spray",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000093",
+    "name": "Wake Me Up 100ml Aroma Room Spray Refill",
+    "category": "Aroma Collection Spray",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000309",
+    "name": "Black Rose 100ml Memori Body Serum",
+    "category": "Body Serum",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000370",
+    "name": "Bon Bon 100ml Memori Body Serum",
+    "category": "Body Serum",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000531",
+    "name": "Charming 20 100ml Memori Body Serum",
+    "category": "Body Serum",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000310",
+    "name": "Coco 100ml Memori Body Serum",
+    "category": "Body Serum",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000311",
+    "name": "Deep Sleep 100ml Memori Body Serum",
+    "category": "Body Serum",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000312",
+    "name": "Elegant Red 100ml Memori Body Serum",
+    "category": "Body Serum",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000313",
+    "name": "Emerald Tea 100ml Memori Body Serum",
+    "category": "Body Serum",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000314",
+    "name": "Italian Summer 100ml Memori Body Serum",
+    "category": "Body Serum",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000525",
+    "name": "Jasmine Bloom 100ml Memori Body Serum",
+    "category": "Body Serum",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000618",
+    "name": "Juicy 100ml Memori Body Serum",
+    "category": "Body Serum",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000619",
+    "name": "London 100ml Memori Body Serum",
+    "category": "Body Serum",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000530",
+    "name": "Loving Violet 100ml Memori Body Serum",
+    "category": "Body Serum",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000315",
+    "name": "Pink Candy 100ml Memori Body Serum",
+    "category": "Body Serum",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000368",
+    "name": "Silent 100ml Memori Body Serum",
+    "category": "Body Serum",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000617",
+    "name": "Thanaka 100ml Memori Body Serum",
+    "category": "Body Serum",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000526",
+    "name": "The Florist 100ml Memori Body Serum",
+    "category": "Body Serum",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000317",
+    "name": "Tiffany 100ml Memori Body Serum",
+    "category": "Body Serum",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000546",
+    "name": "To Herself 100ml Memori Body Serum",
+    "category": "Body Serum",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000544",
+    "name": "Vanilla De Paris 100ml Memori Body Serum",
+    "category": "Body Serum",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000318",
+    "name": "You Are My Queen 100ml Memori Body Serum",
+    "category": "Body Serum",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000735",
+    "name": "Eternal 100ml Memori Body Serum",
+    "category": "Body Serum",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000338",
+    "name": "Rosemary 100ml Hair Treatment Oil",
+    "category": "Hair Care",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000469",
+    "name": "Eucalyptus + Peppermint 100ml Herbal Message Oil",
+    "category": "Massage Oil",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000468",
+    "name": "Lavender 100ml Herbal Message Oil",
+    "category": "Massage Oil",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000575",
+    "name": "Gentleman's Club Men Hygiene Wash 100ml",
+    "category": "Men Wash",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000518",
+    "name": "Black Rose 100ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000516",
+    "name": "Bon Bon 100ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000512",
+    "name": "Charming 20 100ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000515",
+    "name": "CoCo 100ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000411",
+    "name": "Dream With You 100ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000513",
+    "name": "Elegant Red 100ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000519",
+    "name": "Emerald Tea 100ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000412",
+    "name": "Eros Fusion 100ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000528",
+    "name": "Eternal 100ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000511",
+    "name": "Gentlemen 100ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000624",
+    "name": "Hannie 100ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000413",
+    "name": "Her Golden Crown 100ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000520",
+    "name": "Italian Summer 100ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000415",
+    "name": "Leather Market Blue 100ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000514",
+    "name": "Loving Violet 100ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000517",
+    "name": "Peachie Pie 100ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000623",
+    "name": "Peony 100ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000416",
+    "name": "Rosewood 100ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000705",
+    "name": "Thanaka 100ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000419",
+    "name": "Tiffany 100ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000625",
+    "name": "Tulip 100ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000541",
+    "name": "Tulip Garden 100ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000527",
+    "name": "You Are My Queen 100ml Memori Perfume (EDP)",
+    "category": "Perfume (EDP)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000208",
+    "name": "Aqua 100ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000211",
+    "name": "Berry Bliss Dream 100ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000212",
+    "name": "Black 35 100ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000213",
+    "name": "Black Rose 100ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000467",
+    "name": "Bon Bon 100ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000214",
+    "name": "Charming 20 100ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000215",
+    "name": "Coco 100ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000620",
+    "name": "Dream With You 100ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000216",
+    "name": "Elegant Red 100ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000217",
+    "name": "Emerald Tea 100ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000218",
+    "name": "Eternal 100ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000465",
+    "name": "Falling In Love 100ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000219",
+    "name": "Gentlemen 100ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000664",
+    "name": "Grey 100ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000667",
+    "name": "Her Golden Crown 100ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000220",
+    "name": "Italian Summer 100ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000614",
+    "name": "Jasmine Bloom 100ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000221",
+    "name": "Leather Market Blue 100ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000223",
+    "name": "Loving Violet 100ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000233",
+    "name": "Pink Candy 100ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000226",
+    "name": "Roman Bay 100ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000660",
+    "name": "Rosewood 100ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000230",
+    "name": "Thanaka 100ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000232",
+    "name": "Tiffany 100ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000663",
+    "name": "Ultra 100ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000583",
+    "name": "You Are My Queen 100ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000736",
+    "name": "Juicy 100ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000737",
+    "name": "Eros Fusion 100ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000697",
+    "name": "Berry Bliss Dream Perfume Body Cream 100ml",
+    "category": "Perfume Body Cream",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000698",
+    "name": "Black Rose Perfume Body Cream 100ml",
+    "category": "Perfume Body Cream",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000701",
+    "name": "Charming 20 Perfume Body Cream 100ml",
+    "category": "Perfume Body Cream",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000700",
+    "name": "Dream With You Perfume Body Cream 100ml",
+    "category": "Perfume Body Cream",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000696",
+    "name": "Elegant Red Perfume Body Cream 100ml",
+    "category": "Perfume Body Cream",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000702",
+    "name": "Eternal Perfume Body Cream 100ml",
+    "category": "Perfume Body Cream",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000703",
+    "name": "Loving Violet Perfume Body Cream 100ml",
+    "category": "Perfume Body Cream",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000699",
+    "name": "Spring Perfume Body Cream 100ml",
+    "category": "Perfume Body Cream",
+    "size_ml": 100
+  },
+  {
+    "code": "FG-000644",
+    "name": "Deep Sleep 150ml Reed Diffuser",
+    "category": "Reed Diffuser",
+    "size_ml": 150
+  },
+  {
+    "code": "FG-000292",
+    "name": "First Date 150ml Reed Diffuser",
+    "category": "Reed Diffuser",
+    "size_ml": 150
+  },
+  {
+    "code": "FG-000638",
+    "name": "Green Rain 150ml Reed Diffuser",
+    "category": "Reed Diffuser",
+    "size_ml": 150
+  },
+  {
+    "code": "FG-000642",
+    "name": "Lavender & Bergamot 150ml Reed Diffuser",
+    "category": "Reed Diffuser",
+    "size_ml": 150
+  },
+  {
+    "code": "FG-000639",
+    "name": "Lemongrass & Cedar 150ml Reed Diffuser",
+    "category": "Reed Diffuser",
+    "size_ml": 150
+  },
+  {
+    "code": "FG-000640",
+    "name": "Positive Vibes 150ml Reed Diffuser",
+    "category": "Reed Diffuser",
+    "size_ml": 150
+  },
+  {
+    "code": "FG-000641",
+    "name": "Urban Wood 150ml Reed Diffuser",
+    "category": "Reed Diffuser",
+    "size_ml": 150
+  },
+  {
+    "code": "FG-000643",
+    "name": "Valentine 150ml Reed Diffuser",
+    "category": "Reed Diffuser",
+    "size_ml": 150
+  },
+  {
+    "code": "FG-000647",
+    "name": "Berry Bliss Dream Perfume Body Cream 150ml",
+    "category": "Perfume Body Cream",
+    "size_ml": 150
+  },
+  {
+    "code": "FG-000648",
+    "name": "Black Rose Perfume Body Cream 150ml",
+    "category": "Perfume Body Cream",
+    "size_ml": 150
+  },
+  {
+    "code": "FG-000651",
+    "name": "Charming 20 Perfume Body Cream 150ml",
+    "category": "Perfume Body Cream",
+    "size_ml": 150
+  },
+  {
+    "code": "FG-000650",
+    "name": "Dream With You Perfume Body Cream 150ml",
+    "category": "Perfume Body Cream",
+    "size_ml": 150
+  },
+  {
+    "code": "FG-000646",
+    "name": "Elegant Red Perfume Body Cream 150ml",
+    "category": "Perfume Body Cream",
+    "size_ml": 150
+  },
+  {
+    "code": "FG-000652",
+    "name": "Eternal Perfume Body Cream 150ml",
+    "category": "Perfume Body Cream",
+    "size_ml": 150
+  },
+  {
+    "code": "FG-000704",
+    "name": "Loving Violet Perfume Body Cream 150ml",
+    "category": "Perfume Body Cream",
+    "size_ml": 150
+  },
+  {
+    "code": "FG-000649",
+    "name": "Spring Perfume Body Cream 150ml",
+    "category": "Perfume Body Cream",
+    "size_ml": 150
+  },
+  {
+    "code": "FG-000604",
+    "name": "The Emporium 250ml Hotel Collection Oil",
+    "category": "Hotel Collection Oil",
+    "size_ml": 250
+  },
+  {
+    "code": "FG-000096",
+    "name": "Passion Fruit 250ml Hotel Room Spray",
+    "category": "Hotel Collection Spray",
+    "size_ml": 250
+  },
+  {
+    "code": "FG-000095",
+    "name": "Pool Side 250ml Hotel Room Spray",
+    "category": "Hotel Collection Spray",
+    "size_ml": 250
+  },
+  {
+    "code": "FG-000094",
+    "name": "The Emporium 250ml Hotel Room Spray",
+    "category": "Hotel Collection Spray",
+    "size_ml": 250
+  },
+  {
+    "code": "FG-000097",
+    "name": "Woodsage 250ml Designer Perfume Room Spray",
+    "category": "Perfume Room Spray",
+    "size_ml": 250
+  },
+  {
+    "code": "FG-000695",
+    "name": "Eros Fusion 500ml Memori Perfume Oil",
+    "category": "Perfume Oil",
+    "size_ml": 500
+  },
+  {
+    "code": "FG-000662",
+    "name": "First Date 500ml Aroma Oil",
+    "category": "Aroma Collection Oil",
+    "size_ml": 500
+  },
+  {
+    "code": "FG-000626",
+    "name": "Detox Mind 900ml Hotel Oil",
+    "category": "Hotel Collection Oil",
+    "size_ml": 900
+  },
+  {
+    "code": "FG-000542",
+    "name": "The Emporium 500ml Hotel Oil",
+    "category": "Hotel Collection Oil",
+    "size_ml": 500
+  },
+  {
+    "code": "FG-000543",
+    "name": "The Lobby 500ml Hotel Oil",
+    "category": "Hotel Collection Oil",
+    "size_ml": 500
+  },
+  {
+    "code": "FG-000303",
+    "name": "Botanica 500ml Body Wash",
+    "category": "Body Wash",
+    "size_ml": 500
+  },
+  {
+    "code": "FG-000304",
+    "name": "Detox Mind 500ml Body Wash",
+    "category": "Body Wash",
+    "size_ml": 500
+  },
+  {
+    "code": "FG-000305",
+    "name": "Gentlemen 500ml Body Wash",
+    "category": "Body Wash",
+    "size_ml": 500
+  },
+  {
+    "code": "FG-000306",
+    "name": "Green Tea 500ml Body Wash",
+    "category": "Body Wash",
+    "size_ml": 500
+  },
+  {
+    "code": "FG-000308",
+    "name": "White Tea 500ml Body Wash",
+    "category": "Body Wash",
+    "size_ml": 500
+  },
+  {
+    "code": "FG-000324",
+    "name": "500ml Aroma Diffuser",
+    "category": "Diffuser",
+    "size_ml": 500
+  },
+  {
+    "code": "FG-000300",
+    "name": "Bergamot 500ml Shampoo",
+    "category": "Shampoo",
+    "size_ml": 500
+  },
+  {
+    "code": "FG-000301",
+    "name": "Lavender 500ml Shampoo",
+    "category": "Shampoo",
+    "size_ml": 500
+  },
+  {
+    "code": "FG-000430",
+    "name": "Rosemary 500ml Shampoo",
+    "category": "Shampoo",
+    "size_ml": 500
+  },
+  {
+    "code": "FG-000302",
+    "name": "Tea Tree 500ml Shampoo",
+    "category": "Shampoo",
+    "size_ml": 500
+  },
+  {
+    "code": "FG-000319",
+    "name": "Berry Bliss Dream 120ml Memori Body Mist",
+    "category": "Body Mist",
+    "size_ml": 120
+  },
+  {
+    "code": "FG-000320",
+    "name": "Coco 120ml Memori Body Mist",
+    "category": "Body Mist",
+    "size_ml": 120
+  },
+  {
+    "code": "FG-000321",
+    "name": "Eternal 120ml Memori Body Mist",
+    "category": "Body Mist",
+    "size_ml": 120
+  },
+  {
+    "code": "FG-000322",
+    "name": "Libre Rose 120ml Memori Body Mist",
+    "category": "Body Mist",
+    "size_ml": 120
+  },
+  {
+    "code": "FG-000323",
+    "name": "Velvet 120ml Memori Body Mist",
+    "category": "Body Mist",
+    "size_ml": 120
+  },
+  {
+    "code": "FG-000296",
+    "name": "Botanica Spa 270ml Body Wash",
+    "category": "Body Wash",
+    "size_ml": 270
+  },
+  {
+    "code": "FG-000297",
+    "name": "Detox Mind 270ml Body Wash",
+    "category": "Body Wash",
+    "size_ml": 270
+  },
+  {
+    "code": "FG-000298",
+    "name": "Green Tea 270ml Body Wash",
+    "category": "Body Wash",
+    "size_ml": 270
+  },
+  {
+    "code": "FG-000299",
+    "name": "White Tea 270ml Body Wash",
+    "category": "Body Wash",
+    "size_ml": 270
+  },
+  {
+    "code": "FG-000712",
+    "name": "Deep Sleep 250ml Aroma Room Spray",
+    "category": "Aroma Collection Spray",
+    "size_ml": 250
+  },
+  {
+    "code": "FG-000293",
+    "name": "Bergamot 270ml Shampoo",
+    "category": "Shampoo",
+    "size_ml": 270
+  },
+  {
+    "code": "FG-000294",
+    "name": "Lavender 270ml Shampoo",
+    "category": "Shampoo",
+    "size_ml": 270
+  },
+  {
+    "code": "FG-000295",
+    "name": "Tea Tree 270ml Shampoo",
+    "category": "Shampoo",
+    "size_ml": 270
+  },
+  {
+    "code": "FG-000645",
+    "name": "Italian Summer 500ml Memori Perfume Oil",
+    "category": "Perfume Oil",
+    "size_ml": 500
+  },
+  {
+    "code": "FG-000603",
+    "name": "Positive Vibes 1kg Aroma Oil",
+    "category": "Aroma Collection Oil",
+    "size_ml": "1Kg"
+  },
+  {
+    "code": "FG-000666",
+    "name": "Lemongrass 5kg Body Wash",
+    "category": "Body Wash",
+    "size_ml": "5 Kg"
+  },
+  {
+    "code": "FG-000665",
+    "name": "Bergamot 5kg Shampoo",
+    "category": "Shampoo",
+    "size_ml": "5 Kg"
+  },
+  {
+    "code": "FG-000332",
+    "name": "Red Burner Aung Tha Pyay Ni",
+    "category": "Burner",
+    "size_ml": null
+  },
+  {
+    "code": "FG-000333",
+    "name": "Red Burner Christmas",
+    "category": "Burner",
+    "size_ml": null
+  },
+  {
+    "code": "FG-000335",
+    "name": "White Burner Snow Flake",
+    "category": "Burner",
+    "size_ml": null
+  },
+  {
+    "code": "FG-000334",
+    "name": "White Burner Valentine",
+    "category": "Burner",
+    "size_ml": null
+  },
+  {
+    "code": "FG-000489",
+    "name": "Porcelain Burner",
+    "category": "Burner",
+    "size_ml": null
+  },
+  {
+    "code": "FG-000486",
+    "name": "Red Burner Aung Tha Pyay Ni (Small)",
+    "category": "Burner",
+    "size_ml": null
+  },
+  {
+    "code": "FG-000490",
+    "name": "Sample Burner",
+    "category": "Burner",
+    "size_ml": null
+  },
+  {
+    "code": "FG-000488",
+    "name": "White Burner Aung Satt Kyar Phyu",
+    "category": "Burner",
+    "size_ml": null
+  },
+  {
+    "code": "FG-000484",
+    "name": "White Burner Aung Tha Pyay Phyu",
+    "category": "Burner",
+    "size_ml": null
+  },
+  {
+    "code": "FG-000485",
+    "name": "White Burner Aung Tha Pyay Phyu (Small)",
+    "category": "Burner",
+    "size_ml": null
+  },
+  {
+    "code": "FG-000487",
+    "name": "White Burner Christmas",
+    "category": "Burner",
+    "size_ml": null
+  },
+  {
+    "code": "FG-000336",
+    "name": "Burner Candle Holder",
+    "category": "Burner Accessories",
+    "size_ml": null
+  },
+  {
+    "code": "FG-000337",
+    "name": "Burner Water Bowl",
+    "category": "Burner Accessories",
+    "size_ml": null
+  },
+  {
+    "code": "FG-000463",
+    "name": "Red Burner Body",
+    "category": "Burner Accessories",
+    "size_ml": null
+  },
+  {
+    "code": "FG-000482",
+    "name": "Spoon (Burner)",
+    "category": "Burner Accessories",
+    "size_ml": null
+  },
+  {
+    "code": "FG-000464",
+    "name": "White Burner Body",
+    "category": "Burner Accessories",
+    "size_ml": null
+  },
+  {
+    "code": "FG-000339",
+    "name": "4 Hour Tealight Candles 9pcs",
+    "category": "Candle",
+    "size_ml": null
+  },
+  {
+    "code": "FG-000325",
+    "name": "Adapter - 500ml Aroma Diffuser",
+    "category": "Diffuser Accessories",
+    "size_ml": null
+  },
+  {
+    "code": "FG-000327",
+    "name": "Circuit Board - 500ml Aroma Diffuser",
+    "category": "Diffuser Accessories",
+    "size_ml": null
+  },
+  {
+    "code": "FG-000326",
+    "name": "Cup - 500ml Aroma Diffuser",
+    "category": "Diffuser Accessories",
+    "size_ml": null
+  },
+  {
+    "code": "FG-000328",
+    "name": "Fan - 500ml Aroma Diffuser",
+    "category": "Diffuser Accessories",
+    "size_ml": null
+  },
+  {
+    "code": "FG-000329",
+    "name": "Remote - 500ml Aroma Diffuser",
+    "category": "Diffuser Accessories",
+    "size_ml": null
+  },
+  {
+    "code": "FG-000330",
+    "name": "Screw - 500ml Aroma Diffuser",
+    "category": "Diffuser Accessories",
+    "size_ml": null
+  },
+  {
+    "code": "FG-000331",
+    "name": "Ultrasonic Plate - 500ml Aroma Diffuser",
+    "category": "Diffuser Accessories",
+    "size_ml": null
+  },
+  {
+    "code": "FG-000713",
+    "name": "01 Rosewood Velvet Lip Butter",
+    "category": "Lip Stick",
+    "size_ml": null
+  },
+  {
+    "code": "FG-000714",
+    "name": "02 Maroon Velvet Lip Butter",
+    "category": "Lip Stick",
+    "size_ml": null
+  },
+  {
+    "code": "FG-000715",
+    "name": "03 Coral Velvet Lip Butter",
+    "category": "Lip Stick",
+    "size_ml": null
+  },
+  {
+    "code": "FG-000716",
+    "name": "04 Amber Velvet Lip Butter",
+    "category": "Lip Stick",
+    "size_ml": null
+  },
+  {
+    "code": "FG-000731",
+    "name": "Aqua 2ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 2
+  },
+  {
+    "code": "FG-000741",
+    "name": "Berry Bliss Dream 2ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 2
+  },
+  {
+    "code": "FG-000725",
+    "name": "Black Rose 2ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 2
+  },
+  {
+    "code": "FG-000739",
+    "name": "Bon Bon 2ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 2
+  },
+  {
+    "code": "FG-000728",
+    "name": "Charming 20 2ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 2
+  },
+  {
+    "code": "FG-000738",
+    "name": "Coco 2ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 2
+  },
+  {
+    "code": "FG-000729",
+    "name": "Dream With You 2ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 2
+  },
+  {
+    "code": "FG-000720",
+    "name": "Elegant Red 2ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 2
+  },
+  {
+    "code": "FG-000733",
+    "name": "Emerald Tea 2ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 2
+  },
+  {
+    "code": "FG-000742",
+    "name": "Eros Fusion 2ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 2
+  },
+  {
+    "code": "FG-000721",
+    "name": "Eternal 2ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 2
+  },
+  {
+    "code": "FG-000743",
+    "name": "Gentlemen 2ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 2
+  },
+  {
+    "code": "FG-000726",
+    "name": "Her Golden Crown 2ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 2
+  },
+  {
+    "code": "FG-000730",
+    "name": "Iris 2ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 2
+  },
+  {
+    "code": "FG-000727",
+    "name": "Italian Summer 2ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 2
+  },
+  {
+    "code": "FG-000732",
+    "name": "Juicy 2ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 2
+  },
+  {
+    "code": "FG-000723",
+    "name": "Leather Market Blue 2ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 2
+  },
+  {
+    "code": "FG-000740",
+    "name": "Loving Violet 2ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 2
+  },
+  {
+    "code": "FG-000749",
+    "name": "Pink Candy 2ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 2
+  },
+  {
+    "code": "FG-000750",
+    "name": "Roman Bay 2ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 2
+  },
+  {
+    "code": "FG-000724",
+    "name": "Rosewood 2ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 2
+  },
+  {
+    "code": "FG-000744",
+    "name": "Spring 2ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 2
+  },
+  {
+    "code": "FG-000734",
+    "name": "Thanaka 2ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 2
+  },
+  {
+    "code": "FG-000722",
+    "name": "Tiffany 2ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 2
+  },
+  {
+    "code": "FG-000751",
+    "name": "You Are My Queen 2ml Memori Perfume (Elixir)",
+    "category": "Perfume (Elixir)",
+    "size_ml": 2
+  },
+  {
+    "code": "FG-000745",
+    "name": "Eternal 30ml Memori Oil Perfume",
+    "category": "Oil Perfume",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000746",
+    "name": "You Are My Queen 30ml Memori Oil Perfume",
+    "category": "Oil Perfume",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000747",
+    "name": "Spring 30ml Memori Oil Perfume",
+    "category": "Oil Perfume",
+    "size_ml": 30
+  },
+  {
+    "code": "FG-000748",
+    "name": "Berry Bliss Dream 30ml Memori Oil Perfume",
+    "category": "Oil Perfume",
+    "size_ml": 30
+  }
+]

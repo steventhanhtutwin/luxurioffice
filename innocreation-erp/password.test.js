@@ -1,0 +1,2 @@
+const {test}=require('node:test');const assert=require('node:assert/strict');const {hashPassword,verifyPassword}=require('./password');
+test('password hashes use unique salts and reject incorrect passwords',async()=>{const a=await hashPassword('correct-password');const b=await hashPassword('correct-password');assert.notEqual(a,b);assert.equal(await verifyPassword('correct-password',a),true);assert.equal(await verifyPassword('wrong-password',a),false);assert.equal(await verifyPassword('anything','invalid'),false);});

@@ -1,0 +1,103 @@
+
+
+
+----------------------------------------------------------------
+
+setup database from powershell
+
+database  ကို powershell က နေ ပဲ ဖန်တီးသွားတာပါ
+
+npm.cmd install
+
+
+
+workbench မှာ
+
+CREATE DATABASE IF NOT EXISTS innocreation_erp
+CHARACTER SET utf8mb4
+COLLATE utf8mb4_unicode_ci;
+
+CREATE USER 'innocreation_app'@'127.0.0.1'
+IDENTIFIED BY 'YOUR_DB_PASSWORD_HERE';
+
+GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, INDEX
+ON innocreation_erp.*
+TO 'innocreation_app'@'127.0.0.1';
+
+
+database password‌  ပေးသွား
+
+အခု password က St4r-----Ran----92
+
+-----------------------------------------------------------------
+
+အခု App နဲ့ MySQL ချိတ်ကြမယ်။
+
+၁။ .env ဖိုင်ဖန်တီးပါ
+
+VS Code ဖိုင်အသစ်ကို .env လို့ နာမည်ပြောင်းပါ။
+
+အထဲမှာ ဒီလိုဖြည့်ပါ။
+PORT=3000
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_NAME=innocreation_erp
+DB_USER=innocreation_app
+DB_PASSWORD="YOUR_DB_PASSWORD_HERE"
+SESSION_SECRET=
+NODE_ENV=development
+
+DB_PASSWORD မှာ စောစောက SQL ထဲမှာ သတ်မှတ်ထားတဲ့ Password ထည့်ပါ။
+
+
+၂။ Session Secret ထုတ်ပါ
+
+Terminal မှာ ဒီ Command Run ပါ။
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+
+ထွက်လာတဲ့ စာသားရှည်ကို Copy လုပ်ပြီး .env ထဲက SESSION_SECRET= နောက်မှာ Paste လုပ်ပါ။ ပြီးရင် Ctrl + S နဲ့ Save ပါ။
+
+
+
+၃။ Users Table ဖန်တီးပါ
+npm.cmd run setup
+
+အောင်မြင်ရင် ဒီစာပေါ်ပါမယ်။
+Users table ready. Next: npm run create-admin
+
+
+
+၄။ Login အကောင့်ဖန်တီးပါ
+npm.cmd run create-admin
+
+မေးလာတဲ့ Username၊ Display name၊ Password နဲ့ Confirm password ကို ဖြည့်ပါ။ 
+Password ကို အနည်းဆုံး ၁၂ လုံး ထားပါ။ ရိုက်တဲ့ Password က Terminal မှာ မြင်ရပါတယ်။
+
+
+
+၅။ Website Run ပါ
+npm.cmd start
+
+Browser မှာ http://localhost:3000 ဖွင့်ပြီး ခုနက ဖန်တီးထားတဲ့အကောင့်နဲ့ Login ဝင်ပါ။
+
+Server ကို ရပ်ချင်ရင် VS Code Terminal ထဲမှာ—
+Ctrl + C
+
+နောက်တစ်ခါ ပြန်ဖွင့်ချင်ရင်
+npm.cmd start
+
+
+-----------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
