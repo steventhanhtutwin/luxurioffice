@@ -1,5 +1,5 @@
 const {text,grams,checkTimeline}=require('./raw-oil-values');
-const activeTransactions="NOT EXISTS (SELECT 1 FROM raw_oil_void_requests oil_void WHERE oil_void.transaction_id=raw_oil_transactions.id AND oil_void.status='APPROVED')";
+const activeTransactions="NOT EXISTS (SELECT 1 FROM raw_oil_void_requests oil_void WHERE oil_void.transaction_id=raw_oil_transactions.id AND oil_void.status='APPROVED') AND NOT EXISTS (SELECT 1 FROM raw_oil_adjustment_approvals oil_adjustment WHERE oil_adjustment.transaction_id=raw_oil_transactions.id AND oil_adjustment.status<>'APPROVED')";
 const statusLabel=s=>({POSTED:'Posted',VOID_PENDING:'Pending Void Approval',VOIDED:'Voided'}[s]||'Posted');
 function createVoidService(pool){return {async act(actorId,transactionId,action,body={}){
  if(!['request','approve','reject'].includes(action)||!/^\d{1,20}$/.test(String(transactionId)))throw Object.assign(Error('Transaction မတွေ့ပါ။'),{status:404});
@@ -11,6 +11,7 @@ function createVoidService(pool){return {async act(actorId,transactionId,action,
  const [actors]=await conn.execute('SELECT id,role,is_active FROM users WHERE id=? FOR UPDATE',[actorId]);if(!actors[0]||actors[0].role!==role||Number(actors[0].is_active)!==1)throw Object.assign(Error('ဤလုပ်ဆောင်ချက်အတွက် သက်ဆိုင်ရာ Warehouse Role လိုအပ်ပါသည်။'),{status:403});
  const [items]=await conn.execute('SELECT * FROM raw_oil_items WHERE id=? FOR UPDATE',[lookup[0].item_id]);const item=items[0];if(!item)throw Error('Item မတွေ့ပါ။');
  const [transactions]=await conn.execute('SELECT *,DATE_FORMAT(transaction_date,\'%Y-%m-%d\') day FROM raw_oil_transactions WHERE id=? FOR UPDATE',[transactionId]);const tx=transactions[0];if(!tx)throw Error('Transaction မတွေ့ပါ။');
+ const [approvals]=await conn.execute('SELECT status FROM raw_oil_adjustment_approvals WHERE transaction_id=?',[transactionId]);if(approvals.length&&approvals[0].status!=='APPROVED')throw Error('အတည်မပြုရသေးသော Adjustment ကို Void လုပ်၍မရပါ။');
  const [requests]=await conn.execute('SELECT * FROM raw_oil_void_requests WHERE transaction_id=? ORDER BY id DESC LIMIT 1 FOR UPDATE',[transactionId]);const request=requests[0];
  if(action==='request'){if(request?.status==='APPROVED')throw Error('ဤ Transaction သည် Void ဖြစ်ပြီးပါပြီ။');if(request?.status==='PENDING'){await conn.commit();return;}
  await conn.execute("INSERT INTO raw_oil_void_requests (transaction_id,status,reason,requested_by) VALUES (?,'PENDING',?,?)",[transactionId,reason,actorId]);

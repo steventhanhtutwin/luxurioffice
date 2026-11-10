@@ -31,6 +31,7 @@ function createService(pool,{businessDate=today}={}){return {
  checkTimeline(String(item.opening_grams),days,day,direction,qty);
  voucher=await nextVoucher(conn,direction);
  const [result]=await conn.execute('INSERT INTO raw_oil_transactions (item_id,transaction_date,voucher,direction,place_id,qty_grams,remark,created_by,request_key,transaction_category) VALUES (?,?,?,?,?,?,?,?,?,?)',[item.id,day,voucher,direction,body.place_id,decimal(qty),remark,userId,body.request_key,category]);
+ if(category.toLowerCase()==='adjustment')await conn.execute("INSERT INTO raw_oil_adjustment_approvals (transaction_id,status) VALUES (?,'PENDING_SUPERVISOR')",[result.insertId]);
  await conn.commit();return result.insertId;
  }catch(err){await conn.rollback();if(err.code==='ER_DUP_ENTRY'){const [rows]=await pool.execute('SELECT id FROM raw_oil_transactions WHERE request_key=?',[body.request_key]);if(rows.length)return rows[0].id;}throw err;}finally{conn.release();}
  },

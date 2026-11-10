@@ -3,11 +3,11 @@ const {createSettingsService}=require('./settings-service');const {createSetting
 function fixture(){let accounts=[{id:1,username:'admin',display_name:'Admin',position:'Manager',role:'admin',is_active:1,password_version:0},{id:2,username:'old-staff',display_name:'Staff',position:'',role:'staff',is_active:1,password_version:0}];let nextId=3;const execute=async(sql,p=[])=>{
  if(sql.startsWith('SELECT id FROM users WHERE role'))return [accounts.filter(a=>a.role==='admin'&&a.is_active).map(a=>({id:a.id}))];
  if(sql.startsWith('SELECT'))return [accounts.filter(a=>Number(a.id)===Number(p[0])).map(a=>({...a}))];
- if(sql.startsWith('INSERT')){if(accounts.some(a=>a.username.toLowerCase()===p[0].toLowerCase())){const err=Error('Duplicate');err.code='ER_DUP_ENTRY';throw err;}const user={id:nextId++,username:p[0],display_name:p[1],position:p[2],role:p[3],password_hash:p[4],is_active:1,password_version:0};accounts.push(user);return [{insertId:user.id}];}
- if(sql.startsWith('UPDATE')){const a=accounts.find(a=>Number(a.id)===Number(p[4]));Object.assign(a,{display_name:p[0],position:p[1],role:p[2],password_version:a.password_version+p[3]});return [{affectedRows:1}];}
+ if(sql.startsWith('INSERT')){if(accounts.some(a=>a.username.toLowerCase()===p[0].toLowerCase())){const err=Error('Duplicate');err.code='ER_DUP_ENTRY';throw err;}const user={id:nextId++,username:p[0],display_name:p[1],position:p[2],role:p[3],password_hash:p[4],department_id:p[5],is_active:1,password_version:0};accounts.push(user);return [{insertId:user.id}];}
+ if(sql.startsWith('UPDATE')){const a=accounts.find(a=>Number(a.id)===Number(p[5]));Object.assign(a,{display_name:p[0],position:p[1],role:p[2],password_version:a.password_version+p[3],department_id:p[4]});return [{affectedRows:1}];}
  throw Error(sql);
  };
- const pool={execute,query:async(sql)=>sql.startsWith('SELECT COUNT')?[[{total:accounts.length}]]:[accounts.map(a=>({...a}))],getConnection:async()=>{let snapshot;return {beginTransaction:async()=>{snapshot=accounts.map(a=>({...a}));},execute,commit:async()=>{},rollback:async()=>{accounts=snapshot;},release:()=>{}};}};
+ const pool={execute,query:async(sql)=>sql.includes('FROM departments')?[[]]:sql.startsWith('SELECT COUNT')?[[{total:accounts.length}]]:[accounts.map(a=>({...a}))],getConnection:async()=>{let snapshot;return {beginTransaction:async()=>{snapshot=accounts.map(a=>({...a}));},execute,commit:async()=>{},rollback:async()=>{accounts=snapshot;},release:()=>{}};}};
  return {pool,get accounts(){return accounts;}};
 }
 const body=(role='inventory',username='new-staff')=>({username,display_name:'New Staff',position:'Officer',role,password:'abcde',confirm_password:'abcde'});
