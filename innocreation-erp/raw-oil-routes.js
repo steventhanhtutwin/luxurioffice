@@ -1,4 +1,4 @@
-const {transactionCategories,loadTransactionCategories}=require('./raw-oil-transaction-category');
+const {transactionCategories,loadTransactionCategories,loadHistoricalCategories}=require('./raw-oil-transaction-category');
 const {installVoidRoutes}=require('./raw-oil-void-routes');
 const {statusLabel}=require('./raw-oil-void-service');
 const {today:businessToday}=require('./raw-oil-numbering');
@@ -36,7 +36,7 @@ function createRawOilRouter({pool,groups}){
  router.post('/'+path,csrf,asyncRoute(async(req,res)=>{try{const id=await service.postMovement({...req.body,direction},req.session.user.id);res.redirect('/inventory/raw-oil/transactions?saved='+encodeURIComponent(id));}catch(err){return formData(req,res,direction,req.body,errorText(err),err.code?500:400);}}));
  }
  router.get('/transactions',asyncRoute(async(req,res)=>{
- const categories=await loadTransactionCategories(pool);
+ const categories=await loadHistoricalCategories(pool);
  const {q,direction,from,to,status,transaction_category}=transactionValues(req.query);let filter;
  try{filter=transactionFilters(req.query);}catch(err){return render(req,res,'transactions',{type:'history',transactionCategories:categories,rows:[],q,direction,from,to,status,transaction_category,error:err.message,total:0,pageNo:1,saved:false},400);}
  const {where,params}=filter,pageNo=Math.min(1000000,Math.max(1,parseInt(req.query.p,10)||1));
