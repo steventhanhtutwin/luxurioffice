@@ -2,14 +2,14 @@ const test=require('node:test'),assert=require('node:assert/strict');
 const {approveAdjustment,installApprovalRoutes}=require('./raw-oil-approval');
 const {activeTransactions}=require('./raw-oil-void-service');
 const {transactionFilters}=require('./raw-oil-filters');
-function fixture(direction='IN'){
- let state={status:'PENDING_SUPERVISOR',supervisor_by:null},days=[],fail=false,tail=Promise.resolve();
+function fixture(direction='IN',supervisorSubmitted=false){
+ let state={status:supervisorSubmitted?'PENDING_ACCOUNTANT':'PENDING_SUPERVISOR',supervisor_by:supervisorSubmitted?2:null},days=[],fail=false,tail=Promise.resolve();
  const users=[{id:1,role:'inventory',is_active:1},{id:2,role:'warehouse_supervisor',is_active:1},{id:3,role:'warehouse_accountant',is_active:1}];
  const execute=async(sql,p)=>{
  if(sql.startsWith('SELECT item_id'))return [[{item_id:1}]];
  if(sql.startsWith('SELECT id,role'))return [users.filter(u=>u.id===p[0])];
  if(sql.startsWith('SELECT * FROM raw_oil_items'))return [[{id:1,opening_grams:'100.000'}]];
- if(sql.startsWith('SELECT t.*'))return [[{id:9,created_by:1,day:'2026-11-10',qty_grams:'70.000',direction,approval_status:state.status,supervisor_by:state.supervisor_by}]];
+ if(sql.startsWith('SELECT t.*'))return [[{id:9,created_by:supervisorSubmitted?2:1,day:'2026-11-10',qty_grams:'70.000',direction,approval_status:state.status,supervisor_by:state.supervisor_by}]];
  if(sql.startsWith('SELECT DATE_FORMAT')){assert(sql.includes(activeTransactions));return [days];}
  if(sql.startsWith('UPDATE raw_oil_adjustment_approvals')){if(fail)throw Error('write failed');state.status=p[0];if(sql.includes('supervisor_by'))state.supervisor_by=p[1];return [{affectedRows:1}];}
  throw Error(sql);
@@ -47,4 +47,8 @@ test('approval page renders review controls and form CSRF is enforced',async()=>
  const res=await fetch(url+'/inventory/raw-oil/adjustments');assert.equal(res.status,200);const html=await res.text();assert(html.includes('Pending Supervisor'));assert(html.includes('/adjustments/9/approve'));assert(html.includes('Approve'));
  assert.equal((await fetch(url+'/inventory/raw-oil/adjustments/9/approve',{method:'POST'})).status,403);
  }finally{server.close();}
+});
+
+test('Supervisor-created IN and OUT adjustments need only separate Accountant approval',async()=>{
+ for(const direction of ['IN','OUT']){const f=fixture(direction,true);await assert.rejects(approveAdjustment(f.pool,2,9,'approve'));await approveAdjustment(f.pool,3,9,'approve');assert.equal(f.state.status,'APPROVED');}
 });

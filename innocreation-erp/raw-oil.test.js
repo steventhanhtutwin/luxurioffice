@@ -3,11 +3,12 @@ const {grams,decimal,date,balance,checkTimeline}=require('./raw-oil-values');
 const {createService}=require('./raw-oil-service');
 test('gram quantities retain exact decimal values and reject invalid inputs',()=>{assert.equal(decimal(grams('0.001')),'0.001');assert.equal(decimal(grams('81.55')),'81.550');assert.equal(balance('100.000','0.200','0.100'),100100n);for(const value of ['0','-1','1.2345','1e3','NaN','Infinity','','1000000000000'])assert.throws(()=>grams(value));assert.equal(grams('0',{zero:true}),0n);assert.throws(()=>date('2026-02-30'));assert.equal(date('2026-11-08'),'2026-11-08');});
 test('backdated stock out cannot borrow stock received later',()=>{assert.throws(()=>checkTimeline('100.000',[{day:'2026-11-10',delta:'100.000'}],'2026-11-05','OUT',150000n));assert.equal(checkTimeline('100.000',[{day:'2026-11-10',delta:'100.000'}],'2026-11-05','OUT',50000n),150000n);});
-function fixture(opening='100.000',failOnce=false,categoryNames=['Purchase','Return','Adjustment']){
+function fixture(opening='100.000',failOnce=false,categoryNames=['Purchase','Return','Adjustment'],actorRole='inventory'){
  let sequence={RAW_OIL_IN:1n,RAW_OIL_OUT:1n};let rows=[],nextId=1,unlock=Promise.resolve();const item={id:1,code:'001',opening_grams:opening,opening_date:'2026-11-01'};
  const sum=direction=>decimal(rows.filter(r=>!r.pending&&r.direction===direction).reduce((n,r)=>n+grams(r.qty),0n));
  const query=async(sql,p=[])=>{
- if(sql.startsWith('INSERT INTO raw_oil_adjustment_approvals')){const row=rows.find(r=>r.id===p[0]);row.pending=true;return [{affectedRows:1}];}
+ if(sql.startsWith('SELECT id,role,is_active FROM users'))return [[{id:p[0],role:actorRole,is_active:1}]];
+ if(sql.startsWith('INSERT INTO raw_oil_adjustment_approvals')){const row=rows.find(r=>r.id===p[0]);row.pending=true;row.approval_status=sql.includes('PENDING_ACCOUNTANT')?'PENDING_ACCOUNTANT':'PENDING_SUPERVISOR';row.supervisor_by=p[1]||null;return [{affectedRows:1}];}
  if(sql.startsWith('SELECT name FROM raw_oil_transaction_categories'))return [categoryNames.filter(n=>n.toLowerCase()===p[0].toLowerCase()).map(name=>({name}))];
  if(sql.startsWith('SELECT next_value'))return [[{next_value:sequence[p[0]].toString()}]];
  if(sql.startsWith('UPDATE raw_oil_sequences')){sequence[p[1]]=BigInt(p[0]);return [{affectedRows:1}];}
@@ -42,4 +43,20 @@ test('Adjustment submissions remain pending and cannot fund another stock out',a
  assert.equal(f.rows[0].pending,true);
  await assert.rejects(service.postMovement(body('e','1','OUT'),1),/လက်ကျန်မလုံလောက်/);
  assert.equal(f.rows.length,1);
+});
+
+test('Warehouse Accountant cannot key in any category or direction, even by calling service directly',async()=>{
+ for(const direction of ['IN','OUT'])for(const category of ['Purchase','Return','Adjustment','Production Usage']){
+ const f=fixture('100.000',false,['Purchase','Return','Adjustment','Production Usage'],'warehouse_accountant');
+ await assert.rejects(createService(f.pool).postMovement({...body('a','10',direction),transaction_category:category},1),e=>e.status===403);assert.equal(f.rows.length,0);
+ }
+});
+test('Supervisor Adjustment goes directly to Accountant; staff goes to Supervisor; normal categories stay posted',async()=>{
+ for(const role of ['warehouse_supervisor','inventory'])for(const direction of ['IN','OUT']){
+ const f=fixture('100.000',false,['Purchase','Return','Adjustment'],role),s=createService(f.pool,{businessDate:()=> '2026-11-10'});
+ await s.postMovement({...body('a','10',direction),transaction_category:'Adjustment'},5);
+ assert.equal(f.rows[0].pending,true);assert.equal(f.rows[0].approval_status,role==='warehouse_supervisor'?'PENDING_ACCOUNTANT':'PENDING_SUPERVISOR');
+ assert.equal(f.rows[0].supervisor_by,role==='warehouse_supervisor'?5:null);
+ await s.postMovement(body('b','10',direction),5);assert(!f.rows[1].pending);
+ }
 });

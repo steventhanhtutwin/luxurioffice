@@ -34,8 +34,9 @@ function createRawOilRouter({pool,groups,pdfRenderer}){
  }));
  const formData=async(req,res,direction,body={},error='',status=200)=>{const [places]=await pool.query('SELECT * FROM raw_oil_places ORDER BY name');const categories=await loadTransactionCategories(pool);return render(req,res,direction==='IN'?'in':'out',{type:'movement',direction,places,transactionCategories:categories,values:{date:today(),...body,date:businessToday(),voucher:'',request_key:body.request_key||newKey()},error},status);};
  for(const [path,direction]of [['in','IN'],['out','OUT']]){
- router.get('/'+path,asyncRoute((req,res)=>formData(req,res,direction)));
- router.post('/'+path,csrf,asyncRoute(async(req,res)=>{try{const id=await service.postMovement({...req.body,direction},req.session.user.id);res.redirect('/inventory/raw-oil/'+(String(req.body.transaction_category).toLowerCase()==='adjustment'?'adjustments':'transactions')+'?saved='+encodeURIComponent(id));}catch(err){return formData(req,res,direction,req.body,errorText(err),err.code?500:400);}}));
+ const canKeyIn=(req,res,next)=>req.session.user.role==='warehouse_accountant'?res.status(403).send('Warehouse Accountant သည် Raw Oil Stock In / Out ထည့်ခွင့်မရှိပါ။ Approval သာ လုပ်ဆောင်နိုင်ပါသည်။'):next();
+ router.get('/'+path,canKeyIn,asyncRoute((req,res)=>formData(req,res,direction)));
+ router.post('/'+path,canKeyIn,csrf,asyncRoute(async(req,res)=>{try{const id=await service.postMovement({...req.body,direction},req.session.user.id);res.redirect('/inventory/raw-oil/'+(String(req.body.transaction_category).toLowerCase()==='adjustment'?'adjustments':'transactions')+'?saved='+encodeURIComponent(id));}catch(err){if(err.status===403)return res.status(403).send(err.message);return formData(req,res,direction,req.body,errorText(err),err.code?500:400);}}));
  }
  router.get('/transactions',asyncRoute(async(req,res)=>{
  const categories=await loadHistoricalCategories(pool);

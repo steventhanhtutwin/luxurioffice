@@ -14,6 +14,8 @@ function createService(pool,{businessDate=today}={}){return {
  if(!/^\d+$/.test(String(body.place_id)))throw new Error('From / To နေရာကို ရွေးပါ။');
  if(!/^[a-f0-9]{64}$/.test(body.request_key||''))throw new Error('Form expired. Reload and try again.');
  const conn=await pool.getConnection();try{await conn.beginTransaction();
+ const [actors]=await conn.execute('SELECT id,role,is_active FROM users WHERE id=? FOR UPDATE',[userId]);const actor=actors[0];
+ if(!actor||Number(actor.is_active)!==1||actor.role==='warehouse_accountant')throw Object.assign(new Error('Warehouse Accountant သည် Raw Oil Stock In / Out ထည့်ခွင့်မရှိပါ။ Approval သာ လုပ်ဆောင်နိုင်ပါသည်။'),{status:403});
  category=await selectedTransactionCategory(conn,category);
  // Item row is the lock shared by all movements and opening-balance edits.
  const [items]=await conn.execute('SELECT * FROM raw_oil_items WHERE code=? FOR UPDATE',[code]);const item=items[0];if(!item)throw new Error('Item Code မတွေ့ပါ။');
@@ -31,7 +33,10 @@ function createService(pool,{businessDate=today}={}){return {
  checkTimeline(String(item.opening_grams),days,day,direction,qty);
  voucher=await nextVoucher(conn,direction);
  const [result]=await conn.execute('INSERT INTO raw_oil_transactions (item_id,transaction_date,voucher,direction,place_id,qty_grams,remark,created_by,request_key,transaction_category) VALUES (?,?,?,?,?,?,?,?,?,?)',[item.id,day,voucher,direction,body.place_id,decimal(qty),remark,userId,body.request_key,category]);
- if(category.toLowerCase()==='adjustment')await conn.execute("INSERT INTO raw_oil_adjustment_approvals (transaction_id,status) VALUES (?,'PENDING_SUPERVISOR')",[result.insertId]);
+ if(category.toLowerCase()==='adjustment'){
+ if(actor.role==='warehouse_supervisor')await conn.execute("INSERT INTO raw_oil_adjustment_approvals (transaction_id,status,supervisor_by,supervisor_at) VALUES (?,'PENDING_ACCOUNTANT',?,CURRENT_TIMESTAMP)",[result.insertId,userId]);
+ else await conn.execute("INSERT INTO raw_oil_adjustment_approvals (transaction_id,status) VALUES (?,'PENDING_SUPERVISOR')",[result.insertId]);
+ }
  await conn.commit();return result.insertId;
  }catch(err){await conn.rollback();if(err.code==='ER_DUP_ENTRY'){const [rows]=await pool.execute('SELECT id FROM raw_oil_transactions WHERE request_key=?',[body.request_key]);if(rows.length)return rows[0].id;}throw err;}finally{conn.release();}
  },

@@ -17,7 +17,7 @@ function createProfileService(pool){return {
 function accountGuard(pool){return async(req,res,next)=>{try{
  if(!req.session.user)return next();
  const [rows]=await pool.execute('SELECT id,username,display_name,position,role,password_version,is_active FROM users WHERE id=? LIMIT 1',[req.session.user.id]);const user=rows[0];
- if(!user||Number(user.is_active)!==1||req.session.user.password_version===undefined||Number(req.session.user.password_version)!==Number(user.password_version))return req.session.destroy(err=>{if(err)return next(err);res.clearCookie('innocreation.sid');res.redirect('/login');});
+ if(!user||Number(user.is_active)!==1||req.session.user.password_version===undefined||Number(req.session.user.password_version)!==Number(user.password_version))return req.session.destroy(err=>{if(err)return next(err);res.clearCookie('innocreation.sid');res.redirect('/login'+(user&&Number(user.is_active)!==1?'?account_void=1':''));});
  req.account=user;req.session.user={id:user.id,username:user.username,name:user.display_name,role:user.role,password_version:Number(user.password_version)};next();
  }catch(err){next(err);}};}
 module.exports={createProfileService,accountGuard};
