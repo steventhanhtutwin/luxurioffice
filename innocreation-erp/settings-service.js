@@ -8,6 +8,13 @@ function fields(body){
 }
 async function lockAdmin(conn,actorId){const [admins]=await conn.execute("SELECT id FROM users WHERE role='admin' AND is_active=1 ORDER BY id FOR UPDATE");if(!admins.some(row=>Number(row.id)===Number(actorId))){const err=new Error('Admin access required');err.status=403;throw err;}return admins;}
 function createSettingsService(pool){return {
+ async resetPassword(actorId,id){
+ if(!/^\d+$/.test(String(id)))throw Object.assign(new Error('User မတွေ့ပါ။'),{status:404});
+ const hash=await hashPassword('123456');const conn=await pool.getConnection();try{await conn.beginTransaction();await lockAdmin(conn,actorId);
+ const [rows]=await conn.execute('SELECT id FROM users WHERE id=? FOR UPDATE',[id]);if(!rows.length)throw Object.assign(new Error('User မတွေ့ပါ။'),{status:404});
+ await conn.execute('UPDATE users SET password_hash=?,password_version=password_version+1 WHERE id=?',[hash,id]);await conn.commit();
+ }catch(err){await conn.rollback();throw err;}finally{conn.release();}
+ },
  async createUser(actorId,body){const values=fields(body);
  if(typeof body.username!=='string'||!body.username.trim()||body.username.trim().length>100||/\s/.test(body.username.trim()))throw new Error('User Name ကို Space မပါဘဲ အများဆုံး ၁၀၀ လုံး ဖြည့်ပါ။');
  if(typeof body.password!=='string'||body.password.length<5||body.password.length>256)throw new Error('Password ကို အနည်းဆုံး ၅ လုံး၊ အများဆုံး ၂၅၆ လုံး ဖြည့်ပါ။');
