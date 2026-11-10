@@ -3,7 +3,6 @@ const {installVoidRoutes}=require('./raw-oil-void-routes');
 const {statusLabel}=require('./raw-oil-void-service');
 const {today:businessToday}=require('./raw-oil-numbering');
 const express=require('express');
-const {installAdjustmentList}=require('./raw-oil-adjustment-list');
 const {createService,summarySQL,newKey}=require('./raw-oil-service');
 const {text}=require('./raw-oil-values');
 const {summaryFilters,transactionFilters,transactionValues,transactionJoins,transactionSelect}=require('./raw-oil-filters');
@@ -17,7 +16,7 @@ function createRawOilRouter({pool,groups}){
  const errorText=err=>{if(err.code==='ER_DUP_ENTRY')return 'Item Code သို့မဟုတ် နေရာအမည် ထပ်နေပါသည်။';if(err.code){console.error('Raw Oil:',err.code);return 'Database error. Terminal နှင့် setup-raw-oil ပြီးစီးမှုကို စစ်ပါ။';}return err.message;};
  const asyncRoute=fn=>(req,res,next)=>Promise.resolve(fn(req,res,next)).catch(next);
  const sendExcel=(res,buffer,name)=>{res.attachment(name+'_'+today()+'.xlsx');res.type('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');res.send(Buffer.from(buffer));};
- installAdjustmentList({router,pool,render,asyncRoute,sendExcel});
+ router.all(['/adjustments','/adjustments/export.xlsx'],(req,res)=>res.status(404).send('Stock adjustments are disabled.'));
  router.get('/summary/export.xlsx',asyncRoute(async(req,res)=>{const filters=summaryFilters(req.query);const [rows]=await pool.query(summarySQL+filters.where+' ORDER BY i.name,i.id',filters.params);sendExcel(res,await summaryWorkbook(rows,filters),'Raw_Oil_Balance');}));
  router.get('/transactions/export.xlsx',asyncRoute(async(req,res)=>{let filters;try{filters=transactionFilters(req.query);}catch(err){return res.status(400).send(err.message);}const [rows]=await pool.query(transactionSelect+filters.where+' ORDER BY t.transaction_date DESC,t.id DESC',filters.params);sendExcel(res,await transactionWorkbook(rows,filters),'Raw_Oil_Transaction');}));
  installVoidRoutes({router,pool,render,asyncRoute,csrf});
@@ -47,7 +46,7 @@ function createRawOilRouter({pool,groups}){
  const postedItem=(body,id)=>({id,code:body.code,name:body.name,category:body.category,item_class:body.item_class,opening_grams:body.opening_grams,opening_date:body.opening_date,remark:body.remark});
  async function itemForm(req,res,item={},error='',status=200){
  const [categories]=await pool.query("SELECT DISTINCT category FROM raw_oil_items WHERE category<>'' ORDER BY category");
- if(item.id){const [rows]=await pool.execute("SELECT *,DATE_FORMAT(opening_date,'%Y-%m-%d') opening_date FROM raw_oil_items WHERE id=?",[item.id]);if(!rows.length)return res.status(404).send('Item not found');const stored=rows[0];const [transactions]=await pool.execute('SELECT id FROM raw_oil_transactions WHERE item_id=? LIMIT 1',[item.id]);item={...stored,...item,id:stored.id,code:stored.code,item_class:stored.item_class};if(transactions.length)item={...item,opening_grams:stored.opening_grams,opening_date:stored.opening_date,opening_locked:true};}
+ if(item.id){const [rows]=await pool.execute("SELECT *,DATE_FORMAT(opening_date,'%Y-%m-%d') opening_date FROM raw_oil_items WHERE id=?",[item.id]);if(!rows.length)return res.status(404).send('Item not found');const stored=rows[0];if(stored.opening_grams!==null)return res.status(403).send('Stock adjustment လုပ်ခွင့် မရှိတော့ပါ။ Transaction မှားပါက Void Request လုပ်ပါ။');const [transactions]=await pool.execute('SELECT id FROM raw_oil_transactions WHERE item_id=? LIMIT 1',[item.id]);item={...stored,...item,id:stored.id,code:stored.code,item_class:stored.item_class};if(transactions.length)item={...item,opening_grams:stored.opening_grams,opening_date:stored.opening_date,opening_locked:true};}
  else item={...item,item_class:'Raw Oil'};
  return render(req,res,'summary',{type:'item',item,error,categories,today:today()},status);
  }

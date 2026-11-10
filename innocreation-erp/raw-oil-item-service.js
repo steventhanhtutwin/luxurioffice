@@ -7,10 +7,12 @@ async function saveRawOilItem(pool,body,userId,id=null){
  const [categories]=await conn.execute('SELECT category FROM raw_oil_items WHERE category=? LIMIT 1',[category]);if(!categories.length)throw new Error('Category ကို Dropdown စာရင်းထဲမှ ရွေးပါ။');
  let itemId=id,before=null,after;
  if(id){const [rows]=await conn.execute('SELECT * FROM raw_oil_items WHERE id=? FOR UPDATE',[id]);const item=rows[0];if(!item)throw new Error('Item not found');
+ if(item.opening_grams!==null)throw Object.assign(new Error('Stock adjustment လုပ်ခွင့် မရှိတော့ပါ။ Transaction မှားပါက Void Request လုပ်ပါ။'),{status:403});
+ if(name!==item.name||category!==item.category)throw new Error('Set Opening တွင် Item Name / Category ပြောင်းလဲခွင့်မရှိပါ။');
  if(code!==item.code)throw new Error('Item Code ကို ပြောင်းလဲခွင့်မရှိပါ။');
  if(body.item_class!==item.item_class)throw new Error('Class ကို ပြောင်းလဲခွင့်မရှိပါ။');
  const [tx]=await conn.execute('SELECT id FROM raw_oil_transactions WHERE item_id=? LIMIT 1',[id]);
- if(tx.length&&(String(item.opening_grams)!==qty||String(item.opening_date).slice(0,10)!==day))throw new Error('Transaction ရှိပြီးသော Item ၏ Opening Qty နှင့် စတင်ရက်ကို မပြင်နိုင်ပါ။');
+ if(tx.length)throw new Error('Transaction ရှိပြီးသော Item ၏ Opening Qty နှင့် စတင်ရက်ကို မပြင်နိုင်ပါ။');
  before=snapshot(item);after={...before,name,category,opening_grams:qty,opening_date:day};
  await conn.execute('UPDATE raw_oil_items SET name=?,category=?,opening_grams=?,opening_date=?,opening_set_by=? WHERE id=?',[name,category,qty,day,userId,id]);
  }else{if(body.item_class&&body.item_class!=='Raw Oil')throw new Error('Class ကို ပြောင်းလဲခွင့်မရှိပါ။');
