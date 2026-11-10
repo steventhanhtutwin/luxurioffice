@@ -1,4 +1,4 @@
-const {transactionCategory}=require('./raw-oil-transaction-category');
+const {transactionCategory,selectedTransactionCategory}=require('./raw-oil-transaction-category');
 const {activeTransactions}=require('./raw-oil-void-service');
 const {grams,decimal,date,text,balance,checkTimeline}=require('./raw-oil-values');
 const {today,nextVoucher}=require('./raw-oil-numbering');
@@ -10,10 +10,11 @@ function createService(pool,{businessDate=today}={}){return {
  async getItem(code){const [rows]=await pool.execute(summarySQL+' WHERE i.code=?',[code]);return rows[0];},
  async postMovement(body,userId){
  const code=text(body.code,'Item Code',100), direction=body.direction;if(!['IN','OUT'].includes(direction))throw new Error('Invalid direction');
- const category=transactionCategory(body.transaction_category);const qty=grams(body.qty);let day,voucher;const remark=text(body.remark||'','Remark',500,false);
+ let category=transactionCategory(body.transaction_category);const qty=grams(body.qty);let day,voucher;const remark=text(body.remark||'','Remark',500,false);
  if(!/^\d+$/.test(String(body.place_id)))throw new Error('From / To နေရာကို ရွေးပါ။');
  if(!/^[a-f0-9]{64}$/.test(body.request_key||''))throw new Error('Form expired. Reload and try again.');
  const conn=await pool.getConnection();try{await conn.beginTransaction();
+ category=await selectedTransactionCategory(conn,category);
  // Item row is the lock shared by all movements and opening-balance edits.
  const [items]=await conn.execute('SELECT * FROM raw_oil_items WHERE code=? FOR UPDATE',[code]);const item=items[0];if(!item)throw new Error('Item Code မတွေ့ပါ။');
  const [existing]=await conn.execute('SELECT id FROM raw_oil_transactions WHERE request_key=?',[body.request_key]);if(existing.length){await conn.commit();return existing[0].id;}

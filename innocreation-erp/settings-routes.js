@@ -1,3 +1,4 @@
+const {installInventorySettings}=require('./inventory-settings');
 const express=require('express');
 const {createSettingsService}=require('./settings-service');
 const {roles,roleLabel}=require('./user-roles');
@@ -9,6 +10,7 @@ function createSettingsRouter({pool}){
  const asyncRoute=fn=>(req,res,next)=>Promise.resolve(fn(req,res,next)).catch(next);
  const safeValues=body=>({display_name:typeof body.display_name==='string'?body.display_name:'',username:typeof body.username==='string'?body.username:'',position:typeof body.position==='string'?body.position:'',role:typeof body.role==='string'?body.role:''});
  function formError(req,res,view,body,err){if(err.status===403)return res.status(403).send('Admin access required');if(err.code&&err.code!=='ER_DUP_ENTRY')throw err;return render(req,res,view,{values:body,error:err.code==='ER_DUP_ENTRY'?'ဒီ User Name ရှိပြီးသားဖြစ်ပါသည်။ အခြားအမည် ရွေးပါ။':err.message},err.code==='ER_DUP_ENTRY'?409:400);}
+ installInventorySettings({router,pool,render,asyncRoute,csrf});
  router.get('/',(req,res)=>render(req,res,'home'));
  router.get('/users/new',(req,res)=>render(req,res,'new',{values:{}}));
  router.post('/users/new',csrf,asyncRoute(async(req,res)=>{try{const id=await service.createUser(req.session.user.id,req.body);res.redirect('/settings/users?created='+encodeURIComponent(id));}catch(err){return formError(req,res,'new',safeValues(req.body),err);}}));
