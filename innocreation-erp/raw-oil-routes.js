@@ -1,3 +1,5 @@
+const {installVoidRoutes}=require('./raw-oil-void-routes');
+const {statusLabel}=require('./raw-oil-void-service');
 const {today:businessToday}=require('./raw-oil-numbering');
 const express=require('express');
 const {installAdjustmentList}=require('./raw-oil-adjustment-list');
@@ -8,7 +10,7 @@ const {summaryWorkbook,transactionWorkbook}=require('./raw-oil-excel');
 function createRawOilRouter({pool,groups}){
  const router=express.Router(),service=createService(pool),group=groups.find(g=>g.id==='raw-oil');
  const today=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Bangkok',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
- const render=(req,res,id,rawOil,status=200)=>res.status(status).render('inventory',{user:req.session.user,groups,group,page:group.menus.find(m=>m.id===id)||{id,name:'Raw Oil Item'},rawOil:{error:'',...rawOil}});
+ const render=(req,res,id,rawOil,status=200)=>res.status(status).render('inventory',{user:req.session.user,groups,group,page:group.menus.find(m=>m.id===id)||{id,name:'Raw Oil Item'},rawOil:{error:'',status:'',statusLabel,...rawOil}});
  const admin=(req,res,next)=>req.session.user.role==='admin'?next():res.status(403).send('Admin access required');
  const csrf=(req,res,next)=>typeof req.body._csrf==='string'&&req.body._csrf===req.session.csrf?next():res.status(403).send('Form expired. Reload and try again.');
  const errorText=err=>{if(err.code==='ER_DUP_ENTRY')return 'Item Code သို့မဟုတ် နေရာအမည် ထပ်နေပါသည်။';if(err.code){console.error('Raw Oil:',err.code);return 'Database error. Terminal နှင့် setup-raw-oil ပြီးစီးမှုကို စစ်ပါ။';}return err.message;};
@@ -17,6 +19,7 @@ function createRawOilRouter({pool,groups}){
  installAdjustmentList({router,pool,render,asyncRoute,sendExcel});
  router.get('/summary/export.xlsx',asyncRoute(async(req,res)=>{const filters=summaryFilters(req.query);const [rows]=await pool.query(summarySQL+filters.where+' ORDER BY i.name,i.id',filters.params);sendExcel(res,await summaryWorkbook(rows,filters),'Raw_Oil_Balance');}));
  router.get('/transactions/export.xlsx',asyncRoute(async(req,res)=>{let filters;try{filters=transactionFilters(req.query);}catch(err){return res.status(400).send(err.message);}const [rows]=await pool.query(transactionSelect+filters.where+' ORDER BY t.transaction_date DESC,t.id DESC',filters.params);sendExcel(res,await transactionWorkbook(rows,filters),'Raw_Oil_Transaction');}));
+ installVoidRoutes({router,pool,render,asyncRoute,csrf});
  router.get('/api/items/:code',asyncRoute(async(req,res)=>{const item=await service.getItem(req.params.code);if(!item)return res.status(404).json({error:'Item Code မတွေ့ပါ။'});res.json(item);}));
  router.get('/list',(req,res)=>{const q=new URLSearchParams();for(const key of ['q','category','p','saved'])if(typeof req.query[key]==='string')q.set(key,req.query[key]);res.redirect('/inventory/raw-oil/summary'+(q.size?'?'+q.toString():''));});
  router.get('/summary',asyncRoute(async(req,res)=>{
@@ -33,12 +36,12 @@ function createRawOilRouter({pool,groups}){
  router.post('/'+path,csrf,asyncRoute(async(req,res)=>{try{const id=await service.postMovement({...req.body,direction},req.session.user.id);res.redirect('/inventory/raw-oil/transactions?saved='+encodeURIComponent(id));}catch(err){return formData(req,res,direction,req.body,errorText(err),err.code?500:400);}}));
  }
  router.get('/transactions',asyncRoute(async(req,res)=>{
- const {q,direction,from,to}=transactionValues(req.query);let filter;
- try{filter=transactionFilters(req.query);}catch(err){return render(req,res,'transactions',{type:'history',rows:[],q,direction,from,to,error:err.message,total:0,pageNo:1,saved:false},400);}
+ const {q,direction,from,to,status}=transactionValues(req.query);let filter;
+ try{filter=transactionFilters(req.query);}catch(err){return render(req,res,'transactions',{type:'history',rows:[],q,direction,from,to,status,error:err.message,total:0,pageNo:1,saved:false},400);}
  const {where,params}=filter,pageNo=Math.min(1000000,Math.max(1,parseInt(req.query.p,10)||1));
  const [rows]=await pool.query(transactionSelect+where+' ORDER BY t.transaction_date DESC,t.id DESC LIMIT 50 OFFSET '+((pageNo-1)*50),params);
  const [count]=await pool.query('SELECT COUNT(*) total'+transactionJoins+where,params);
- render(req,res,'transactions',{type:'history',rows,q,direction,from,to,total:Number(count[0].total),pageNo,saved:/^\d+$/.test(String(req.query.saved||''))?String(req.query.saved):false});
+ render(req,res,'transactions',{type:'history',rows,q,direction,from,to,status,total:Number(count[0].total),pageNo,saved:/^\d+$/.test(String(req.query.saved||''))?String(req.query.saved):false});
  }));
  const postedItem=(body,id)=>({id,code:body.code,name:body.name,category:body.category,item_class:body.item_class,opening_grams:body.opening_grams,opening_date:body.opening_date,remark:body.remark});
  async function itemForm(req,res,item={},error='',status=200){

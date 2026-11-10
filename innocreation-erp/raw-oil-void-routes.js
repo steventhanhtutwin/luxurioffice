@@ -1,0 +1,8 @@
+const {createVoidService}=require('./raw-oil-void-service');
+const {transactionSelect}=require('./raw-oil-filters');
+function installVoidRoutes({router,pool,render,asyncRoute,csrf}){const service=createVoidService(pool);
+ const detail=async(req,res,error='',status=200)=>{if(!/^\d{1,20}$/.test(req.params.id))return res.status(404).send('Transaction not found');const [rows]=await pool.execute(transactionSelect+' WHERE t.id=?',[req.params.id]);if(!rows.length)return res.status(404).send('Transaction not found');const [requests]=await pool.execute('SELECT v.*,u.display_name requester,a.display_name decider FROM raw_oil_void_requests v JOIN users u ON u.id=v.requested_by LEFT JOIN users a ON a.id=v.decided_by WHERE v.transaction_id=? ORDER BY v.id DESC',[req.params.id]);return render(req,res,'transactions',{type:'void-detail',tx:rows[0],requests,error,notice:req.query.done==='1'},status);};
+ router.get('/transactions/:id',asyncRoute((req,res)=>detail(req,res)));
+ for(const action of ['request','approve','reject'])router.post('/transactions/:id/void/'+action,(req,res,next)=>req.session.user.role===(action==='request'?'warehouse_supervisor':'warehouse_accountant')?next():res.status(403).send('Warehouse role required'),csrf,asyncRoute(async(req,res)=>{try{await service.act(req.session.user.id,req.params.id,action,req.body);res.redirect('/inventory/raw-oil/transactions/'+req.params.id+'?done=1');}catch(err){if(err.status===403||err.status===404)return res.status(err.status).send(err.message);if(err.code)throw err;return detail(req,res,err.message,400);}}));
+}
+module.exports={installVoidRoutes};

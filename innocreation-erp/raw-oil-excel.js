@@ -1,3 +1,4 @@
+const {statusLabel}=require('./raw-oil-void-service');
 const ExcelJS=require('exceljs');
 const GREEN='254C40',BLACK='000000';
 const number=value=>value===null||value===undefined?null:Number(value);
@@ -27,7 +28,7 @@ async function summaryWorkbook(items,filters){
  const rows=items.map(item=>({code:String(item.code),name:item.name,category:item.category,item_class:item.item_class,opening:number(item.opening_grams),stock_in:number(item.stock_in),stock_out:number(item.stock_out),closing:number(item.closing_grams),date:excelDate(item.opening_date),status:item.opening_grams===null?'Opening pending':'Verified'}));
  const {workbook,sheet,merged}=createReport('Raw Oil Balance',columns,'Filters · Search: '+(filters.q||'All')+' · Category: '+(filters.category||'All'),rows);
  const pending=rows.filter(r=>r.status==='Opening pending').length;
- merged(5,pending?pending+' items have unverified opening quantities. Their opening/closing cells and report totals remain blank.':'Closing Qty = Opening Qty + Stock In - Stock Out. All recorded movements since each item start date.');
+ merged(5,pending?pending+' items have unverified opening quantities. Their opening/closing cells and report totals remain blank.':'Closing Qty = Opening Qty + Stock In - Stock Out. Approved voids excluded; pending void requests still included.');
  sheet.getRow(5).height=32;sheet.getCell(5,1).alignment={wrapText:true};
  const total=sheet.addRow({code:'TOTAL',status:pending?'Opening pending':''});total.height=28;
  for(const [key,letter]of [['opening','E'],['stock_in','F'],['stock_out','G'],['closing','H']]){
@@ -38,10 +39,10 @@ async function summaryWorkbook(items,filters){
  return workbook.xlsx.writeBuffer();
 }
 async function transactionWorkbook(entries,filters){
- const columns=[{header:'Transaction ID',key:'id',width:18,format:'@'},{header:'Date',key:'date',width:17,format:'yyyy-mm-dd'},{header:'Vr No',key:'voucher',width:20,format:'@'},{header:'Item Code',key:'code',width:18,format:'@'},{header:'Item Name',key:'name',width:38},{header:'Categories',key:'category',width:27},{header:'Type',key:'direction',width:12},{header:'From',key:'from',width:23},{header:'To',key:'to',width:23},{header:'Qty (g)',key:'qty',width:20,format:'#,##0.000'},{header:'Remark',key:'remark',width:40},{header:'Entered By',key:'entered_by',width:24}];
- const rows=entries.map(tx=>({id:String(tx.id),date:excelDate(tx.day),voucher:String(tx.voucher),code:String(tx.code),name:tx.name,category:tx.category,direction:tx.direction,from:tx.direction==='IN'?tx.place:'Warehouse',to:tx.direction==='IN'?'Warehouse':tx.place,qty:number(tx.qty_grams),remark:tx.remark||'',entered_by:tx.entered_by}));
- const {workbook,sheet,merged}=createReport('Raw Oil Transaction',columns,'Filters · Search: '+(filters.q||'All')+' · Type: '+(filters.direction||'IN + OUT')+' · From date: '+(filters.from||'Any')+' · To date: '+(filters.to||'Any'),rows);
- merged(5,rows.length?'Warehouse receipts and issues. Quantities are positive; Type and From / To indicate direction.':'No transactions match these filters.');
+ const columns=[{header:'Transaction ID',key:'id',width:18,format:'@'},{header:'Date',key:'date',width:17,format:'yyyy-mm-dd'},{header:'Vr No',key:'voucher',width:20,format:'@'},{header:'Item Code',key:'code',width:18,format:'@'},{header:'Item Name',key:'name',width:38},{header:'Categories',key:'category',width:27},{header:'Type',key:'direction',width:12},{header:'From',key:'from',width:23},{header:'To',key:'to',width:23},{header:'Qty (g)',key:'qty',width:20,format:'#,##0.000'},{header:'Remark',key:'remark',width:40},{header:'Entered By',key:'entered_by',width:24},{header:'Status',key:'status',width:25},{header:'Void Reason',key:'void_reason',width:40},{header:'Void Requested By',key:'void_requested_by',width:24},{header:'Void Requested At',key:'void_requested_at',width:24},{header:'Latest Void Request',key:'request_status',width:24},{header:'Void Decision By',key:'void_decided_by',width:24},{header:'Void Decision At',key:'void_decided_at',width:24},{header:'Reject Reason',key:'void_decision_reason',width:40}];
+ const rows=entries.map(tx=>({id:String(tx.id),date:excelDate(tx.day),voucher:String(tx.voucher),code:String(tx.code),name:tx.name,category:tx.category,direction:tx.direction,from:tx.direction==='IN'?tx.place:'Warehouse',to:tx.direction==='IN'?'Warehouse':tx.place,qty:number(tx.qty_grams),remark:tx.remark||'',entered_by:tx.entered_by,status:statusLabel(tx.void_status),void_reason:tx.void_reason||'',void_requested_by:tx.void_requested_by||'',void_requested_at:tx.void_requested_at?String(tx.void_requested_at):'',request_status:tx.request_status||'',void_decided_by:tx.void_decided_by||'',void_decided_at:tx.void_decided_at?String(tx.void_decided_at):'',void_decision_reason:tx.void_decision_reason||''}));
+ const {workbook,sheet,merged}=createReport('Raw Oil Transaction',columns,'Filters · Search: '+(filters.q||'All')+' · Status: '+(filters.status||'All')+' · Type: '+(filters.direction||'IN + OUT')+' · From date: '+(filters.from||'Any')+' · To date: '+(filters.to||'Any'),rows);
+ merged(5,rows.length?'Voided rows are audit records only and excluded from Balance. Pending requests still affect stock. Quantities are positive; Type and From / To indicate direction.':'No transactions match these filters.');
  sheet.getRow(5).height=30;
  return workbook.xlsx.writeBuffer();
 }
