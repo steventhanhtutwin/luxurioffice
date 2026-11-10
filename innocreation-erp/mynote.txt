@@ -89,7 +89,34 @@ npm.cmd start
 
 -----------------------------------------------------------------
 
+၄။ လက်ရှိ Database ကို Export လုပ်ပါ
 
+MySQL Workbench မှာ—
+1. လက်ရှိ Local MySQL Connection ကိုဖွင့်ပါ။
+2. Server → Data Export ကိုနှိပ်ပါ။
+3. ERP Database ကိုရွေးပြီး Table အားလုံး ရွေးပါ။
+4. Dump Structure and Data ကိုရွေးပါ။
+5. Export to Self-Contained File ကိုရွေးပါ။
+6. Include Create Schema ကို အမှန်မခြစ်ပါနဲ့။
+7. Start Export နှိပ်ပါ။
+ရလာတဲ့ .sql ဖိုင်ကို Backup အဖြစ် သိမ်းထားပါ။
+
+
+-----------------------------------------------------------------
+
+၅။ Hostinger Database ထဲ Import လုပ်ပါ
+
+Database ဖန်တီးပြီးသားဆိုရင်—
+1. Databases → Management ကိုဝင်ပါ။
+2. u506347531_innocreation Database ဘေးက phpMyAdmin ကိုဖွင့်ပါ။
+3. အဲဒီ Database ကိုရွေးပါ။
+4. Import → Choose File မှာ .sql ဖိုင်ကိုရွေးပါ။
+5. Import / Go နှိပ်ပါ။
+Export ထဲမှာ CREATE DATABASE သို့မဟုတ် Local Database ကိုညွှန်းတဲ့ USE innocreation_erp; ပါနေရင် 
+Hostinger Database နာမည်နဲ့ မကိုက်နိုင်လို့ Import မလုပ်ခင် ပြင်ရပါမယ်။ Import က လက်ရှိ Hostinger Database ကို ရွေးပြီးလုပ်တာ ဖြစ်ရပါမယ်။
+
+
+-----------------------------------------------------------------
 
 
 

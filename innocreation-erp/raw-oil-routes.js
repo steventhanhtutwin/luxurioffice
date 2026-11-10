@@ -1,3 +1,4 @@
+const {today:businessToday}=require('./raw-oil-numbering');
 const express=require('express');
 const {installAdjustmentList}=require('./raw-oil-adjustment-list');
 const {createService,summarySQL,newKey}=require('./raw-oil-service');
@@ -25,7 +26,7 @@ function createRawOilRouter({pool,groups}){
  const [totals]=await pool.query('SELECT COUNT(*) item_count,SUM(opening_grams IS NULL) pending,COALESCE(SUM(opening_grams),0) opening,COALESCE(SUM(stock_in),0) stock_in,COALESCE(SUM(stock_out),0) stock_out,COALESCE(SUM(closing_grams),0) closing FROM ('+summarySQL+where+') s',params);
  render(req,res,req.path==='/summary'?'summary':'list',{type:'list',rows,q,category,categories,totals:totals[0],total:Number(counts[0].total),pageNo,saved:req.query.saved==='1'});
  }));
- const formData=async(req,res,direction,body={},error='',status=200)=>{const [places]=await pool.query('SELECT * FROM raw_oil_places ORDER BY name');return render(req,res,direction==='IN'?'in':'out',{type:'movement',direction,places,values:{date:today(),...body,request_key:body.request_key||newKey()},error},status);};
+ const formData=async(req,res,direction,body={},error='',status=200)=>{const [places]=await pool.query('SELECT * FROM raw_oil_places ORDER BY name');return render(req,res,direction==='IN'?'in':'out',{type:'movement',direction,places,values:{date:today(),...body,...(direction==='IN'?{date:businessToday(),voucher:''}:{}),request_key:body.request_key||newKey()},error},status);};
  for(const [path,direction]of [['in','IN'],['out','OUT']]){
  router.get('/'+path,asyncRoute((req,res)=>formData(req,res,direction)));
  router.post('/'+path,csrf,asyncRoute(async(req,res)=>{try{const id=await service.postMovement({...req.body,direction},req.session.user.id);res.redirect('/inventory/raw-oil/transactions?saved='+encodeURIComponent(id));}catch(err){return formData(req,res,direction,req.body,errorText(err),err.code?500:400);}}));
