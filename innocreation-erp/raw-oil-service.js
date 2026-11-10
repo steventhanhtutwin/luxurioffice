@@ -1,3 +1,4 @@
+const {transactionCategory}=require('./raw-oil-transaction-category');
 const {activeTransactions}=require('./raw-oil-void-service');
 const {grams,decimal,date,text,balance,checkTimeline}=require('./raw-oil-values');
 const {today,nextVoucher}=require('./raw-oil-numbering');
@@ -9,7 +10,7 @@ function createService(pool,{businessDate=today}={}){return {
  async getItem(code){const [rows]=await pool.execute(summarySQL+' WHERE i.code=?',[code]);return rows[0];},
  async postMovement(body,userId){
  const code=text(body.code,'Item Code',100), direction=body.direction;if(!['IN','OUT'].includes(direction))throw new Error('Invalid direction');
- const qty=grams(body.qty);let day,voucher;const remark=text(body.remark||'','Remark',500,false);
+ const category=transactionCategory(body.transaction_category);const qty=grams(body.qty);let day,voucher;const remark=text(body.remark||'','Remark',500,false);
  if(!/^\d+$/.test(String(body.place_id)))throw new Error('From / To နေရာကို ရွေးပါ။');
  if(!/^[a-f0-9]{64}$/.test(body.request_key||''))throw new Error('Form expired. Reload and try again.');
  const conn=await pool.getConnection();try{await conn.beginTransaction();
@@ -28,7 +29,7 @@ function createService(pool,{businessDate=today}={}){return {
  const [days]=await conn.execute("SELECT DATE_FORMAT(transaction_date,'%Y-%m-%d') day,SUM(CASE WHEN direction='IN' THEN qty_grams ELSE -qty_grams END) delta FROM raw_oil_transactions WHERE item_id=? AND "+activeTransactions+" GROUP BY transaction_date ORDER BY transaction_date",[item.id]);
  checkTimeline(String(item.opening_grams),days,day,direction,qty);
  voucher=await nextVoucher(conn,direction);
- const [result]=await conn.execute('INSERT INTO raw_oil_transactions (item_id,transaction_date,voucher,direction,place_id,qty_grams,remark,created_by,request_key) VALUES (?,?,?,?,?,?,?,?,?)',[item.id,day,voucher,direction,body.place_id,decimal(qty),remark,userId,body.request_key]);
+ const [result]=await conn.execute('INSERT INTO raw_oil_transactions (item_id,transaction_date,voucher,direction,place_id,qty_grams,remark,created_by,request_key,transaction_category) VALUES (?,?,?,?,?,?,?,?,?,?)',[item.id,day,voucher,direction,body.place_id,decimal(qty),remark,userId,body.request_key,category]);
  await conn.commit();return result.insertId;
  }catch(err){await conn.rollback();if(err.code==='ER_DUP_ENTRY'){const [rows]=await pool.execute('SELECT id FROM raw_oil_transactions WHERE request_key=?',[body.request_key]);if(rows.length)return rows[0].id;}throw err;}finally{conn.release();}
  },
