@@ -11,7 +11,8 @@ async function setup(){
  await pool.query(`CREATE TABLE IF NOT EXISTS raw_oil_places (id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, name VARCHAR(120) NOT NULL UNIQUE) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4`);
  await pool.query(`CREATE TABLE IF NOT EXISTS raw_oil_transactions (
  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY, item_id INT UNSIGNED NOT NULL,
- transaction_date DATE NOT NULL, voucher VARCHAR(100) NOT NULL, direction ENUM('IN','OUT') NOT NULL,
+ transaction_date DATE NOT NULL,
+ transaction_time TIME NULL DEFAULT NULL, voucher VARCHAR(100) NOT NULL, direction ENUM('IN','OUT') NOT NULL,
  place_id INT UNSIGNED NOT NULL, qty_grams DECIMAL(15,3) NOT NULL, remark VARCHAR(500) NOT NULL DEFAULT '',
  created_by INT UNSIGNED NOT NULL, request_key CHAR(64) NOT NULL UNIQUE,
  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

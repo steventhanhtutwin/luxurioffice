@@ -1,12 +1,13 @@
 const {transactionCategory,selectedTransactionCategory}=require('./raw-oil-transaction-category');
 const {activeTransactions}=require('./raw-oil-void-service');
 const {grams,decimal,date,text,balance,checkTimeline}=require('./raw-oil-values');
-const {today,nextVoucher}=require('./raw-oil-numbering');
+const {businessNow}=require('./raw-oil-datetime');
+const {nextVoucher}=require('./raw-oil-numbering');
 const {randomBytes}=require('node:crypto');
 const {saveRawOilItem}=require('./raw-oil-item-service');
 const aggregate=`SELECT item_id, SUM(CASE WHEN direction='IN' THEN qty_grams ELSE 0 END) stock_in, SUM(CASE WHEN direction='OUT' THEN qty_grams ELSE 0 END) stock_out FROM raw_oil_transactions WHERE ${activeTransactions} GROUP BY item_id`;
 const summarySQL=`SELECT i.*,COALESCE(t.stock_in,0) stock_in,COALESCE(t.stock_out,0) stock_out,CASE WHEN i.opening_grams IS NULL THEN NULL ELSE i.opening_grams+COALESCE(t.stock_in,0)-COALESCE(t.stock_out,0) END closing_grams FROM raw_oil_items i LEFT JOIN (${aggregate}) t ON t.item_id=i.id`;
-function createService(pool,{businessDate=today}={}){return {
+function createService(pool,{businessDate,clock=businessNow}={}){return {
  async getItem(code){const [rows]=await pool.execute(summarySQL+' WHERE i.code=?',[code]);return rows[0];},
  async postMovements(body,userId){
  if(!Array.isArray(body.items)||!body.items.length||body.items.length>500)throw new Error('Item 1 မှ 500 အထိ ထည့်ပါ။');
@@ -18,7 +19,7 @@ function createService(pool,{businessDate=today}={}){return {
  await conn.execute('SELECT id,role,is_active FROM users WHERE id=? FOR UPDATE',[userId]);
  for(const code of [...new Set(codes)].sort())await conn.execute('SELECT id FROM raw_oil_items WHERE code=? FOR UPDATE',[code]);
  const scoped={execute:(...args)=>conn.execute(...args),getConnection:async()=>({execute:(...args)=>conn.execute(...args),beginTransaction:async()=>{},commit:async()=>{},rollback:async()=>{},release:()=>{}})};
- const batchDate=businessDate();const service=createService(scoped,{businessDate:()=>batchDate}),ids=[],pendingTotals=new Map();
+ const stamp=clock();const batchDate=businessDate?businessDate():stamp.day;const service=createService(scoped,{businessDate:()=>batchDate,clock:()=>stamp}),ids=[],pendingTotals=new Map();
  // Retry the original submission without allocating another number.
  const firstKey=require('node:crypto').createHash('sha256').update(body.request_key+':0').digest('hex');
  const [saved]=await conn.execute('SELECT id FROM raw_oil_transactions WHERE request_key=?',[firstKey]);
@@ -52,7 +53,7 @@ function createService(pool,{businessDate=today}={}){return {
  if(body.imported_name!==undefined){const importedName=text(body.imported_name,'Excel Item Name',200,false);const normalize=value=>String(value).trim().toLowerCase().replace(/\s+/g,' ');if(importedName&&normalize(importedName)!==normalize(item.name))throw Error('Excel Item Name နှင့် System Item Name မကိုက်ပါ။ Error row ကို Remove လုပ်ပါ သို့မဟုတ် Excel ပြင်ပြီး ပြန် Import လုပ်ပါ။');}
 
  const [existing]=await conn.execute('SELECT id FROM raw_oil_transactions WHERE request_key=?',[body.request_key]);if(existing.length){await conn.commit();return existing[0].id;}
- day=date(businessDate());
+ const stamp=clock();day=date(businessDate?businessDate():stamp.day);
  if(item.opening_grams===null)throw new Error('အဖွင့်လက်ကျန်နှင့် စာရင်းစတင်ရက်ကို အရင်သတ်မှတ်ပါ။');
  const openingDate=String(item.opening_date).slice(0,10);if(day<openingDate)throw new Error('စာရင်းစတင်ရက်ထက် စောသော Transaction မထည့်နိုင်ပါ။');
  const [places]=await conn.execute('SELECT id FROM raw_oil_places WHERE id=?',[body.place_id]);if(!places.length)throw new Error('From / To နေရာကို ရွေးပါ။');
@@ -65,7 +66,7 @@ function createService(pool,{businessDate=today}={}){return {
  const [days]=await conn.execute("SELECT DATE_FORMAT(transaction_date,'%Y-%m-%d') day,SUM(CASE WHEN direction='IN' THEN qty_grams ELSE -qty_grams END) delta FROM raw_oil_transactions WHERE item_id=? AND "+activeTransactions+" GROUP BY transaction_date ORDER BY transaction_date",[item.id]);
  checkTimeline(String(item.opening_grams),days,day,direction,effectiveQty);
  voucher=sharedVoucher||await nextVoucher(conn,direction);
- const [result]=await conn.execute('INSERT INTO raw_oil_transactions (item_id,transaction_date,voucher,direction,place_id,qty_grams,remark,created_by,request_key,transaction_category) VALUES (?,?,?,?,?,?,?,?,?,?)',[item.id,day,voucher,direction,body.place_id,decimal(qty),remark,userId,body.request_key,category]);
+ const [result]=await conn.execute('INSERT INTO raw_oil_transactions (item_id,transaction_date,voucher,direction,place_id,qty_grams,remark,created_by,request_key,transaction_category,transaction_time) VALUES (?,?,?,?,?,?,?,?,?,?,?)',[item.id,day,voucher,direction,body.place_id,decimal(qty),remark,userId,body.request_key,category,stamp.time]);
  if(category.toLowerCase()==='adjustment'){
  if(pendingTotals)pendingTotals.set(String(item.id),effectiveQty);
  if(actor.role==='warehouse_supervisor')await conn.execute("INSERT INTO raw_oil_adjustment_approvals (transaction_id,status,supervisor_by,supervisor_at) VALUES (?,'PENDING_ACCOUNTANT',?,CURRENT_TIMESTAMP)",[result.insertId,userId]);

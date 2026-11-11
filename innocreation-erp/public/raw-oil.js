@@ -1,5 +1,9 @@
 (()=>{
  const form=document.getElementById('oil-movement');if(!form)return;
+ const dateField=document.getElementById('oil-date');
+ const clockFormat=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Bangkok',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'});
+ function tick(){const p=Object.fromEntries(clockFormat.formatToParts(new Date()).map(v=>[v.type,v.value]));if(dateField)dateField.value=`${p.year}-${p.month}-${p.day} ${p.hour}:${p.minute}:${p.second}`;}
+ tick();setInterval(tick,1000);
  const get=id=>document.getElementById('oil-'+id),table=get('items'),save=get('save'),category=get('transaction-category'),place=get('place'),add=get('add-item'),message=get('entry-message');let rows=[],importing=false,building=false,importBlocked=false,failedBatch=[];const importButton=get('import-excel'),fileInput=get('import-file');
  const lockedPlace=document.createElement('input');lockedPlace.value='Main Warehouse';lockedPlace.readOnly=true;lockedPlace.hidden=true;place.after(lockedPlace);
  const blockMessage=document.createElement('p');blockMessage.className='error';blockMessage.hidden=true;blockMessage.setAttribute('role','alert');message.before(blockMessage);
