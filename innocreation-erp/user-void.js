@@ -1,12 +1,12 @@
+const {lockSettingsActor,ensureSettingsManager}=require('./application-access');
 const message='အကောင့်တွင် Issues ရှိနေပါသည်။ Accountant Head ကို ဆက်သွယ်ပါ။';
 async function voidUser(pool,actorId,id){
  if(!/^\d{1,20}$/.test(String(id)))throw Object.assign(Error('User မတွေ့ပါ။'),{status:404});
  const c=await pool.getConnection();try{await c.beginTransaction();
- const [admins]=await c.execute("SELECT id FROM users WHERE role='admin' AND is_active=1 ORDER BY id FOR UPDATE");
- if(!admins.some(u=>Number(u.id)===Number(actorId)))throw Object.assign(Error('Admin access required'),{status:403});
+ const activeUsers=await lockSettingsActor(c,actorId),admins=activeUsers.filter(u=>u.role==='admin');
  if(Number(actorId)===Number(id))throw Object.assign(Error('မိမိအကောင့်ကို Void လုပ်၍မရပါ။'),{status:403});
  const [rows]=await c.execute('SELECT id,role,is_active FROM users WHERE id=? FOR UPDATE',[id]);const user=rows[0];if(!user)throw Object.assign(Error('User မတွေ့ပါ။'),{status:404});
- if(Number(user.is_active)===1){if(user.role==='admin'&&admins.length<=1)throw Object.assign(Error('အနည်းဆုံး Active Admin တစ်ဦး ရှိရပါမည်။'),{status:403});
+ if(Number(user.is_active)===1){ensureSettingsManager(activeUsers,id,[]);if(user.role==='admin'&&admins.length<=1)throw Object.assign(Error('အနည်းဆုံး Active Admin တစ်ဦး ရှိရပါမည်။'),{status:403});
  await c.execute('UPDATE users SET is_active=0,password_version=password_version+1 WHERE id=?',[id]);}
  await c.commit();
  }catch(e){await c.rollback();throw e;}finally{c.release();}

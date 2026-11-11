@@ -1,7 +1,8 @@
+const {lockSettingsActor}=require('./application-access');
 const {transactionCategory}=require('./raw-oil-transaction-category');
-function createInventorySettingsService(pool){return {async createCategory(actorId,body){const name=transactionCategory(body.name),conn=await pool.getConnection();try{await conn.beginTransaction();const [actors]=await conn.execute('SELECT id,role,is_active FROM users WHERE id=? FOR UPDATE',[actorId]);if(!actors[0]||actors[0].role!=='admin'||Number(actors[0].is_active)!==1)throw Object.assign(Error('Admin access required'),{status:403});await conn.execute('INSERT INTO raw_oil_transaction_categories (name,created_by) VALUES (?,?)',[name,actorId]);await conn.commit();}catch(err){await conn.rollback();throw err;}finally{conn.release();}},async updateCategory(actorId,id,body){
+function createInventorySettingsService(pool){return {async createCategory(actorId,body){const name=transactionCategory(body.name),conn=await pool.getConnection();try{await conn.beginTransaction();await lockSettingsActor(conn,actorId);await conn.execute('INSERT INTO raw_oil_transaction_categories (name,created_by) VALUES (?,?)',[name,actorId]);await conn.commit();}catch(err){await conn.rollback();throw err;}finally{conn.release();}},async updateCategory(actorId,id,body){
  if(!/^\d{1,10}$/.test(String(id)))throw Object.assign(Error('Category not found'),{status:404});
- const name=transactionCategory(body.name),conn=await pool.getConnection();try{await conn.beginTransaction();const [actors]=await conn.execute('SELECT id,role,is_active FROM users WHERE id=? FOR UPDATE',[actorId]);if(!actors[0]||actors[0].role!=='admin'||Number(actors[0].is_active)!==1)throw Object.assign(Error('Admin access required'),{status:403});
+ const name=transactionCategory(body.name),conn=await pool.getConnection();try{await conn.beginTransaction();await lockSettingsActor(conn,actorId);
  const [rows]=await conn.execute('SELECT id,name,is_active FROM raw_oil_transaction_categories WHERE id=? FOR UPDATE',[id]);const category=rows[0];if(!category)throw Object.assign(Error('Category not found'),{status:404});
  if(category.name.trim().toLowerCase()==='adjustment')throw Object.assign(Error('Adjustment Category ကို ပြောင်းခွင့်မရှိပါ။'),{status:403});
  if(Number(category.is_active??1)===0)throw Object.assign(Error('Voided Category ကို Edit လုပ်၍ မရပါ။'),{status:403});
@@ -11,7 +12,7 @@ function createInventorySettingsService(pool){return {async createCategory(actor
  },async voidCategory(actorId,id,body){
  if(!/^\d{1,10}$/.test(String(id)))throw Object.assign(Error('Category not found'),{status:404});
  if(body.confirm_void!=='yes')throw Object.assign(Error('Void ကို အတည်ပြုပါ။'),{status:400});
- const conn=await pool.getConnection();try{await conn.beginTransaction();const [actors]=await conn.execute('SELECT id,role,is_active FROM users WHERE id=? FOR UPDATE',[actorId]);if(!actors[0]||actors[0].role!=='admin'||Number(actors[0].is_active)!==1)throw Object.assign(Error('Admin access required'),{status:403});
+ const conn=await pool.getConnection();try{await conn.beginTransaction();await lockSettingsActor(conn,actorId);
  const [rows]=await conn.execute('SELECT id,name,is_active FROM raw_oil_transaction_categories WHERE id=? FOR UPDATE',[id]);const category=rows[0];if(!category)throw Object.assign(Error('Category not found'),{status:404});
  if(category.name.trim().toLowerCase()==='adjustment')throw Object.assign(Error('Adjustment Category ကို Void လုပ်ခွင့်မရှိပါ။'),{status:403});
  if(Number(category.is_active??1)===0){await conn.commit();return;}
