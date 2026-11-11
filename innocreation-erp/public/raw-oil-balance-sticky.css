@@ -18,3 +18,8 @@
  .oil-balance-reset{font-size:12px;min-height:34px;padding:0 5px}
 }
 @media print{.oil-balance-toolbar{position:static;box-shadow:none}}
+.oil-balance-frozen-head{position:fixed;z-index:19;overflow:hidden;pointer-events:none;background:#f2f5eb;box-shadow:0 3px 8px #253e3512;border-bottom:1px solid #dce3d4}
+.oil-balance-frozen-head[hidden]{display:none}
+.oil-balance-frozen-head .oil-table{table-layout:fixed;margin-top:0;margin-bottom:0;border-radius:0}
+.oil-balance-frozen-head th{background:#f2f5eb}
+@media print{.oil-balance-frozen-head{display:none!important}}
