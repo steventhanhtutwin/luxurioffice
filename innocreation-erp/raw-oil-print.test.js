@@ -18,3 +18,9 @@ test('Raw Oil Print/PDF keeps status, Unicode, approvals and void audit; escapes
  for(const endpoint of ['print','pdf']){assert.equal((await fetch(base+'/44/'+endpoint,{redirect:'manual'})).status,302);assert.equal((await fetch(base+'/bad/'+endpoint,{headers})).status,404);assert.equal((await fetch(base+'/99/'+endpoint,{headers})).status,404);}
  }finally{s.close();}
 });
+
+test('voucher totals retain exact grams and signature spaces in both print and PDF templates',async()=>{
+ const ejs=require('ejs'),tx={id:1,voucher:'ROI-1',direction:'IN',day:'2026-11-11',place:'Main Warehouse',entered_by:'Staff',created_by:1,void_status:'POSTED',code:'001',name:'Oil',qty_grams:'0.100'};
+ for(const pdfMode of [false,true]){const lines=[tx,{...tx,code:'002',qty_grams:'0.200'}];const html=await ejs.renderFile(path.join(__dirname,'views/raw-oil/print.ejs'),{tx,lines,approval:null,requests:[],pdfMode,css:'',statusLabel:()=> 'Posted'});assert(html.includes('Total Items: 2'));assert(html.includes('Total Weight: 0.300 g'));assert.equal((html.match(/<em>Sign<\/em>/g)||[]).length,3);}
+ const lines=Array.from({length:50},(_,i)=>({...tx,code:String(i),qty_grams:'999999999999.999'}));const html=await ejs.renderFile(path.join(__dirname,'views/raw-oil/print.ejs'),{tx,lines,approval:null,requests:[],pdfMode:true,css:'',statusLabel:()=> 'Posted'});assert(html.includes('49,999,999,999,999.950 g'));
+});
