@@ -1,7 +1,7 @@
 const test=require('node:test'),assert=require('node:assert/strict'),express=require('express');
 const {DatabaseSync}=require('node:sqlite');const {buildNotifications,createNotificationRouter,oilSQL,fgSQL}=require('./approval-notifications');
 const base={id:200,voucher:'ROI-000080',created_by:1,entered_by:'Staff <script>',item_count:5,total_qty:'10000.000',adjustment_status:'PENDING_SUPERVISOR'};
-test('approval notifications follow each role, exclude self and previous approver, send outcomes only to owner',()=>{
+test('approval notifications follow each role, exclude self and previous approver, never send outcomes to submitters',()=>{
  assert.equal(buildNotifications([base],[],{id:2,role:'warehouse_supervisor'}).length,1);
  assert.equal(buildNotifications([base],[],{id:3,role:'warehouse_accountant'}).length,0);
  const advanced={...base,adjustment_status:'PENDING_ACCOUNTANT',supervisor_by:2};
@@ -9,7 +9,7 @@ test('approval notifications follow each role, exclude self and previous approve
  assert.equal(buildNotifications([advanced],[],{id:3,role:'warehouse_accountant'})[0].pending,true);
  assert.equal(buildNotifications([advanced],[],{id:2,role:'warehouse_accountant'}).length,0);
  assert.equal(buildNotifications([base],[],{id:1,role:'warehouse_supervisor'}).length,0);
- for(const status of ['APPROVED','REJECTED']){const r={...base,adjustment_status:status};assert.equal(buildNotifications([r],[],{id:1,role:'staff'})[0].pending,false);assert.equal(buildNotifications([r],[],{id:4,role:'staff'}).length,0);}
+ for(const status of ['APPROVED','REJECTED']){const r={...base,adjustment_status:status};assert.equal(buildNotifications([r],[],{id:1,role:'staff'}).length,0);assert.equal(buildNotifications([r],[],{id:4,role:'staff'}).length,0);}
 });
 test('void and FG notifications respect stages and distinguish repeated void requests',()=>{
  const row={...base,adjustment_status:'APPROVED',void_status:'PENDING',requested_by:2,void_id:8,requester:'Supervisor'};
@@ -47,4 +47,14 @@ test('notification API persists read per user, keeps pending count, rechecks acc
  actor={...actor,application_access:'[]'};assert.equal((await fetch(url)).status,403);
  actor={...actor,application_access:'["inventory"]',is_active:0};assert.equal((await fetch(url)).status,403);
  }finally{await new Promise(r=>server.close(r));}
+});
+
+test('100 completed submissions leave no notifications for submitter, requester or approvers',()=>{
+ const oils=Array.from({length:100},(_,i)=>({...base,id:i+1,adjustment_status:i%2?'APPROVED':'REJECTED',void_status:i%2?'APPROVED':'REJECTED',requested_by:2,void_id:i+1}));
+ const fgs=oils.map(r=>({...r,status:r.id%2?'POSTED':'REJECTED'}));
+ for(const user of [{id:1,role:'staff'},{id:2,role:'warehouse_supervisor'},{id:3,role:'warehouse_accountant'},{id:1,role:'warehouse_accountant'}])assert.deepEqual(buildNotifications(oils,fgs,user),[]);
+ const pending=oils.map(r=>({...r,adjustment_status:'PENDING_SUPERVISOR',void_status:null}));
+ assert.equal(buildNotifications(pending,[],{id:2,role:'warehouse_supervisor'}).length,100);
+ assert.equal(buildNotifications(pending.slice(30),[],{id:2,role:'warehouse_supervisor'}).length,70);
+ assert.equal(buildNotifications(pending,[],{id:1,role:'staff'}).length,0);
 });

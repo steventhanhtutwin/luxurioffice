@@ -26,14 +26,11 @@ function buildNotifications(oils,fgs,user){
   const s=r.adjustment_status;
   const actionable=!same(r.created_by,user.id)&&((supervisor&&s==='PENDING_SUPERVISOR')||(accountant&&s==='PENDING_ACCOUNTANT'&&!same(r.supervisor_by,user.id)));
   if(actionable)add('adjustment',r,s,true,'Adjustment အတည်ပြုရန်ရှိပါသည်','Raw Oil › Adjustment',r.entered_by,'g');
-  else if(same(r.created_by,user.id)&&['APPROVED','REJECTED'].includes(s))add('adjustment',r,s,false,s==='APPROVED'?'Adjustment အတည်ပြုပြီးပါပြီ':'Adjustment ပယ်ချထားပါသည်','Raw Oil › Adjustment',r.entered_by,'g');
   if(accountant&&r.void_status==='PENDING'&&!same(r.requested_by,user.id))add('void',r,'PENDING',true,'Void Request အတည်ပြုရန်ရှိပါသည်','Raw Oil › Transaction',r.requester,'g',r.void_id);
-  else if(['APPROVED','REJECTED'].includes(r.void_status)&&(same(r.requested_by,user.id)||same(r.created_by,user.id)))add('void',r,r.void_status,false,r.void_status==='APPROVED'?'Void Request အတည်ပြုပြီးပါပြီ':'Void Request ပယ်ချထားပါသည်','Raw Oil › Transaction',r.requester,'g',r.void_id);
  }
  for(const r of fgs){
   const pending=(supervisor&&r.status==='REQUESTED')||(accountant&&r.status==='SUPERVISOR_APPROVED'&&!same(r.supervisor_by,user.id));
   if(pending)add('fg',r,r.status,true,'FG Transfer အတည်ပြုရန်ရှိပါသည်','Finished Goods › Transfer Approval',r.entered_by,'pcs');
-  else if(same(r.created_by,user.id)&&['POSTED','REJECTED'].includes(r.status))add('fg',r,r.status,false,r.status==='POSTED'?'FG Transfer အတည်ပြုပြီးပါပြီ':'FG Transfer ပယ်ချထားပါသည်','Finished Goods › Transfer Approval',r.entered_by,'pcs');
  }
  return out.sort((a,b)=>Number(b.pending)-Number(a.pending));
 }
