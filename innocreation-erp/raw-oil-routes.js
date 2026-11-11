@@ -52,8 +52,8 @@ function createRawOilRouter({pool,groups,pdfRenderer}){
  const {q,direction,from,to,status,transaction_category}=transactionValues(req.query);let filter;
  try{filter=transactionFilters(req.query);}catch(err){return render(req,res,'transactions',{type:'history',transactionCategories:categories,rows:[],q,direction,from,to,status,transaction_category,error:err.message,total:0,pageNo:1,saved:false},400);}
  const {where,params}=filter,pageNo=Math.min(1000000,Math.max(1,parseInt(req.query.p,10)||1));
- const [rows]=await pool.query(transactionSelect+where+' ORDER BY t.transaction_date DESC,t.id DESC LIMIT 50 OFFSET '+((pageNo-1)*50),params);
- const [count]=await pool.query('SELECT COUNT(*) total'+transactionJoins+where,params);
+ const [rows]=await pool.query(transactionSelect+' WHERE t.id IN (SELECT DISTINCT COALESCE((SELECT voucher_id FROM raw_oil_voucher_lines WHERE transaction_id=t.id),t.id)'+transactionJoins+where+') ORDER BY t.transaction_date DESC,t.id DESC LIMIT 50 OFFSET '+((pageNo-1)*50),params);
+ const [count]=await pool.query('SELECT COUNT(DISTINCT COALESCE((SELECT voucher_id FROM raw_oil_voucher_lines WHERE transaction_id=t.id),t.id)) total'+transactionJoins+where,params);
  render(req,res,'transactions',{type:'history',transactionCategories:categories,rows,q,direction,from,to,status,transaction_category,total:Number(count[0].total),pageNo,saved:/^\d+$/.test(String(req.query.saved||''))?String(req.query.saved):false});
  }));
  const postedItem=(body,id)=>({id,code:body.code,name:body.name,category:body.category,item_class:body.item_class,opening_grams:body.opening_grams,opening_date:body.opening_date,remark:body.remark});

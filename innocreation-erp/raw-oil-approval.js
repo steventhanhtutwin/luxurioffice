@@ -1,16 +1,16 @@
 const {adjustmentFilters,adjustmentWorkbook}=require('./raw-oil-adjustment-report');
 const adjustmentJoins=' FROM raw_oil_adjustment_approvals a JOIN raw_oil_transactions t ON t.id=a.transaction_id JOIN raw_oil_items i ON i.id=t.item_id JOIN raw_oil_places p ON p.id=t.place_id JOIN users u ON u.id=t.created_by LEFT JOIN users s ON s.id=a.supervisor_by LEFT JOIN users k ON k.id=a.accountant_by';
-const adjustmentSelect="SELECT t.*,DATE_FORMAT(t.transaction_date,'%Y-%m-%d') day,i.code,i.name,CASE WHEN LOWER(p.name)='warehouse' THEN 'Main Warehouse' ELSE p.name END place,u.display_name entered_by,a.status approval_status,a.supervisor_by,a.supervisor_at,a.accountant_by,a.accountant_at,s.display_name supervisor_name,k.display_name accountant_name"+adjustmentJoins;
+const adjustmentSelect="SELECT t.*,(SELECT COUNT(*) FROM raw_oil_voucher_lines item_lines WHERE item_lines.voucher_id=t.id) item_count,DATE_FORMAT(t.transaction_date,'%Y-%m-%d') day,i.code,i.name,CASE WHEN LOWER(p.name)='warehouse' THEN 'Main Warehouse' ELSE p.name END place,u.display_name entered_by,a.status approval_status,a.supervisor_by,a.supervisor_at,a.accountant_by,a.accountant_at,s.display_name supervisor_name,k.display_name accountant_name"+adjustmentJoins;
 const {activeTransactions}=require('./raw-oil-void-service');
 const {grams,checkTimeline}=require('./raw-oil-values');
-async function approveAdjustment(pool,actorId,id,action){
+async function approveAdjustmentLine(pool,actorId,id,action){
  if(!/^\d{1,20}$/.test(String(id))||!['approve','reject'].includes(action))throw Error('Invalid adjustment');
  const [lookup]=await pool.execute('SELECT item_id FROM raw_oil_transactions WHERE id=?',[id]);if(!lookup.length)throw Error('Adjustment not found');
  const c=await pool.getConnection();try{await c.beginTransaction();
  const [users]=await c.execute('SELECT id,role,is_active FROM users WHERE id=? FOR UPDATE',[actorId]);const actor=users[0];
  if(!actor||Number(actor.is_active)!==1||!['warehouse_supervisor','warehouse_accountant'].includes(actor.role))throw Object.assign(Error('Warehouse approval role required'),{status:403});
  const [items]=await c.execute('SELECT * FROM raw_oil_items WHERE id=? FOR UPDATE',[lookup[0].item_id]);
- const [rows]=await c.execute("SELECT t.*,DATE_FORMAT(t.transaction_date,'%Y-%m-%d') day,a.status approval_status,a.supervisor_by,a.accountant_by FROM raw_oil_transactions t JOIN raw_oil_adjustment_approvals a ON a.transaction_id=t.id WHERE t.id=? FOR UPDATE",[id]);const tx=rows[0];if(!tx)throw Error('Adjustment not found');
+ const [rows]=await c.execute("SELECT t.*,(SELECT COUNT(*) FROM raw_oil_voucher_lines item_lines WHERE item_lines.voucher_id=t.id) item_count,DATE_FORMAT(t.transaction_date,'%Y-%m-%d') day,a.status approval_status,a.supervisor_by,a.accountant_by FROM raw_oil_transactions t JOIN raw_oil_adjustment_approvals a ON a.transaction_id=t.id WHERE t.id=? FOR UPDATE",[id]);const tx=rows[0];if(!tx)throw Error('Adjustment not found');
  const supervisor=actor.role==='warehouse_supervisor';
  const expected=supervisor?'PENDING_SUPERVISOR':'PENDING_ACCOUNTANT';
  if(tx.approval_status!==expected)throw Error('Approval အဆင့် ပြောင်းလဲသွားပါသည်။ Reload လုပ်ပါ။');
@@ -26,6 +26,11 @@ async function approveAdjustment(pool,actorId,id,action){
  await c.commit();
  }catch(e){await c.rollback();throw e;}finally{c.release();}
 }
+async function approveAdjustment(pool,actorId,id,action){
+ if(!/^\d{1,20}$/.test(String(id))||!['approve','reject'].includes(action))throw Error('Invalid adjustment');
+ const members=await require('./raw-oil-voucher').voucherIds(pool,id);if(members.length===1)return approveAdjustmentLine(pool,actorId,members[0],action);
+ return require('./raw-oil-voucher').actOnVoucher(pool,actorId,id,async(scoped,ids)=>{for(const line of ids)await approveAdjustmentLine(scoped,actorId,line,action);});
+}
 function installApprovalRoutes({router,pool,render,asyncRoute,csrf}){
  router.get('/adjustments/export.xlsx',asyncRoute(async(req,res)=>{
  let filter;try{filter=adjustmentFilters(req.query);}catch(e){return res.status(400).send(e.message);}
@@ -37,8 +42,8 @@ function installApprovalRoutes({router,pool,render,asyncRoute,csrf}){
  router.get('/adjustments',asyncRoute(async(req,res)=>{
  let filter;try{filter=adjustmentFilters(req.query);}catch(e){return res.status(400).send(e.message);}
  const pageNo=Math.min(1000000,Math.max(1,parseInt(req.query.p,10)||1));
- const [rows]=await pool.query(adjustmentSelect+filter.where+' ORDER BY t.id DESC LIMIT 50 OFFSET '+((pageNo-1)*50),filter.params);
- const [counts]=await pool.query('SELECT COUNT(*) total'+adjustmentJoins+filter.where,filter.params);
+ const [rows]=await pool.query(adjustmentSelect+' WHERE t.id IN (SELECT DISTINCT COALESCE((SELECT voucher_id FROM raw_oil_voucher_lines WHERE transaction_id=t.id),t.id)'+adjustmentJoins+filter.where+') ORDER BY t.id DESC LIMIT 50 OFFSET '+((pageNo-1)*50),filter.params);
+ const [counts]=await pool.query('SELECT COUNT(DISTINCT COALESCE((SELECT voucher_id FROM raw_oil_voucher_lines WHERE transaction_id=t.id),t.id)) total'+adjustmentJoins+filter.where,filter.params);
  render(req,res,'adjustments',{type:'approval-list',rows,filters:filter,total:Number(counts[0].total),pageNo,saved:req.query.saved==='1'||/^\d+$/.test(req.query.saved||''),error:''});
  }));
  router.post('/adjustments/:id/:action',csrf,asyncRoute(async(req,res)=>{

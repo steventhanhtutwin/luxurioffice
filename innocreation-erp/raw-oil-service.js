@@ -20,14 +20,21 @@ function createService(pool,{businessDate=today}={}){return {
  for(const code of [...codes].sort())await conn.execute('SELECT id FROM raw_oil_items WHERE code=? FOR UPDATE',[code]);
  const scoped={execute:(...args)=>conn.execute(...args),getConnection:async()=>({execute:(...args)=>conn.execute(...args),beginTransaction:async()=>{},commit:async()=>{},rollback:async()=>{},release:()=>{}})};
  const service=createService(scoped,{businessDate}),ids=[];
+ // Retry the original submission without allocating another number.
+ const firstKey=require('node:crypto').createHash('sha256').update(body.request_key+':0').digest('hex');
+ const [saved]=await conn.execute('SELECT id FROM raw_oil_transactions WHERE request_key=?',[firstKey]);
+ if(saved.length){await conn.commit();return saved[0].id;}
+ if(!['IN','OUT'].includes(body.direction))throw Error('Invalid direction');
+ const sharedVoucher=await nextVoucher(conn,body.direction);
  for(let index=0;index<body.items.length;index++){
  const request_key=require('node:crypto').createHash('sha256').update(body.request_key+':'+index).digest('hex');
- ids.push(await service.postMovement({...body,code:body.items[index].code,qty:body.items[index].qty,remark:body.items[index].remark,request_key},userId));
+ ids.push(await service.postMovement({...body,code:body.items[index].code,qty:body.items[index].qty,remark:body.items[index].remark,request_key},userId,sharedVoucher));
  }
+ for(const id of ids)await conn.execute('INSERT INTO raw_oil_voucher_lines (transaction_id,voucher_id) VALUES (?,?)',[id,ids[0]]);
  await conn.commit();return ids[0];
  }catch(err){await conn.rollback();throw err;}finally{conn.release();}
  },
- async postMovement(body,userId){
+ async postMovement(body,userId,sharedVoucher=null){
  const code=text(body.code,'Item Code',100), direction=body.direction;if(!['IN','OUT'].includes(direction))throw new Error('Invalid direction');
  let category=transactionCategory(body.transaction_category);const qty=grams(body.qty);let day,voucher;const remark=text(body.remark||'','Remark',500,false);
  if(category.toLowerCase()!=='adjustment'&&!/^\d+$/.test(String(body.place_id)))throw new Error('From / To နေရာကို ရွေးပါ။');
@@ -55,7 +62,7 @@ function createService(pool,{businessDate=today}={}){return {
  // Enforce nonnegative stock at every effective date, including backdated entries.
  const [days]=await conn.execute("SELECT DATE_FORMAT(transaction_date,'%Y-%m-%d') day,SUM(CASE WHEN direction='IN' THEN qty_grams ELSE -qty_grams END) delta FROM raw_oil_transactions WHERE item_id=? AND "+activeTransactions+" GROUP BY transaction_date ORDER BY transaction_date",[item.id]);
  checkTimeline(String(item.opening_grams),days,day,direction,qty);
- voucher=await nextVoucher(conn,direction);
+ voucher=sharedVoucher||await nextVoucher(conn,direction);
  const [result]=await conn.execute('INSERT INTO raw_oil_transactions (item_id,transaction_date,voucher,direction,place_id,qty_grams,remark,created_by,request_key,transaction_category) VALUES (?,?,?,?,?,?,?,?,?,?)',[item.id,day,voucher,direction,body.place_id,decimal(qty),remark,userId,body.request_key,category]);
  if(category.toLowerCase()==='adjustment'){
  if(actor.role==='warehouse_supervisor')await conn.execute("INSERT INTO raw_oil_adjustment_approvals (transaction_id,status,supervisor_by,supervisor_at) VALUES (?,'PENDING_ACCOUNTANT',?,CURRENT_TIMESTAMP)",[result.insertId,userId]);

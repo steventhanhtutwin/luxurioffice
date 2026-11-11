@@ -6,6 +6,8 @@ function fixture(direction='IN',supervisorSubmitted=false){
  let state={status:supervisorSubmitted?'PENDING_ACCOUNTANT':'PENDING_SUPERVISOR',supervisor_by:supervisorSubmitted?2:null},days=[],fail=false,tail=Promise.resolve();
  const users=[{id:1,role:'inventory',is_active:1},{id:2,role:'warehouse_supervisor',is_active:1},{id:3,role:'warehouse_accountant',is_active:1}];
  const execute=async(sql,p)=>{
+ if(sql.startsWith('SELECT transaction_id FROM raw_oil_voucher_lines'))return [[]];
+
  if(sql.startsWith('SELECT item_id'))return [[{item_id:1}]];
  if(sql.startsWith('SELECT id,role'))return [users.filter(u=>u.id===p[0])];
  if(sql.startsWith('SELECT * FROM raw_oil_items'))return [[{id:1,opening_grams:'100.000'}]];
@@ -41,7 +43,7 @@ test('approval page renders review controls and form CSRF is enforced',async()=>
  const express=require('express'),path=require('node:path'),{createRawOilRouter}=require('./raw-oil-routes');const app=express();
  app.set('view engine','ejs');app.set('views',path.join(__dirname,'views'));app.use(express.urlencoded({extended:false}));
  app.use((req,res,next)=>{req.session={user:{id:2,role:'warehouse_supervisor'},csrf:'valid'};res.locals.csrf='valid';next();});
- const pool={query:async sql=>sql.includes('COUNT(*)')?[[{total:1}]]:[[{id:9,created_by:1,approval_status:'PENDING_SUPERVISOR',direction:'OUT',qty_grams:'1.000',name:'Oil',code:'001',day:'2026-11-10',voucher:'ROO-000001',remark:'Count',entered_by:'Operator'}]]};
+ const pool={query:async sql=>sql.startsWith('SELECT COUNT')?[[{total:1}]]:[[{id:9,created_by:1,approval_status:'PENDING_SUPERVISOR',direction:'OUT',qty_grams:'1.000',name:'Oil',code:'001',day:'2026-11-10',voucher:'ROO-000001',remark:'Count',entered_by:'Operator'}]]};
  app.use('/inventory/raw-oil',createRawOilRouter({pool,groups:[{id:'raw-oil',menus:[{id:'adjustments',name:'Raw Oil Adjustment'}]}]}));
  const server=app.listen(0);await new Promise(r=>server.once('listening',r));try{const url='http://127.0.0.1:'+server.address().port;
  const res=await fetch(url+'/inventory/raw-oil/adjustments');assert.equal(res.status,200);const html=await res.text();assert(html.includes('Pending Supervisor'));assert(html.includes('/adjustments/9/approve'));assert(html.includes('Approve'));

@@ -1,7 +1,7 @@
 const {text,grams,checkTimeline}=require('./raw-oil-values');
 const activeTransactions="NOT EXISTS (SELECT 1 FROM raw_oil_void_requests oil_void WHERE oil_void.transaction_id=raw_oil_transactions.id AND oil_void.status='APPROVED') AND NOT EXISTS (SELECT 1 FROM raw_oil_adjustment_approvals oil_adjustment WHERE oil_adjustment.transaction_id=raw_oil_transactions.id AND oil_adjustment.status<>'APPROVED')";
 const statusLabel=s=>({POSTED:'Posted',VOID_PENDING:'Pending Void Approval',VOIDED:'Voided'}[s]||'Posted');
-function createVoidService(pool){return {async act(actorId,transactionId,action,body={}){
+function createLineVoidService(pool){return {async act(actorId,transactionId,action,body={}){
  if(!['request','approve','reject'].includes(action)||!/^\d{1,20}$/.test(String(transactionId)))throw Object.assign(Error('Transaction မတွေ့ပါ။'),{status:404});
  const role=action==='request'?'warehouse_supervisor':'warehouse_accountant';
  const reason=action==='approve'?'':text(body.reason,'Void / Reject အကြောင်းရင်း',500);
@@ -29,5 +29,20 @@ function createVoidService(pool){return {async act(actorId,transactionId,action,
  }
  await conn.commit();
  }catch(err){await conn.rollback();throw err;}finally{conn.release();}
+ }};}
+function createVoidService(pool){return {async act(actorId,id,action,body={}){
+ if(!/^\d{1,20}$/.test(String(id)))throw Object.assign(Error('Transaction not found'),{status:404});
+ const members=await require('./raw-oil-voucher').voucherIds(pool,id);if(members.length===1)return createLineVoidService(pool).act(actorId,members[0],action,body);
+ return require('./raw-oil-voucher').actOnVoucher(pool,actorId,id,async(scoped,ids)=>{
+ // The displayed request must still be the current request on the canonical first line.
+ if(action!=='request'){
+ const [root]=await scoped.execute('SELECT * FROM raw_oil_void_requests WHERE transaction_id=? ORDER BY id DESC LIMIT 1 FOR UPDATE',[ids[0]]);
+ if(!root[0]||String(root[0].id)!==String(body.request_id))throw Error('Request ပြောင်းလဲသွားပါသည်။ Reload လုပ်ပါ။');
+ }
+ for(const line of ids){let payload=body;if(action!=='request'){
+ const [requests]=await scoped.execute('SELECT * FROM raw_oil_void_requests WHERE transaction_id=? ORDER BY id DESC LIMIT 1 FOR UPDATE',[line]);
+ if(!requests[0])throw Error('Void request မတွေ့ပါ။');payload={...body,request_id:requests[0].id};
+ }await createLineVoidService(scoped).act(actorId,line,action,payload);}
+ });
  }};}
 module.exports={createVoidService,activeTransactions,statusLabel};

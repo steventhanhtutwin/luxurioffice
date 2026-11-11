@@ -2,6 +2,8 @@ const test=require('node:test'),assert=require('node:assert/strict'),express=req
 const {createRawOilRouter}=require('./raw-oil-routes');
 test('Raw Oil Print/PDF keeps status, Unicode, approvals and void audit; escapes content and enforces login',async()=>{
  let pdfHTML='',unavailable=false;const pool={execute:async(sql,p)=>{
+ if(sql.startsWith('SELECT transaction_id FROM raw_oil_voucher_lines'))return [[]];
+ if(sql.startsWith('SELECT status FROM raw_oil_adjustment_approvals'))return [[]];
  if(sql.startsWith('SELECT t.*'))return p[0]==='44'?[[{id:44,voucher:'ROI-000014',day:'2026-11-10',direction:'IN',place:'BKK',code:'1199144',name:'Aqua Perfume',category:'Perfume',qty_grams:'500.000',entered_by:'Operator',remark:'မြန်မာ <script>unsafe</script>',transaction_category:'Adjustment',void_status:'VOIDED'}]]:[[]];
  if(sql.startsWith('SELECT v.*'))return [[{id:1,status:'APPROVED',reason:'Wrong item',requester:'Supervisor',requested_at:'2026-11-10',decided_by:3,decider:'Accountant',decided_at:'2026-11-10',decision_reason:'Confirmed'}]];
  return [[{supervisor_name:'Supervisor',accountant_name:'Accountant',supervisor_at:'2026-11-10',accountant_at:'2026-11-10'}]];

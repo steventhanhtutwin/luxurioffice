@@ -19,6 +19,7 @@ function fixture(opening='100.000',failOnce=false,categoryNames=['Purchase','Ret
  if(sql.startsWith('SELECT id FROM raw_oil_places'))return [[{id:1}]];
  if(sql.startsWith('SELECT COALESCE'))return [[{stock_in:sum('IN'),stock_out:sum('OUT')}]];
  if(sql.startsWith('SELECT DATE_FORMAT')){const totals=new Map();for(const row of rows.filter(r=>!r.pending))totals.set(row.day,(totals.get(row.day)||0n)+(row.direction==='IN'?grams(row.qty):-grams(row.qty)));return [[...totals].sort().map(([day,n])=>({day,delta:n<0n?'-'+decimal(-n):decimal(n)}))];}
+ if(sql.startsWith('INSERT INTO raw_oil_voucher_lines'))return [{affectedRows:1}];
  if(sql.startsWith('INSERT INTO raw_oil_transactions')){if(failOnce){failOnce=false;throw Error('Simulated write failure');}const row={transaction_category:p[9],voucher:p[2],id:nextId++,day:p[1],direction:p[3],qty:p[5],key:p[8]};rows.push(row);return [{insertId:row.id}];}
  throw Error('Unexpected test query '+sql);
  };
@@ -63,4 +64,4 @@ test('Supervisor Adjustment goes directly to Accountant; staff goes to Superviso
  }
 });
 
-test('batch saves atomically and rejects duplicate items',async()=>{const f=fixture(),s=createService(f.pool);await assert.rejects(s.postMovements({...body(),items:[{code:'001',qty:'1'},{code:'001',qty:'2'}]},1),/Item Code/);await assert.rejects(s.postMovements({...body(),items:[{code:'001',qty:'1'},{code:'002',qty:'9999'}]},1));assert.equal(f.rows.length,0);await s.postMovements({...body(),items:[{code:'001',qty:'1'},{code:'002',qty:'2'}]},1);assert.equal(f.rows.length,2);await s.postMovements({...body(),items:[{code:'001',qty:'1'},{code:'002',qty:'2'}]},1);assert.equal(f.rows.length,2);});
+test('batch saves atomically and rejects duplicate items',async()=>{const f=fixture(),s=createService(f.pool);await assert.rejects(s.postMovements({...body(),items:[{code:'001',qty:'1'},{code:'001',qty:'2'}]},1),/Item Code/);await assert.rejects(s.postMovements({...body(),items:[{code:'001',qty:'1'},{code:'002',qty:'9999'}]},1));assert.equal(f.rows.length,0);await s.postMovements({...body(),items:[{code:'001',qty:'1'},{code:'002',qty:'2'}]},1);assert.equal(f.rows.length,2);assert.equal(new Set(f.rows.map(r=>r.voucher)).size,1);await s.postMovements({...body(),items:[{code:'001',qty:'1'},{code:'002',qty:'2'}]},1);assert.equal(f.rows.length,2);});
