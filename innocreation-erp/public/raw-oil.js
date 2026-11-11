@@ -20,5 +20,5 @@
  }
  const restored=[...table.querySelectorAll('.oil-restored-item')].map(element=>Object.fromEntries(['code','qty','remark'].map(field=>[field,element.querySelector(`[data-saved="${field}"]`).value])));table.replaceChildren();for(const value of restored.length?restored:[{}])newRow(value);
  add.addEventListener('click',()=>{if(rows.length<50)newRow().code.focus();});category.addEventListener('change',update);
- form.addEventListener('submit',event=>{message.textContent='';update();if(save.disabled){event.preventDefault();message.textContent='Item Code အားလုံးကို မှန်ကန်စွာ ဖြည့်ပါ။';return;}const codes=rows.map(row=>row.code.value.trim());if(new Set(codes).size!==codes.length){event.preventDefault();message.textContent='Item တစ်မျိုးကို တစ်ကြောင်းသာ ထည့်ပါ။';return;}save.disabled=true;save.textContent='Saving…';});update();
+ form.addEventListener('submit',event=>{message.textContent='';update();if(save.disabled){event.preventDefault();message.textContent='Item Code အားလုံးကို မှန်ကန်စွာ ဖြည့်ပါ။';return;}save.disabled=true;save.textContent='Saving…';});update();
 })();

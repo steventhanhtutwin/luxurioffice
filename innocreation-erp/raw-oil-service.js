@@ -12,14 +12,13 @@ function createService(pool,{businessDate=today}={}){return {
  if(!Array.isArray(body.items)||!body.items.length||body.items.length>50)throw new Error('Item 1 မှ 50 အထိ ထည့်ပါ။');
  if(!/^[a-f0-9]{64}$/.test(body.request_key||''))throw new Error('Form expired. Reload and try again.');
  const codes=body.items.map(row=>text(row.code,'Item Code',100));
- if(new Set(codes).size!==codes.length)throw new Error('Item Code တစ်ခုကို တစ်ကြိမ်သာ ထည့်ပါ။');
  const conn=await pool.getConnection();
  try{await conn.beginTransaction();
  // All rows use one transaction; deterministic item locks avoid opposing batch deadlocks.
  await conn.execute('SELECT id,role,is_active FROM users WHERE id=? FOR UPDATE',[userId]);
- for(const code of [...codes].sort())await conn.execute('SELECT id FROM raw_oil_items WHERE code=? FOR UPDATE',[code]);
+ for(const code of [...new Set(codes)].sort())await conn.execute('SELECT id FROM raw_oil_items WHERE code=? FOR UPDATE',[code]);
  const scoped={execute:(...args)=>conn.execute(...args),getConnection:async()=>({execute:(...args)=>conn.execute(...args),beginTransaction:async()=>{},commit:async()=>{},rollback:async()=>{},release:()=>{}})};
- const service=createService(scoped,{businessDate}),ids=[];
+ const batchDate=businessDate();const service=createService(scoped,{businessDate:()=>batchDate}),ids=[],pendingTotals=new Map();
  // Retry the original submission without allocating another number.
  const firstKey=require('node:crypto').createHash('sha256').update(body.request_key+':0').digest('hex');
  const [saved]=await conn.execute('SELECT id FROM raw_oil_transactions WHERE request_key=?',[firstKey]);
@@ -28,13 +27,13 @@ function createService(pool,{businessDate=today}={}){return {
  const sharedVoucher=await nextVoucher(conn,body.direction);
  for(let index=0;index<body.items.length;index++){
  const request_key=require('node:crypto').createHash('sha256').update(body.request_key+':'+index).digest('hex');
- ids.push(await service.postMovement({...body,code:body.items[index].code,qty:body.items[index].qty,remark:body.items[index].remark,request_key},userId,sharedVoucher));
+ ids.push(await service.postMovement({...body,code:body.items[index].code,qty:body.items[index].qty,remark:body.items[index].remark,request_key},userId,sharedVoucher,pendingTotals));
  }
  for(const id of ids)await conn.execute('INSERT INTO raw_oil_voucher_lines (transaction_id,voucher_id) VALUES (?,?)',[id,ids[0]]);
  await conn.commit();return ids[0];
  }catch(err){await conn.rollback();throw err;}finally{conn.release();}
  },
- async postMovement(body,userId,sharedVoucher=null){
+ async postMovement(body,userId,sharedVoucher=null,pendingTotals=null){
  const code=text(body.code,'Item Code',100), direction=body.direction;if(!['IN','OUT'].includes(direction))throw new Error('Invalid direction');
  let category=transactionCategory(body.transaction_category);const qty=grams(body.qty);let day,voucher;const remark=text(body.remark||'','Remark',500,false);
  if(category.toLowerCase()!=='adjustment'&&!/^\d+$/.test(String(body.place_id)))throw new Error('From / To နေရာကို ရွေးပါ။');
@@ -57,14 +56,16 @@ function createService(pool,{businessDate=today}={}){return {
  const [places]=await conn.execute('SELECT id FROM raw_oil_places WHERE id=?',[body.place_id]);if(!places.length)throw new Error('From / To နေရာကို ရွေးပါ။');
  const [totals]=await conn.execute("SELECT COALESCE(SUM(CASE WHEN direction='IN' THEN qty_grams ELSE 0 END),0) stock_in,COALESCE(SUM(CASE WHEN direction='OUT' THEN qty_grams ELSE 0 END),0) stock_out FROM raw_oil_transactions WHERE item_id=? AND "+activeTransactions,[item.id]);
  const current=balance(String(item.opening_grams),String(totals[0].stock_in),String(totals[0].stock_out));
- if(direction==='OUT'&&qty>current)throw new Error('Main Warehouse လက်ကျန်မလုံလောက်ပါ။');
- if(direction==='IN'&&current+qty>999999999999999n)throw new Error('လက်ကျန်ပမာဏ ကန့်သတ်ချက်ကျော်နေပါသည်။');
+ const effectiveQty=qty+(category.toLowerCase()==='adjustment'&&pendingTotals?(pendingTotals.get(String(item.id))||0n):0n);
+ if(direction==='OUT'&&effectiveQty>current)throw new Error('Main Warehouse လက်ကျန်မလုံလောက်ပါ။');
+ if(direction==='IN'&&current+effectiveQty>999999999999999n)throw new Error('လက်ကျန်ပမာဏ ကန့်သတ်ချက်ကျော်နေပါသည်။');
  // Enforce nonnegative stock at every effective date, including backdated entries.
  const [days]=await conn.execute("SELECT DATE_FORMAT(transaction_date,'%Y-%m-%d') day,SUM(CASE WHEN direction='IN' THEN qty_grams ELSE -qty_grams END) delta FROM raw_oil_transactions WHERE item_id=? AND "+activeTransactions+" GROUP BY transaction_date ORDER BY transaction_date",[item.id]);
- checkTimeline(String(item.opening_grams),days,day,direction,qty);
+ checkTimeline(String(item.opening_grams),days,day,direction,effectiveQty);
  voucher=sharedVoucher||await nextVoucher(conn,direction);
  const [result]=await conn.execute('INSERT INTO raw_oil_transactions (item_id,transaction_date,voucher,direction,place_id,qty_grams,remark,created_by,request_key,transaction_category) VALUES (?,?,?,?,?,?,?,?,?,?)',[item.id,day,voucher,direction,body.place_id,decimal(qty),remark,userId,body.request_key,category]);
  if(category.toLowerCase()==='adjustment'){
+ if(pendingTotals)pendingTotals.set(String(item.id),effectiveQty);
  if(actor.role==='warehouse_supervisor')await conn.execute("INSERT INTO raw_oil_adjustment_approvals (transaction_id,status,supervisor_by,supervisor_at) VALUES (?,'PENDING_ACCOUNTANT',?,CURRENT_TIMESTAMP)",[result.insertId,userId]);
  else await conn.execute("INSERT INTO raw_oil_adjustment_approvals (transaction_id,status) VALUES (?,'PENDING_SUPERVISOR')",[result.insertId]);
  }

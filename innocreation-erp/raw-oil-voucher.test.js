@@ -29,3 +29,23 @@ test('transaction and approval lists show one row per voucher, including searche
  try{const id=await s.postMovements(body(),1);let html=await(await fetch(base+'/transactions?q=002')).text();assert.equal((html.match(/class="oil-clickable-transaction"/g)||[]).length,1);assert(html.includes('ROI-000001'));assert(html.includes('+ 1 items'));html=await(await fetch(base+'/transactions/'+id)).text();assert(html.includes('Oil One'));assert(html.includes('Oil Two'));html=await(await fetch(base+'/transactions/'+id+'/print')).text();assert(html.includes('Oil One'));assert(html.includes('Oil Two'));const pending=await s.postMovements(body('Adjustment','IN','b'),1);html=await(await fetch(base+'/adjustments?q=002')).text();assert(html.includes('ROI-000002'));assert(html.includes('1 adjustments'));html=await(await fetch(base+'/transactions/'+pending)).text();assert(html.includes('PENDING_SUPERVISOR'));assert(!html.includes('Request Void →'));
  }finally{server.close();f.db.close();}
 });
+test('duplicate item rows retain quantities and remarks under one voucher; regular OUT checks their combined stock',async()=>{
+ const f=fixture(),s=createService(f.pool,{businessDate:()=> '2026-11-11'});
+ try{const payload={...body(),items:[{code:'001',qty:'200',remark:'Bottle A'},{code:'001',qty:'100',remark:'Bottle B'}]};const id=await s.postMovements(payload,1),rows=await voucherRows(f.pool,id);assert.equal(rows.length,2);assert.equal(rows[0].voucher,rows[1].voucher);assert.deepEqual(rows.map(r=>r.remark),['Bottle A','Bottle B']);assert.deepEqual(rows.map(r=>Number(r.qty_grams)),[200,100]);assert.equal(Number((await s.getItem('001')).closing_grams),400);
+ await assert.rejects(s.postMovements({...body('Purchase','OUT','b'),items:[{code:'001',qty:'250'},{code:'001',qty:'151'}]},1));assert.equal(Number((await s.getItem('001')).closing_grams),400);assert.equal(f.db.prepare('SELECT COUNT(*) n FROM raw_oil_transactions').get().n,2);
+ const out=await s.postMovements({...body('Purchase','OUT','c'),items:[{code:'001',qty:'250'},{code:'001',qty:'150'}]},1);assert.equal((await voucherRows(f.pool,out)).length,2);assert.equal(Number((await s.getItem('001')).closing_grams),0);
+ }finally{f.db.close();}
+});
+test('pending duplicate Adjustment OUT checks cumulative quantity at submission and atomic approval',async()=>{
+ const f=fixture(),s=createService(f.pool,{businessDate:()=> '2026-11-11'});
+ try{await assert.rejects(s.postMovements({...body('Adjustment','OUT'),items:[{code:'001',qty:'60'},{code:'001',qty:'50'}]},1));assert.equal(f.db.prepare('SELECT COUNT(*) n FROM raw_oil_transactions').get().n,0);
+ const id=await s.postMovements({...body('Adjustment','OUT','b'),items:[{code:'001',qty:'40'},{code:'001',qty:'40'}]},1);assert.equal(Number((await s.getItem('001')).closing_grams),100);await approveAdjustment(f.pool,2,id,'approve');await s.postMovements({...body('Purchase','OUT','c'),items:[{code:'001',qty:'30'}]},1);await assert.rejects(approveAdjustment(f.pool,3,id,'approve'));assert(f.db.prepare('SELECT status FROM raw_oil_adjustment_approvals').all().every(r=>r.status==='PENDING_ACCOUNTANT'));assert.equal(Number((await s.getItem('001')).closing_grams),70);
+ f.db.exec('UPDATE raw_oil_items SET opening_grams=200 WHERE id=1');await approveAdjustment(f.pool,3,id,'approve');assert.equal(Number((await s.getItem('001')).closing_grams),90);
+ }finally{f.db.close();}
+});
+test('duplicate IN voucher void checks combined stock and rolls every decision back on a shortage',async()=>{
+ const f=fixture(),s=createService(f.pool,{businessDate:()=> '2026-11-11'}),v=createVoidService(f.pool);
+ try{f.db.exec('UPDATE raw_oil_items SET opening_grams=0 WHERE id=1');const id=await s.postMovements({...body(),items:[{code:'001',qty:'60'},{code:'001',qty:'60'}]},1);await s.postMovements({...body('Purchase','OUT','b'),items:[{code:'001',qty:'30'}]},1);await v.act(2,id,'request',{reason:'Wrong receipt'});await assert.rejects(v.act(3,id,'approve',{request_id:'1'}));assert(f.db.prepare('SELECT status FROM raw_oil_void_requests').all().every(r=>r.status==='PENDING'));assert.equal(Number((await s.getItem('001')).closing_grams),90);
+ }finally{f.db.close();}
+});
+test('duplicate pending Adjustment IN cannot exceed the per-item balance limit in aggregate',async()=>{const f=fixture(),s=createService(f.pool,{businessDate:()=> '2026-11-11'});try{f.db.exec('UPDATE raw_oil_items SET opening_grams=999999999990 WHERE id=1');await assert.rejects(s.postMovements({...body('Adjustment'),items:[{code:'001',qty:'6'},{code:'001',qty:'6'}]},1));assert.equal(f.db.prepare('SELECT COUNT(*) n FROM raw_oil_transactions').get().n,0);}finally{f.db.close();}});
