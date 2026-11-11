@@ -47,7 +47,7 @@ function createRawOilRouter({pool,groups,pdfRenderer}){
  if(match){const index=Number(match[1]);if(!rows.has(index))rows.set(index,{});rows.get(index)[match[2]]=value;}
  }if(rows.size)req.body.items=[...rows].sort((a,b)=>a[0]-b[0]).map(entry=>entry[1]);
  }
- try{const id=await (Array.isArray(req.body.items)?service.postMovements:service.postMovement)({...req.body,direction},req.session.user.id);{const redirect='/inventory/raw-oil/'+(String(req.body.transaction_category).toLowerCase()==='adjustment'?'adjustments':'transactions')+'?saved='+encodeURIComponent(id);return req.is('application/json')?res.json({redirect}):res.redirect(redirect);}}catch(err){if(req.is('application/json'))return res.status(err.status||400).json({error:errorText(err)});if(err.status===403)return res.status(403).send(err.message);return formData(req,res,direction,req.body,errorText(err),err.code?500:400);}}));
+ try{require('./raw-oil-import').ensureImportReady(req,direction);const id=await (Array.isArray(req.body.items)?service.postMovements:service.postMovement)({...req.body,direction},req.session.user.id);{const redirect='/inventory/raw-oil/'+(String(req.body.transaction_category).toLowerCase()==='adjustment'?'adjustments':'transactions')+'?saved='+encodeURIComponent(id);return req.is('application/json')?res.json({redirect}):res.redirect(redirect);}}catch(err){if(req.is('application/json'))return res.status(err.status||400).json({error:errorText(err)});if(err.status===403)return res.status(403).send(err.message);return formData(req,res,direction,req.body,errorText(err),err.code?500:400);}}));
  }
  router.get('/transactions',asyncRoute(async(req,res)=>{
  const categories=await loadHistoricalCategories(pool);
