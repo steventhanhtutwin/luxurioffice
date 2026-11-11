@@ -29,3 +29,31 @@
 .oil-record-fields.oil-adjustment-fields{grid-template-columns:minmax(180px,1.35fr) repeat(4,minmax(125px,1fr))}
 @media(max-width:1150px){.oil-record-fields.oil-adjustment-fields{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:700px){.oil-record-fields,.oil-record-fields.oil-adjustment-fields{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* Transaction search stays compact; optional filters open over the table. */
+.oil-compact-transaction{padding:12px 14px;overflow:visible}
+.oil-transaction-search-form{display:flex;align-items:center;gap:14px;margin:0}
+.oil-search-control{position:relative;display:flex;align-items:center;flex:1;min-width:0;height:42px;border:1px solid #d4ddce;border-radius:9px;background:#fff}
+.oil-search-icon{display:flex;align-items:center;font-size:26px;color:#304e43;padding-left:12px;line-height:1}
+.oil-search-control>input{flex:1;width:0;min-width:0;border:0;border-radius:0;padding:8px 10px;font-size:13px;height:38px;background:transparent}
+.oil-search-control>input:focus{outline-offset:-2px}
+.oil-search-control>.oil-quick-search{width:auto;min-height:32px;margin:0 5px;padding:6px 13px;font-size:12px}
+.oil-custom-filter{position:static;margin:0;flex-shrink:0}
+.oil-custom-filter>summary{display:flex;align-items:center;justify-content:center;gap:5px;min-width:44px;height:40px;padding:0 10px;border-left:1px solid #d4ddce;list-style:none;color:#304e43;cursor:pointer;font-size:12px;border-radius:0 9px 9px 0}
+.oil-custom-filter>summary::-webkit-details-marker{display:none}
+.oil-custom-filter>summary:hover,.oil-custom-filter[open]>summary{background:#edf2e8}
+.oil-custom-count{border-radius:12px;background:#304e43;color:#fff;padding:1px 5px;font-size:10px}
+.oil-custom-panel{position:absolute;top:calc(100% + 10px);left:0;width:min(720px,calc(100vw - 36px));padding:18px;background:#fff;border:1px solid #dce3d4;border-radius:12px;box-shadow:0 12px 35px #233f3526;z-index:30;max-height:65vh;overflow:auto}
+.oil-custom-panel-title{font-size:14px;font-weight:700;color:#304e43;margin-bottom:14px}
+.oil-custom-panel .oil-record-fields{grid-template-columns:repeat(2,minmax(0,1fr))}
+.oil-custom-panel-actions{display:flex;align-items:center;gap:12px;border-top:1px solid #edf0e8;margin-top:16px;padding-top:12px}
+.oil-custom-panel-actions button{width:auto;margin:0;padding:9px 18px;font-size:13px}
+.oil-compact-tools{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.oil-compact-tools button.oil-export{width:auto;margin:0;min-height:40px;padding:8px 16px;font-size:13px;background:#efecdf;color:#887449;border:1px solid #d8cfb5;border-radius:9px;white-space:nowrap}
+.oil-active-filters{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.oil-active-filters span{font-size:11px;padding:3px 9px;border-radius:12px;background:#edf2e8;color:#58704c}
+@media(max-width:650px){.oil-transaction-search-form{flex-wrap:wrap;gap:8px}.oil-search-control{flex-basis:100%}.oil-compact-tools{width:100%;justify-content:space-between}.oil-custom-panel{width:calc(100vw - 54px);max-height:55vh;padding:14px}.oil-search-control>input{font-size:12px}.oil-compact-tools button.oil-export{font-size:12px;min-height:34px}}
+@media print{.oil-custom-panel{display:none}}
+
+.oil-compact-new{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:8px 14px;background:#304e43;border:1px solid #304e43;border-radius:9px;color:#fff;text-decoration:none;white-space:nowrap;font-size:13px;font-weight:600}
+@media(max-width:1000px){.oil-transaction-search-form:has(.oil-compact-new){flex-wrap:wrap}.oil-transaction-search-form:has(.oil-compact-new)>.oil-search-control{flex-basis:100%}}
+@media(max-width:650px){.oil-compact-tools{flex-wrap:wrap;justify-content:flex-start}.oil-compact-new{margin-left:auto;min-height:34px;font-size:12px;padding:7px 10px}}

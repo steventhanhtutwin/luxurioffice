@@ -1,0 +1,1 @@
+(()=>{const details=document.querySelector('.oil-compact-transaction .oil-custom-filter');if(!details)return;document.addEventListener('click',event=>{if(!details.contains(event.target))details.open=false;});document.addEventListener('keydown',event=>{if(event.key==='Escape'&&details.open){details.open=false;details.querySelector('summary').focus();}});})();
