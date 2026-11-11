@@ -23,3 +23,9 @@
 .oil-balance-frozen-head .oil-table{table-layout:fixed;margin-top:0;margin-bottom:0;border-radius:0}
 .oil-balance-frozen-head th{background:#f2f5eb}
 @media print{.oil-balance-frozen-head{display:none!important}}
+
+/* Shared compact filter panels for Raw Oil Transaction and Adjustment. */
+.oil-record-fields{grid-template-columns:repeat(3,minmax(0,1fr))}
+.oil-record-fields.oil-adjustment-fields{grid-template-columns:minmax(180px,1.35fr) repeat(4,minmax(125px,1fr))}
+@media(max-width:1150px){.oil-record-fields.oil-adjustment-fields{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:700px){.oil-record-fields,.oil-record-fields.oil-adjustment-fields{grid-template-columns:repeat(2,minmax(0,1fr))}}
