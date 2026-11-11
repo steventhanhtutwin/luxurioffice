@@ -1,3 +1,6 @@
+const {adjustmentFilters,adjustmentWorkbook}=require('./raw-oil-adjustment-report');
+const adjustmentJoins=' FROM raw_oil_adjustment_approvals a JOIN raw_oil_transactions t ON t.id=a.transaction_id JOIN raw_oil_items i ON i.id=t.item_id JOIN raw_oil_places p ON p.id=t.place_id JOIN users u ON u.id=t.created_by LEFT JOIN users s ON s.id=a.supervisor_by LEFT JOIN users k ON k.id=a.accountant_by';
+const adjustmentSelect="SELECT t.*,DATE_FORMAT(t.transaction_date,'%Y-%m-%d') day,i.code,i.name,CASE WHEN LOWER(p.name)='warehouse' THEN 'Main Warehouse' ELSE p.name END place,u.display_name entered_by,a.status approval_status,a.supervisor_by,a.supervisor_at,a.accountant_by,a.accountant_at,s.display_name supervisor_name,k.display_name accountant_name"+adjustmentJoins;
 const {activeTransactions}=require('./raw-oil-void-service');
 const {grams,checkTimeline}=require('./raw-oil-values');
 async function approveAdjustment(pool,actorId,id,action){
@@ -24,11 +27,19 @@ async function approveAdjustment(pool,actorId,id,action){
  }catch(e){await c.rollback();throw e;}finally{c.release();}
 }
 function installApprovalRoutes({router,pool,render,asyncRoute,csrf}){
+ router.get('/adjustments/export.xlsx',asyncRoute(async(req,res)=>{
+ let filter;try{filter=adjustmentFilters(req.query);}catch(e){return res.status(400).send(e.message);}
+ const [rows]=await pool.query(adjustmentSelect+filter.where+' ORDER BY t.id DESC',filter.params);
+ res.attachment('Raw_Oil_Adjustments_'+require('./raw-oil-numbering').today()+'.xlsx');
+ res.type('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+ res.send(Buffer.from(await adjustmentWorkbook(rows,filter)));
+ }));
  router.get('/adjustments',asyncRoute(async(req,res)=>{
+ let filter;try{filter=adjustmentFilters(req.query);}catch(e){return res.status(400).send(e.message);}
  const pageNo=Math.min(1000000,Math.max(1,parseInt(req.query.p,10)||1));
- const [rows]=await pool.query("SELECT t.*,DATE_FORMAT(t.transaction_date,'%Y-%m-%d') day,i.code,i.name,p.name place,u.display_name entered_by,a.status approval_status,a.supervisor_by,a.supervisor_at,a.accountant_by,a.accountant_at,s.display_name supervisor_name,k.display_name accountant_name FROM raw_oil_adjustment_approvals a JOIN raw_oil_transactions t ON t.id=a.transaction_id JOIN raw_oil_items i ON i.id=t.item_id JOIN raw_oil_places p ON p.id=t.place_id JOIN users u ON u.id=t.created_by LEFT JOIN users s ON s.id=a.supervisor_by LEFT JOIN users k ON k.id=a.accountant_by ORDER BY t.id DESC LIMIT 50 OFFSET "+((pageNo-1)*50));
- const [counts]=await pool.query('SELECT COUNT(*) total FROM raw_oil_adjustment_approvals');
- render(req,res,'adjustments',{type:'approval-list',rows,total:Number(counts[0].total),pageNo,saved:req.query.saved==='1'||/^\d+$/.test(req.query.saved||''),error:''});
+ const [rows]=await pool.query(adjustmentSelect+filter.where+' ORDER BY t.id DESC LIMIT 50 OFFSET '+((pageNo-1)*50),filter.params);
+ const [counts]=await pool.query('SELECT COUNT(*) total'+adjustmentJoins+filter.where,filter.params);
+ render(req,res,'adjustments',{type:'approval-list',rows,filters:filter,total:Number(counts[0].total),pageNo,saved:req.query.saved==='1'||/^\d+$/.test(req.query.saved||''),error:''});
  }));
  router.post('/adjustments/:id/:action',csrf,asyncRoute(async(req,res)=>{
  try{await approveAdjustment(pool,req.session.user.id,req.params.id,req.params.action);res.redirect('/inventory/raw-oil/adjustments?saved=1');}catch(e){if(e.code)throw e;res.status(e.status||400).type('text').send(e.message);}

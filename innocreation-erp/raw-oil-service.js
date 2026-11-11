@@ -8,15 +8,39 @@ const aggregate=`SELECT item_id, SUM(CASE WHEN direction='IN' THEN qty_grams ELS
 const summarySQL=`SELECT i.*,COALESCE(t.stock_in,0) stock_in,COALESCE(t.stock_out,0) stock_out,CASE WHEN i.opening_grams IS NULL THEN NULL ELSE i.opening_grams+COALESCE(t.stock_in,0)-COALESCE(t.stock_out,0) END closing_grams FROM raw_oil_items i LEFT JOIN (${aggregate}) t ON t.item_id=i.id`;
 function createService(pool,{businessDate=today}={}){return {
  async getItem(code){const [rows]=await pool.execute(summarySQL+' WHERE i.code=?',[code]);return rows[0];},
+ async postMovements(body,userId){
+ if(!Array.isArray(body.items)||!body.items.length||body.items.length>50)throw new Error('Item 1 မှ 50 အထိ ထည့်ပါ။');
+ if(!/^[a-f0-9]{64}$/.test(body.request_key||''))throw new Error('Form expired. Reload and try again.');
+ const codes=body.items.map(row=>text(row.code,'Item Code',100));
+ if(new Set(codes).size!==codes.length)throw new Error('Item Code တစ်ခုကို တစ်ကြိမ်သာ ထည့်ပါ။');
+ const conn=await pool.getConnection();
+ try{await conn.beginTransaction();
+ // All rows use one transaction; deterministic item locks avoid opposing batch deadlocks.
+ await conn.execute('SELECT id,role,is_active FROM users WHERE id=? FOR UPDATE',[userId]);
+ for(const code of [...codes].sort())await conn.execute('SELECT id FROM raw_oil_items WHERE code=? FOR UPDATE',[code]);
+ const scoped={execute:(...args)=>conn.execute(...args),getConnection:async()=>({execute:(...args)=>conn.execute(...args),beginTransaction:async()=>{},commit:async()=>{},rollback:async()=>{},release:()=>{}})};
+ const service=createService(scoped,{businessDate}),ids=[];
+ for(let index=0;index<body.items.length;index++){
+ const request_key=require('node:crypto').createHash('sha256').update(body.request_key+':'+index).digest('hex');
+ ids.push(await service.postMovement({...body,code:body.items[index].code,qty:body.items[index].qty,remark:body.items[index].remark,request_key},userId));
+ }
+ await conn.commit();return ids[0];
+ }catch(err){await conn.rollback();throw err;}finally{conn.release();}
+ },
  async postMovement(body,userId){
  const code=text(body.code,'Item Code',100), direction=body.direction;if(!['IN','OUT'].includes(direction))throw new Error('Invalid direction');
  let category=transactionCategory(body.transaction_category);const qty=grams(body.qty);let day,voucher;const remark=text(body.remark||'','Remark',500,false);
- if(!/^\d+$/.test(String(body.place_id)))throw new Error('From / To နေရာကို ရွေးပါ။');
+ if(category.toLowerCase()!=='adjustment'&&!/^\d+$/.test(String(body.place_id)))throw new Error('From / To နေရာကို ရွေးပါ။');
  if(!/^[a-f0-9]{64}$/.test(body.request_key||''))throw new Error('Form expired. Reload and try again.');
  const conn=await pool.getConnection();try{await conn.beginTransaction();
  const [actors]=await conn.execute('SELECT id,role,is_active FROM users WHERE id=? FOR UPDATE',[userId]);const actor=actors[0];
  if(!actor||Number(actor.is_active)!==1||actor.role==='warehouse_accountant')throw Object.assign(new Error('Warehouse Accountant သည် Raw Oil Stock In / Out ထည့်ခွင့်မရှိပါ။ Approval သာ လုပ်ဆောင်နိုင်ပါသည်။'),{status:403});
  category=await selectedTransactionCategory(conn,category);
+ if(category.toLowerCase()==='adjustment'){
+ await conn.execute("INSERT IGNORE INTO raw_oil_places (name) VALUES ('Main Warehouse')");
+ const [main]=await conn.execute("SELECT id FROM raw_oil_places WHERE name='Main Warehouse' LIMIT 1");
+ body={...body,place_id:main[0].id};
+ }
  // Item row is the lock shared by all movements and opening-balance edits.
  const [items]=await conn.execute('SELECT * FROM raw_oil_items WHERE code=? FOR UPDATE',[code]);const item=items[0];if(!item)throw new Error('Item Code မတွေ့ပါ။');
  const [existing]=await conn.execute('SELECT id FROM raw_oil_transactions WHERE request_key=?',[body.request_key]);if(existing.length){await conn.commit();return existing[0].id;}
@@ -26,7 +50,7 @@ function createService(pool,{businessDate=today}={}){return {
  const [places]=await conn.execute('SELECT id FROM raw_oil_places WHERE id=?',[body.place_id]);if(!places.length)throw new Error('From / To နေရာကို ရွေးပါ။');
  const [totals]=await conn.execute("SELECT COALESCE(SUM(CASE WHEN direction='IN' THEN qty_grams ELSE 0 END),0) stock_in,COALESCE(SUM(CASE WHEN direction='OUT' THEN qty_grams ELSE 0 END),0) stock_out FROM raw_oil_transactions WHERE item_id=? AND "+activeTransactions,[item.id]);
  const current=balance(String(item.opening_grams),String(totals[0].stock_in),String(totals[0].stock_out));
- if(direction==='OUT'&&qty>current)throw new Error('Warehouse လက်ကျန်မလုံလောက်ပါ။');
+ if(direction==='OUT'&&qty>current)throw new Error('Main Warehouse လက်ကျန်မလုံလောက်ပါ။');
  if(direction==='IN'&&current+qty>999999999999999n)throw new Error('လက်ကျန်ပမာဏ ကန့်သတ်ချက်ကျော်နေပါသည်။');
  // Enforce nonnegative stock at every effective date, including backdated entries.
  const [days]=await conn.execute("SELECT DATE_FORMAT(transaction_date,'%Y-%m-%d') day,SUM(CASE WHEN direction='IN' THEN qty_grams ELSE -qty_grams END) delta FROM raw_oil_transactions WHERE item_id=? AND "+activeTransactions+" GROUP BY transaction_date ORDER BY transaction_date",[item.id]);

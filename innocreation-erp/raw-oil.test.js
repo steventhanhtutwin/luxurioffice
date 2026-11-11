@@ -14,6 +14,8 @@ function fixture(opening='100.000',failOnce=false,categoryNames=['Purchase','Ret
  if(sql.startsWith('UPDATE raw_oil_sequences')){sequence[p[1]]=BigInt(p[0]);return [{affectedRows:1}];}
  if(sql.startsWith('SELECT * FROM raw_oil_items'))return [[item]];
  if(sql.startsWith('SELECT id FROM raw_oil_transactions WHERE request_key'))return [rows.filter(r=>r.key===p[0]).map(r=>({id:r.id}))];
+ if(sql.startsWith('INSERT IGNORE INTO raw_oil_places'))return [{affectedRows:1}];
+ if(sql.startsWith('SELECT id FROM raw_oil_items'))return [[{id:1}]];
  if(sql.startsWith('SELECT id FROM raw_oil_places'))return [[{id:1}]];
  if(sql.startsWith('SELECT COALESCE'))return [[{stock_in:sum('IN'),stock_out:sum('OUT')}]];
  if(sql.startsWith('SELECT DATE_FORMAT')){const totals=new Map();for(const row of rows.filter(r=>!r.pending))totals.set(row.day,(totals.get(row.day)||0n)+(row.direction==='IN'?grams(row.qty):-grams(row.qty)));return [[...totals].sort().map(([day,n])=>({day,delta:n<0n?'-'+decimal(-n):decimal(n)}))];}
@@ -60,3 +62,5 @@ test('Supervisor Adjustment goes directly to Accountant; staff goes to Superviso
  await s.postMovement(body('b','10',direction),5);assert(!f.rows[1].pending);
  }
 });
+
+test('batch saves atomically and rejects duplicate items',async()=>{const f=fixture(),s=createService(f.pool);await assert.rejects(s.postMovements({...body(),items:[{code:'001',qty:'1'},{code:'001',qty:'2'}]},1),/Item Code/);await assert.rejects(s.postMovements({...body(),items:[{code:'001',qty:'1'},{code:'002',qty:'9999'}]},1));assert.equal(f.rows.length,0);await s.postMovements({...body(),items:[{code:'001',qty:'1'},{code:'002',qty:'2'}]},1);assert.equal(f.rows.length,2);await s.postMovements({...body(),items:[{code:'001',qty:'1'},{code:'002',qty:'2'}]},1);assert.equal(f.rows.length,2);});

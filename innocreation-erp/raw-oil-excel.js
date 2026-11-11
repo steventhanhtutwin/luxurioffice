@@ -10,7 +10,7 @@ function createReport(title,columns,filters,rows){
  sheet.columns=columns;const end=columns.length;
  const merged=(row,text)=>{sheet.mergeCells(row,1,row,end);sheet.getCell(row,1).value=text;};
  merged(1,'INNOCREATION / '+title);sheet.getRow(1).height=35;sheet.getCell(1,1).font={name:'Myanmar Text',size:18,bold:true,color:{argb:GREEN}};
- merged(2,'Warehouse · Standard unit: gram (g)');
+ merged(2,'Main Warehouse · Standard unit: gram (g)');
  merged(3,filters);sheet.getRow(3).height=42;sheet.getCell(3,1).alignment={wrapText:true,vertical:'middle'};
  const exported=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Bangkok',dateStyle:'medium',timeStyle:'short'}).format(new Date());
  merged(4,'Exported: '+exported+' (Asia/Bangkok) · '+rows.length+' records · All matching rows, all pages');
@@ -40,10 +40,12 @@ async function summaryWorkbook(items,filters){
 }
 async function transactionWorkbook(entries,filters){
  const columns=[{header:'Transaction ID',key:'id',width:18,format:'@'},{header:'Date',key:'date',width:17,format:'yyyy-mm-dd'},{header:'Vr No',key:'voucher',width:20,format:'@'},{header:'Item Code',key:'code',width:18,format:'@'},{header:'Item Name',key:'name',width:38},{header:'Categories',key:'category',width:27},{header:'Type',key:'direction',width:12},{header:'From',key:'from',width:23},{header:'To',key:'to',width:23},{header:'Qty (g)',key:'qty',width:20,format:'#,##0.000'},{header:'Remark',key:'remark',width:40},{header:'Entered By',key:'entered_by',width:24},{header:'Status',key:'status',width:25},{header:'Void Reason',key:'void_reason',width:40},{header:'Void Requested By',key:'void_requested_by',width:24},{header:'Void Requested At',key:'void_requested_at',width:24},{header:'Latest Void Request',key:'request_status',width:24},{header:'Void Decision By',key:'void_decided_by',width:24},{header:'Void Decision At',key:'void_decided_at',width:24},{header:'Reject Reason',key:'void_decision_reason',width:40},{header:'Transaction Category',key:'transaction_category',width:25}];
- const rows=entries.map(tx=>({id:String(tx.id),date:excelDate(tx.day),voucher:String(tx.voucher),code:String(tx.code),name:tx.name,category:tx.category,direction:tx.direction,from:tx.direction==='IN'?tx.place:'Warehouse',to:tx.direction==='IN'?'Warehouse':tx.place,qty:number(tx.qty_grams),remark:tx.remark||'',entered_by:tx.entered_by,status:statusLabel(tx.void_status),void_reason:tx.void_reason||'',void_requested_by:tx.void_requested_by||'',void_requested_at:tx.void_requested_at?String(tx.void_requested_at):'',request_status:tx.request_status||'',void_decided_by:tx.void_decided_by||'',void_decided_at:tx.void_decided_at?String(tx.void_decided_at):'',void_decision_reason:tx.void_decision_reason||'',transaction_category:tx.transaction_category||''}));
+ const rows=entries.map(tx=>({id:String(tx.id),date:excelDate(tx.day),voucher:String(tx.voucher),code:String(tx.code),name:tx.name,category:tx.category,direction:tx.direction,from:tx.direction==='IN'?tx.place:'Main Warehouse',to:tx.direction==='IN'?'Main Warehouse':tx.place,qty:number(tx.qty_grams),remark:tx.remark||'',entered_by:tx.entered_by,status:statusLabel(tx.void_status),void_reason:tx.void_reason||'',void_requested_by:tx.void_requested_by||'',void_requested_at:tx.void_requested_at?String(tx.void_requested_at):'',request_status:tx.request_status||'',void_decided_by:tx.void_decided_by||'',void_decided_at:tx.void_decided_at?String(tx.void_decided_at):'',void_decision_reason:tx.void_decision_reason||'',transaction_category:tx.transaction_category||''}));
  const {workbook,sheet,merged}=createReport('Raw Oil Transaction',columns,'Filters · Search: '+(filters.q||'All')+' · Transaction Category: '+(filters.transaction_category||'All')+' · Status: '+(filters.status||'All')+' · Type: '+(filters.direction||'IN + OUT')+' · From date: '+(filters.from||'Any')+' · To date: '+(filters.to||'Any'),rows);
  merged(5,rows.length?'Voided rows are audit records only and excluded from Balance. Pending requests still affect stock. Quantities are positive; Type and From / To indicate direction.':'No transactions match these filters.');
  sheet.getRow(5).height=30;
  return workbook.xlsx.writeBuffer();
 }
 module.exports={summaryWorkbook,transactionWorkbook,createReport};
+
+module.exports.createReport=createReport;

@@ -16,7 +16,6 @@ function createRawOilRouter({pool,groups,pdfRenderer}){
  const errorText=err=>{if(err.code==='ER_DUP_ENTRY')return 'Item Code သို့မဟုတ် နေရာအမည် ထပ်နေပါသည်။';if(err.code){console.error('Raw Oil:',err.code);return 'Database error. Terminal နှင့် setup-raw-oil ပြီးစီးမှုကို စစ်ပါ။';}return err.message;};
  const asyncRoute=fn=>(req,res,next)=>Promise.resolve(fn(req,res,next)).catch(next);
  const sendExcel=(res,buffer,name)=>{res.attachment(name+'_'+today()+'.xlsx');res.type('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');res.send(Buffer.from(buffer));};
- router.all('/adjustments/export.xlsx',(req,res)=>res.status(404).send('Export unavailable'));
  require('./raw-oil-approval').installApprovalRoutes({router,pool,render,asyncRoute,csrf});
  router.get('/summary/export.xlsx',asyncRoute(async(req,res)=>{const filters=summaryFilters(req.query);const [rows]=await pool.query(summarySQL+filters.where+' ORDER BY i.name,i.id',filters.params);sendExcel(res,await summaryWorkbook(rows,filters),'Raw_Oil_Balance');}));
  router.get('/transactions/export.xlsx',asyncRoute(async(req,res)=>{let filters;try{filters=transactionFilters(req.query);}catch(err){return res.status(400).send(err.message);}const [rows]=await pool.query(transactionSelect+filters.where+' ORDER BY t.transaction_date DESC,t.id DESC',filters.params);sendExcel(res,await transactionWorkbook(rows,filters),'Raw_Oil_Transaction');}));
@@ -36,7 +35,15 @@ function createRawOilRouter({pool,groups,pdfRenderer}){
  for(const [path,direction]of [['in','IN'],['out','OUT']]){
  const canKeyIn=(req,res,next)=>req.session.user.role==='warehouse_accountant'?res.status(403).send('Warehouse Accountant သည် Raw Oil Stock In / Out ထည့်ခွင့်မရှိပါ။ Approval သာ လုပ်ဆောင်နိုင်ပါသည်။'):next();
  router.get('/'+path,canKeyIn,asyncRoute((req,res)=>formData(req,res,direction)));
- router.post('/'+path,canKeyIn,csrf,asyncRoute(async(req,res)=>{try{const id=await service.postMovement({...req.body,direction},req.session.user.id);res.redirect('/inventory/raw-oil/'+(String(req.body.transaction_category).toLowerCase()==='adjustment'?'adjustments':'transactions')+'?saved='+encodeURIComponent(id));}catch(err){if(err.status===403)return res.status(403).send(err.message);return formData(req,res,direction,req.body,errorText(err),err.code?500:400);}}));
+ router.post('/'+path,canKeyIn,csrf,asyncRoute(async(req,res)=>{
+ // Support the application's extended:false URL-encoded parser without server changes.
+ if(!Array.isArray(req.body.items)){
+ const rows=new Map();for(const [key,value] of Object.entries(req.body)){
+ const match=/^items\[(\d{1,3})\]\[(code|qty|remark)\]$/.exec(key);
+ if(match){const index=Number(match[1]);if(!rows.has(index))rows.set(index,{});rows.get(index)[match[2]]=value;}
+ }if(rows.size)req.body.items=[...rows].sort((a,b)=>a[0]-b[0]).map(entry=>entry[1]);
+ }
+ try{const id=await (Array.isArray(req.body.items)?service.postMovements:service.postMovement)({...req.body,direction},req.session.user.id);res.redirect('/inventory/raw-oil/'+(String(req.body.transaction_category).toLowerCase()==='adjustment'?'adjustments':'transactions')+'?saved='+encodeURIComponent(id));}catch(err){if(err.status===403)return res.status(403).send(err.message);return formData(req,res,direction,req.body,errorText(err),err.code?500:400);}}));
  }
  router.get('/transactions',asyncRoute(async(req,res)=>{
  const categories=await loadHistoricalCategories(pool);
@@ -59,7 +66,7 @@ function createRawOilRouter({pool,groups,pdfRenderer}){
  router.post('/items/new',admin,csrf,asyncRoute(async(req,res)=>{try{await service.saveItem(req.body,req.session.user.id);res.redirect('/inventory/raw-oil/summary?saved=1');}catch(err){return itemForm(req,res,postedItem(req.body),errorText(err),err.code?500:400);}}));
  router.get('/items/:id',admin,asyncRoute((req,res)=>itemForm(req,res,{id:req.params.id})));
  router.post('/items/:id',admin,csrf,asyncRoute(async(req,res)=>{try{await service.saveItem(req.body,req.session.user.id,req.params.id);res.redirect('/inventory/raw-oil/summary?saved=1');}catch(err){return itemForm(req,res,postedItem(req.body,req.params.id),errorText(err),err.code?500:400);}}));
- router.post('/places',admin,csrf,asyncRoute(async(req,res)=>{const direction=req.body.return_to==='out'?'OUT':'IN';try{const name=text(req.body.name,'Location',120);if(name.toLowerCase()==='warehouse')throw new Error('Warehouse ကို From / To အဖြစ် ထပ်မထည့်ရပါ။');await pool.execute('INSERT INTO raw_oil_places (name) VALUES (?)',[name]);res.redirect('/inventory/raw-oil/'+(direction==='IN'?'in':'out'));}catch(err){return formData(req,res,direction,{},errorText(err),err.code?500:400);}}));
+ router.post('/places',admin,csrf,asyncRoute(async(req,res)=>{const direction=req.body.return_to==='out'?'OUT':'IN';try{const name=text(req.body.name,'Location',120);if(['warehouse','main warehouse'].includes(name.toLowerCase()))throw new Error('Warehouse ကို From / To အဖြစ် ထပ်မထည့်ရပါ။');await pool.execute('INSERT INTO raw_oil_places (name) VALUES (?)',[name]);res.redirect('/inventory/raw-oil/'+(direction==='IN'?'in':'out'));}catch(err){return formData(req,res,direction,{},errorText(err),err.code?500:400);}}));
  router.use((err,req,res,next)=>{console.error('Raw Oil page:',err.code||err.message);res.status(500).send('Raw Oil database is not ready or could not be read. Run npm.cmd run setup-raw-oil and check the terminal.');});
  return router;
 }
