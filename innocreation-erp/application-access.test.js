@@ -1,7 +1,7 @@
 const test=require('node:test'),assert=require('node:assert/strict'),express=require('express'),path=require('path');
 const {applications,accessFor,submittedAccess,ensureSettingsManager}=require('./application-access');
 const {createSettingsService}=require('./settings-service');
-function fixture(){let users=[{id:1,username:'owner',display_name:'Owner',role:'admin',is_active:1,password_version:0,application_access:JSON.stringify(applications.map(a=>a.id))},{id:2,username:'manager',display_name:'Manager',role:'inventory',is_active:1,password_version:0,application_access:'["settings"]'},{id:3,username:'staff',display_name:'Staff',role:'warehouse_accountant',is_active:1,password_version:0,application_access:'["inventory"]'}];
+function fixture(){let users=[{id:1,username:'owner',display_name:'Owner',role:'admin',is_active:1,password_version:0,application_access:JSON.stringify(applications.map(a=>a.id))},{id:2,username:'manager',display_name:'Manager',role:'staff',is_active:1,password_version:0,application_access:'["settings"]'},{id:3,username:'staff',display_name:'Staff',role:'warehouse_accountant',is_active:1,password_version:0,application_access:'["inventory"]'}];
  const execute=async(sql,p=[])=>{
  if(sql.includes('FROM users WHERE is_active=1 ORDER BY id'))return [users.filter(u=>u.is_active)];
  if(sql.startsWith('SELECT')&&sql.includes('FROM users'))return [users.filter(u=>u.id===Number(p[0])).map(u=>({...u}))];
@@ -23,7 +23,7 @@ test('Application access validates one/multiple/all/none, and explicit admin den
  assert.throws(()=>ensureSettingsManager([{id:1,role:'admin',is_active:1,application_access:'["settings"]'}],1,[]));
 });
 test('Non-admin with Settings access can manage user permissions, categories, departments and reset passwords',async()=>{
- const f=fixture(),s=createSettingsService(f.pool);const body={username:'new',display_name:'New Staff',position:'Officer',role:'inventory',password:'abcde',confirm_password:'abcde',application_access_present:'1',application_access:['packaging','purchasing']};
+ const f=fixture(),s=createSettingsService(f.pool);const body={username:'new',display_name:'New Staff',position:'Officer',role:'staff',password:'abcde',confirm_password:'abcde',application_access_present:'1',application_access:['packaging','purchasing']};
  const id=await s.createUser(2,body);assert.deepEqual(accessFor(f.users.find(u=>u.id===id)),['packaging','purchasing']);
  await s.updateUser(2,id,{...body,application_access:applications.map(a=>a.id)});assert.equal(accessFor(f.users.find(u=>u.id===id)).length,5);
  await s.updateUser(2,id,{...body,application_access:undefined});assert.deepEqual(accessFor(f.users.find(u=>u.id===id)),[]);
@@ -31,7 +31,7 @@ test('Non-admin with Settings access can manage user permissions, categories, de
  await require('./inventory-settings').createInventorySettingsService(f.pool).createCategory(2,{name:'Usage'});
  await require('./departments').createDepartmentService(f.pool).save(2,'create',null,{name:'Warehouse'});
  await assert.rejects(s.createUser(3,body),e=>e.status===403);
- f.users[0].application_access='[]';await assert.rejects(s.updateUser(2,2,{display_name:'Manager',position:'',role:'inventory',application_access_present:'1'}),e=>e.status===403);
+ f.users[0].application_access='[]';await assert.rejects(s.updateUser(2,2,{display_name:'Manager',position:'',role:'staff',application_access_present:'1'}),e=>e.status===403);
 });
 test('Live access checks protect every application URL including APIs, exports, POST and Settings; revoke without logout',async()=>{
  const {accountGuard}=require('./profile-service'),f=fixture(),app=express();app.use(express.urlencoded({extended:false}));app.set('view engine','ejs');app.set('views',path.join(__dirname,'views'));

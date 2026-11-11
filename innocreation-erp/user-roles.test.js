@@ -1,0 +1,10 @@
+const test=require('node:test'),assert=require('node:assert/strict');
+const {roles,normalizedRole,roleLabel}=require('./user-roles');
+test('Only four roles may be assigned and legacy application roles display as Staff',async()=>{
+ assert.deepEqual(roles.map(r=>r.value),['admin','staff','warehouse_supervisor','warehouse_accountant']);
+ for(const old of ['inventory','packaging','production','purchasing']){assert.equal(normalizedRole(old),'staff');assert.equal(roleLabel(old),'Staff');await assert.rejects(require('./settings-service').createSettingsService({}).createUser(1,{display_name:'New',position:'Officer',role:old,username:'new',password:'abcde',confirm_password:'abcde'}),/User Role/);}
+ assert.equal(normalizedRole('warehouse_accountant'),'warehouse_accountant');
+});
+test('Editing legacy users selects Staff while preserving their application access',async()=>{
+ const express=require('express'),path=require('path'),{createSettingsRouter}=require('./settings-routes');const app=express();app.set('view engine','ejs');app.set('views',path.join(__dirname,'views'));app.use((req,res,next)=>{req.session={user:{id:1,role:'admin',app_access:['settings']},csrf:'x'};res.locals.csrf='x';next();});const pool={execute:async()=>[[{id:2,username:'old',display_name:'Legacy Staff',role:'inventory',application_access:'["inventory","purchasing"]'}]],query:async()=>[[]]};app.use('/settings',createSettingsRouter({pool}));const s=app.listen(0);await new Promise(r=>s.once('listening',r));try{const res=await fetch('http://127.0.0.1:'+s.address().port+'/settings/users/2/edit');assert.equal(res.status,200);const html=await res.text();assert(/value="staff" selected/.test(html));const dropdown=html.match(/<select id="role"[\s\S]*?<\/select>/)[0];assert.equal((dropdown.match(/<option/g)||[]).length,5);for(const old of ['inventory','packaging','production','purchasing'])assert(!dropdown.includes('value="'+old+'"'));assert(/name="application_access" value="inventory" checked/.test(html));assert(/name="application_access" value="purchasing" checked/.test(html));}finally{s.close();}
+});
