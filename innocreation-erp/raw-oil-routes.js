@@ -51,7 +51,8 @@ function createRawOilRouter({pool,groups,pdfRenderer}){
  async function itemForm(req,res,item={},error='',status=200){
  const [categories]=await pool.query("SELECT DISTINCT category FROM raw_oil_items WHERE category<>'' ORDER BY category");
  if(item.id){const [rows]=await pool.execute("SELECT *,DATE_FORMAT(opening_date,'%Y-%m-%d') opening_date FROM raw_oil_items WHERE id=?",[item.id]);if(!rows.length)return res.status(404).send('Item not found');const stored=rows[0];if(stored.opening_grams!==null)return res.status(403).send('Stock adjustment လုပ်ခွင့် မရှိတော့ပါ။ Transaction မှားပါက Void Request လုပ်ပါ။');const [transactions]=await pool.execute('SELECT id FROM raw_oil_transactions WHERE item_id=? LIMIT 1',[item.id]);item={...stored,...item,id:stored.id,code:stored.code,item_class:stored.item_class};if(transactions.length)item={...item,opening_grams:stored.opening_grams,opening_date:stored.opening_date,opening_locked:true};}
- else item={...item,item_class:'Raw Oil'};
+ else item={...item,code:'',item_class:'Raw Oil'};
+ item.opening_date ||= businessToday();
  return render(req,res,'summary',{type:'item',item,error,categories,today:today()},status);
  }
  router.get('/items/new',admin,asyncRoute((req,res)=>itemForm(req,res)));
