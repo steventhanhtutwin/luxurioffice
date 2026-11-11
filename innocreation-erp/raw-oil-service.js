@@ -9,7 +9,7 @@ const summarySQL=`SELECT i.*,COALESCE(t.stock_in,0) stock_in,COALESCE(t.stock_ou
 function createService(pool,{businessDate=today}={}){return {
  async getItem(code){const [rows]=await pool.execute(summarySQL+' WHERE i.code=?',[code]);return rows[0];},
  async postMovements(body,userId){
- if(!Array.isArray(body.items)||!body.items.length||body.items.length>50)throw new Error('Item 1 မှ 50 အထိ ထည့်ပါ။');
+ if(!Array.isArray(body.items)||!body.items.length||body.items.length>500)throw new Error('Item 1 မှ 500 အထိ ထည့်ပါ။');
  if(!/^[a-f0-9]{64}$/.test(body.request_key||''))throw new Error('Form expired. Reload and try again.');
  const codes=body.items.map(row=>text(row.code,'Item Code',100));
  const conn=await pool.getConnection();

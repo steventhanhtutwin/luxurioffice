@@ -71,3 +71,11 @@
 #oil-movement .oil-entry-table .oil-remove-item{width:auto;margin:0;padding:9px 10px;font-size:12px;color:#80633a;background:#f3eee4}
 .oil-inline-status{display:block;color:#a54d38;font-size:11px;line-height:1.6;margin-top:5px;overflow-wrap:anywhere}
 #oil-movement .oil-inline-items #oil-entry-message{margin:10px 0;color:#a54d38}
+
+.oil-import-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+#oil-movement .oil-import-tools #oil-import-excel{background:#efecdf;color:#887449;border:1px solid #d8cfb5}
+.oil-import-download{margin:16px 0 0;font-size:13px}
+.oil-import-download a{color:#b13c2e;text-decoration:underline;background:none;border:0;padding:0}
+#oil-entry-message details{max-height:240px;overflow:auto;padding:8px 0}
+#oil-entry-message summary{cursor:pointer;font-weight:600}
+#oil-import-file[hidden]{display:none}
