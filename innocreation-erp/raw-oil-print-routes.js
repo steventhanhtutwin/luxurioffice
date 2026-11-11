@@ -14,7 +14,7 @@ function installRawOilPrintRoutes({router,pool,asyncRoute,pdfRenderer=renderPDF}
  router.get('/transactions/:id/pdf',asyncRoute(async(req,res)=>{
  const value=await data(req.params.id);if(!value)return res.status(404).send('Transaction not found');res.set('Cache-Control','private, no-store');
  try{const html=await ejs.renderFile(path.join(__dirname,'views/raw-oil/print.ejs'),{...value,pdfMode:true,css:printCSS()});const bytes=await pdfRenderer(html);res.attachment('Raw_Oil_Transaction_'+value.tx.id+'.pdf').type('application/pdf').send(bytes);}
- catch(err){console.error('Raw Oil PDF:',err.code||err.message);res.status(503).render('raw-oil/pdf-unavailable',{id:value.tx.id});}
+ catch(err){console.error('Raw Oil PDF:',err.code||err.message);res.render('raw-oil/print',{...value,pdfMode:false,downloadMode:true});}
  }));
 }
 module.exports={installRawOilPrintRoutes};
