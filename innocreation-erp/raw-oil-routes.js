@@ -1,3 +1,4 @@
+const {periodValues,periodSummary}=require('./raw-oil-period');
 const {transactionCategories,loadTransactionCategories,loadHistoricalCategories}=require('./raw-oil-transaction-category');
 const {installVoidRoutes}=require('./raw-oil-void-routes');
 const {statusLabel}=require('./raw-oil-void-service');
@@ -17,19 +18,20 @@ function createRawOilRouter({pool,groups,pdfRenderer}){
  const asyncRoute=fn=>(req,res,next)=>Promise.resolve(fn(req,res,next)).catch(next);
  const sendExcel=(res,buffer,name)=>{res.attachment(name+'_'+today()+'.xlsx');res.type('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');res.send(Buffer.from(buffer));};
  require('./raw-oil-approval').installApprovalRoutes({router,pool,render,asyncRoute,csrf});
- router.get('/summary/export.xlsx',asyncRoute(async(req,res)=>{const filters=summaryFilters(req.query);const [rows]=await pool.query(summarySQL+filters.where+' ORDER BY i.name,i.id',filters.params);sendExcel(res,await summaryWorkbook(rows,filters),'Raw_Oil_Balance');}));
+ router.get('/summary/export.xlsx',asyncRoute(async(req,res)=>{let filters;try{filters={...summaryFilters(req.query),...periodValues(req.query)};}catch(err){return res.status(400).send(err.message);}const report=periodSummary(filters);const [rows]=await pool.query(report.sql+filters.where+' ORDER BY i.name,i.id',[...report.params,...filters.params]);sendExcel(res,await summaryWorkbook(rows,filters),'Raw_Oil_Balance');}));
  router.get('/transactions/export.xlsx',asyncRoute(async(req,res)=>{let filters;try{filters=transactionFilters(req.query);}catch(err){return res.status(400).send(err.message);}const [rows]=await pool.query(transactionSelect+filters.where+' ORDER BY t.transaction_date DESC,t.id DESC',filters.params);sendExcel(res,await transactionWorkbook(rows,filters),'Raw_Oil_Transaction');}));
  require('./raw-oil-print-routes').installRawOilPrintRoutes({router,pool,asyncRoute,pdfRenderer});
  installVoidRoutes({router,pool,render,asyncRoute,csrf});
  router.get('/api/items/:code',asyncRoute(async(req,res)=>{const item=await service.getItem(req.params.code);if(!item)return res.status(404).json({error:'Item Code မတွေ့ပါ။'});res.json(item);}));
  router.get('/list',(req,res)=>{const q=new URLSearchParams();for(const key of ['q','category','p','saved'])if(typeof req.query[key]==='string')q.set(key,req.query[key]);res.redirect('/inventory/raw-oil/summary'+(q.size?'?'+q.toString():''));});
  router.get('/summary',asyncRoute(async(req,res)=>{
+ let period;try{period=periodValues(req.query);}catch(err){return res.status(400).send(err.message);}const report=periodSummary(period);
  const {q,category,where,params}=summaryFilters(req.query);const pageNo=Math.min(1000000,Math.max(1,parseInt(req.query.p,10)||1));
- const [rows]=await pool.query(summarySQL+where+' ORDER BY i.name,i.id LIMIT 50 OFFSET '+((pageNo-1)*50),params);
+ const [rows]=await pool.query(report.sql+where+' ORDER BY i.name,i.id LIMIT 50 OFFSET '+((pageNo-1)*50),[...report.params,...params]);
  const [counts]=await pool.query('SELECT COUNT(*) total FROM raw_oil_items i'+where,params);
  const [categories]=await pool.query('SELECT DISTINCT category FROM raw_oil_items ORDER BY category');
- const [totals]=await pool.query('SELECT COUNT(*) item_count,SUM(opening_grams IS NULL) pending,COALESCE(SUM(opening_grams),0) opening,COALESCE(SUM(stock_in),0) stock_in,COALESCE(SUM(stock_out),0) stock_out,COALESCE(SUM(closing_grams),0) closing FROM ('+summarySQL+where+') s',params);
- render(req,res,'summary',{type:'list',rows,q,category,categories,totals:totals[0],total:Number(counts[0].total),pageNo,saved:req.query.saved==='1'});
+ const [totals]=await pool.query('SELECT COUNT(*) item_count,SUM(original_opening_grams IS NULL) pending,COALESCE(SUM(opening_grams),0) opening,COALESCE(SUM(stock_in),0) stock_in,COALESCE(SUM(stock_out),0) stock_out,COALESCE(SUM(closing_grams),0) closing FROM ('+report.sql+where+') s',[...report.params,...params]);
+ render(req,res,'summary',{type:'list',rows,q,category,...period,categories,totals:totals[0],total:Number(counts[0].total),pageNo,saved:req.query.saved==='1'});
  }));
  const formData=async(req,res,direction,body={},error='',status=200)=>{const [places]=await pool.query('SELECT * FROM raw_oil_places ORDER BY name');const categories=await loadTransactionCategories(pool);return render(req,res,direction==='IN'?'in':'out',{type:'movement',direction,places,transactionCategories:categories,values:{date:today(),...body,date:businessToday(),voucher:'',request_key:body.request_key||newKey()},error},status);};
  for(const [path,direction]of [['in','IN'],['out','OUT']]){
