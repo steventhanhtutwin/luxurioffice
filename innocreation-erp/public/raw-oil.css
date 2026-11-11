@@ -42,3 +42,17 @@
 #oil-movement .oil-selected-items .oil-remove-item{width:auto;padding:8px 12px;background:#f3eee4;color:#80633a;white-space:nowrap;font-size:13px}
 #oil-item-count{display:inline-block;margin-left:8px;padding:3px 10px;border-radius:20px;background:#eaf0e5;font-size:13px}
 @media(max-width:600px){#oil-movement .oil-item-entry{padding:16px;margin-top:20px}}
+
+/* Balance filter panel: aligned fields with a dedicated action row. */
+.oil-balance-toolbar{margin:20px 0;padding:20px;background:#fff;border:1px solid #dce3d4;border-radius:14px}
+.oil-balance-filters{display:block;margin:0}
+.oil-balance-fields{display:grid;grid-template-columns:minmax(220px,1.4fr) minmax(190px,1.1fr) minmax(165px,1fr) minmax(165px,1fr);gap:16px}
+.oil-balance-fields label{display:flex;flex-direction:column;gap:8px;margin:0;color:#70805f;font-size:13px;font-weight:600;min-width:0}
+.oil-balance-fields input,.oil-balance-fields select{width:100%;min-width:0;height:46px;margin:0;box-sizing:border-box;border:1px solid #d4ddce;border-radius:9px;background:#fff;padding:10px 13px;font:inherit;font-size:14px;font-weight:400;color:#304139}
+.oil-balance-actions{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:18px;padding-top:18px;border-top:1px solid #edf0e8;flex-wrap:wrap}
+.oil-balance-action-group{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.oil-balance-actions button,.oil-balance-actions .oil-button{display:inline-flex;align-items:center;justify-content:center;width:auto;min-height:44px;box-sizing:border-box;padding:10px 20px;margin:0;border:1px solid #304e43;border-radius:9px;background:#304e43;color:#fff;font:inherit;font-size:14px;font-weight:600;text-decoration:none;cursor:pointer}
+.oil-balance-actions button.oil-export{background:#efecdf;border-color:#d8cfb5;color:#887449}
+.oil-balance-reset{display:inline-flex;align-items:center;min-height:44px;padding:0 8px;color:#708557;font-size:14px}
+@media(max-width:1100px){.oil-balance-fields{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.oil-balance-toolbar{padding:16px}.oil-balance-fields{grid-template-columns:minmax(0,1fr);gap:14px}.oil-balance-actions,.oil-balance-action-group{gap:10px}.oil-balance-actions>.oil-button{width:100%}}
