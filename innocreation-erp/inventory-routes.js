@@ -10,6 +10,7 @@ const groups = [
 function renderInventory(req,res,group=null,page=null){res.render('inventory',{user:req.session.user,groups,group,page});}
 const router=express.Router();
 router.use((req,res,next)=>req.session.user?next():res.redirect('/login'));
+router.use('/notifications',require('./approval-notifications').createNotificationRouter({pool}));
 router.use('/raw-oil',createRawOilRouter({pool,groups}));
 router.use('/finished-goods',createFGRouter({pool,groups}));
 router.get('/',(req,res)=>renderInventory(req,res));
