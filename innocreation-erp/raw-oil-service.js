@@ -27,7 +27,7 @@ function createService(pool,{businessDate=today}={}){return {
  const sharedVoucher=await nextVoucher(conn,body.direction);
  for(let index=0;index<body.items.length;index++){
  const request_key=require('node:crypto').createHash('sha256').update(body.request_key+':'+index).digest('hex');
- ids.push(await service.postMovement({...body,code:body.items[index].code,qty:body.items[index].qty,remark:body.items[index].remark,request_key},userId,sharedVoucher,pendingTotals));
+ ids.push(await service.postMovement({...body,code:body.items[index].code,qty:body.items[index].qty,remark:body.items[index].remark,imported_name:body.items[index].imported_name,request_key},userId,sharedVoucher,pendingTotals));
  }
  for(const id of ids)await conn.execute('INSERT INTO raw_oil_voucher_lines (transaction_id,voucher_id) VALUES (?,?)',[id,ids[0]]);
  await conn.commit();return ids[0];
@@ -49,6 +49,8 @@ function createService(pool,{businessDate=today}={}){return {
  }
  // Item row is the lock shared by all movements and opening-balance edits.
  const [items]=await conn.execute('SELECT * FROM raw_oil_items WHERE code=? FOR UPDATE',[code]);const item=items[0];if(!item)throw new Error('Item Code မတွေ့ပါ။');
+ if(body.imported_name!==undefined){const importedName=text(body.imported_name,'Excel Item Name',200,false);const normalize=value=>String(value).trim().toLowerCase().replace(/\s+/g,' ');if(importedName&&normalize(importedName)!==normalize(item.name))throw Error('Excel Item Name နှင့် System Item Name မကိုက်ပါ။ Error row ကို Remove လုပ်ပါ သို့မဟုတ် Excel ပြင်ပြီး ပြန် Import လုပ်ပါ။');}
+
  const [existing]=await conn.execute('SELECT id FROM raw_oil_transactions WHERE request_key=?',[body.request_key]);if(existing.length){await conn.commit();return existing[0].id;}
  day=date(businessDate());
  if(item.opening_grams===null)throw new Error('အဖွင့်လက်ကျန်နှင့် စာရင်းစတင်ရက်ကို အရင်သတ်မှတ်ပါ။');
