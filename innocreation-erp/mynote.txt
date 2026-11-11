@@ -119,6 +119,14 @@ Hostinger Database နာမည်နဲ့ မကိုက်နိုင်လ
 -----------------------------------------------------------------
 
 
+git add .
+git diff --cached --stat
+git commit -m "Update Raw Oil In"
+git push origin main
+
+
+-----------------------------------------------------------------
+
 
 
 
