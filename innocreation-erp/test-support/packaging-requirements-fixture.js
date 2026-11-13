@@ -1,0 +1,22 @@
+const {DatabaseSync}=require('node:sqlite');
+function fixture(){const db=new DatabaseSync(':memory:');db.exec(`PRAGMA foreign_keys=ON;
+CREATE TABLE users(id INTEGER PRIMARY KEY,display_name TEXT,is_active INTEGER,application_access TEXT);
+INSERT INTO users VALUES(1,'Packaging Staff',1,'["packaging"]'),(2,'Inventory Staff',1,'["inventory"]');
+CREATE TABLE fg_items(id INTEGER PRIMARY KEY,code TEXT,name TEXT);
+INSERT INTO fg_items VALUES(101,'FG-000101','Pink Candy 30ml Memori Perfume (Elixir)'),(102,'FG-000102','Dream With You 30ml Memori Perfume (Elixir)');
+CREATE TABLE fg_settings(id INTEGER PRIMARY KEY,main_location_id INTEGER);
+INSERT INTO fg_settings VALUES(1,7);
+CREATE TABLE fg_balances(item_id INTEGER,location_id INTEGER,opening_qty NUMERIC);
+INSERT INTO fg_balances VALUES(101,7,100),(102,7,200);
+CREATE TABLE fg_ledger(item_id INTEGER,location_id INTEGER,direction TEXT,qty NUMERIC);
+INSERT INTO fg_ledger VALUES(101,7,'IN',12),(101,7,'OUT',5),(101,8,'IN',999);
+CREATE TABLE packaging_stock(id INTEGER PRIMARY KEY,item_name TEXT,category TEXT,size_ml TEXT,opening_qty NUMERIC,imported_stock_in NUMERIC,imported_stock_out NUMERIC,version INTEGER,updated_by INTEGER,fg_item_id INTEGER);
+INSERT INTO packaging_stock VALUES(1,'Pink Candy 30ml Memori Perfume (Elixir)','Perfume','30',1,0,0,0,NULL,101),(2,'Dream With You 30ml Memori Perfume (Elixir)','Perfume','30',10,0,0,0,NULL,102);
+CREATE TABLE packaging_requisitions(id INTEGER PRIMARY KEY AUTOINCREMENT,request_no TEXT UNIQUE,request_key TEXT UNIQUE,source_name TEXT,source_fingerprint TEXT,request_type TEXT DEFAULT 'SALES',remark TEXT DEFAULT '',priority TEXT DEFAULT 'NORMAL',needed_by TEXT,created_by INTEGER,created_at TEXT,status TEXT DEFAULT 'PENDING_WAREHOUSE_ISSUE',FOREIGN KEY(created_by) REFERENCES users(id));
+CREATE TABLE packaging_requisition_lines(id INTEGER PRIMARY KEY AUTOINCREMENT,requisition_id INTEGER,item_id INTEGER,item_name TEXT,category TEXT,size_ml TEXT,sales_qty NUMERIC,stock_qty NUMERIC,shortage_qty NUMERIC,requested_qty NUMERIC,item_code TEXT,UNIQUE(requisition_id,item_id),FOREIGN KEY(requisition_id) REFERENCES packaging_requisitions(id),FOREIGN KEY(item_id) REFERENCES packaging_stock(id));
+ALTER TABLE users ADD COLUMN role TEXT DEFAULT 'staff';
+ALTER TABLE packaging_stock ADD COLUMN received_qty NUMERIC DEFAULT 0;
+CREATE TABLE stock_requisition_dispatches(id INTEGER PRIMARY KEY AUTOINCREMENT,requisition_id INTEGER,request_key TEXT UNIQUE,status TEXT DEFAULT 'PENDING',created_by INTEGER,created_at TEXT,note TEXT,approved_by INTEGER,approved_at TEXT,rejected_by INTEGER,rejected_at TEXT,rejection_reason TEXT,received_by INTEGER,received_at TEXT,receipt_note TEXT,fg_document_id INTEGER UNIQUE);
+CREATE TABLE stock_requisition_dispatch_lines(id INTEGER PRIMARY KEY AUTOINCREMENT,dispatch_id INTEGER,requisition_line_id INTEGER,item_id INTEGER,fg_item_id INTEGER,item_code TEXT,item_name TEXT,qty NUMERIC,UNIQUE(dispatch_id,requisition_line_id));
+`);let failLine=false;const writes=[];const execute=async(sql,args=[])=>{if(failLine&&sql.startsWith('INSERT INTO packaging_requisition_lines'))throw Error('Simulated line failure');sql=sql.replace(/ FOR UPDATE/g,'');const stmt=db.prepare(sql);if(/^SELECT/.test(sql))return [stmt.all(...args)];writes.push(sql);const r=stmt.run(...args);return [{insertId:Number(r.lastInsertRowid),affectedRows:Number(r.changes)}];};const pool={execute,query:execute,getConnection:async()=>({execute,query:execute,beginTransaction:async()=>db.exec('BEGIN'),commit:async()=>db.exec('COMMIT'),rollback:async()=>db.exec('ROLLBACK'),release:()=>{}})};return {db,pool,writes,set failLine(v){failLine=v;}};}
+module.exports={fixture};

@@ -16,6 +16,11 @@ const fgSQL=`SELECT d.id,d.reference voucher,d.created_by,u.display_name entered
  (SELECT COUNT(*) FROM fg_lines l WHERE l.document_id=d.id) item_count,
  (SELECT CAST(SUM(l.qty) AS CHAR) FROM fg_lines l WHERE l.document_id=d.id) total_qty
  FROM fg_documents d JOIN users u ON u.id=d.created_by WHERE d.kind='TRANSFER' ORDER BY d.id DESC`;
+const dispatchSQL=`SELECT d.id,d.requisition_id,d.created_by,r.request_no voucher,u.display_name entered_by,
+ (SELECT COUNT(*) FROM stock_requisition_dispatch_lines l WHERE l.dispatch_id=d.id) item_count,
+ (SELECT CAST(SUM(l.qty) AS CHAR) FROM stock_requisition_dispatch_lines l WHERE l.dispatch_id=d.id) total_qty
+ FROM stock_requisition_dispatches d JOIN packaging_requisitions r ON r.id=d.requisition_id JOIN users u ON u.id=d.created_by WHERE d.status='PENDING' ORDER BY d.id DESC`;
+function dispatchNotifications(rows,user){return user.role==='warehouse_supervisor'?rows.filter(r=>String(r.created_by)!==String(user.id)).map(r=>({key:'dispatch:'+r.id+':PENDING',id:String(r.id),voucher:r.voucher,author:r.entered_by,items:Number(r.item_count),total:String(r.total_qty||'0'),unit:'pcs',title:'Dispatch အတည်ပြုရန်ရှိပါသည်',page:'Inventory › Stock Requisitions',pending:true,url:'/inventory/stock-requisitions/'+r.requisition_id})):[];}
 const same=(a,b)=>String(a)===String(b);
 function buildNotifications(oils,fgs,user){
  const out=[],supervisor=user.role==='warehouse_supervisor',accountant=user.role==='warehouse_accountant';
@@ -41,7 +46,7 @@ function createNotificationRouter({pool}){
   const [rows]=await pool.execute('SELECT id,role,is_active,application_access FROM users WHERE id=? LIMIT 1',[req.session?.user?.id||0]);
   const user=rows[0];if(!user||Number(user.is_active)!==1||!accessFor(user).includes('inventory'))throw Object.assign(Error('Inventory access required'),{status:403});return user;
  }
- async function list(user){const [[oil],[fg]]=await Promise.all([pool.query(oilSQL),pool.query(fgSQL)]);return buildNotifications(oil,fg,user);}
+ async function list(user){const [[oil],[fg]]=await Promise.all([pool.query(oilSQL),pool.query(fgSQL)]);const [dispatches]=user.role==='warehouse_supervisor'?await pool.query(dispatchSQL):[[]];return [...dispatchNotifications(dispatches,user),...buildNotifications(oil,fg,user)];}
  router.get('/',run(async(req,res)=>{
   const user=await current(req),items=await list(user);const [read]=await pool.execute('SELECT notification_key FROM erp_notification_reads WHERE user_id=?',[user.id]);const seen=new Set(read.map(r=>r.notification_key));
   items.forEach(n=>n.unread=!seen.has(n.key));res.set('Cache-Control','no-store').json({unread:items.filter(n=>n.unread).length,pending:items.filter(n=>n.pending).length,items});
@@ -54,4 +59,4 @@ function createNotificationRouter({pool}){
  }));
  router.use((err,req,res,next)=>{console.error('Approval notifications:',err.code||err.message);res.status(err.status||503).json({error:err.status===403?'Inventory access required':'Notifications ကို ယခု မရယူနိုင်ပါ။ ပြန်စမ်းပါ။'});});return router;
 }
-module.exports={createNotificationRouter,buildNotifications,oilSQL,fgSQL};
+module.exports={createNotificationRouter,buildNotifications,dispatchNotifications,oilSQL,fgSQL,dispatchSQL};

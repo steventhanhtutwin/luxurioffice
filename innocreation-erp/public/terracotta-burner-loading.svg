@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 214" role="img" aria-label="Luxuri terracotta aroma burner">
+<defs>
+ <linearGradient id="clay" x1="0" x2="1"><stop stop-color="#a86645"/><stop offset=".23" stop-color="#d29b77"/><stop offset=".56" stop-color="#d7a07d"/><stop offset="1" stop-color="#ab6c4b"/></linearGradient>
+ <linearGradient id="brass" x1="0" x2="1"><stop stop-color="#806531"/><stop offset=".21" stop-color="#d4c28a"/><stop offset=".43" stop-color="#eee2b6"/><stop offset=".71" stop-color="#ad9455"/><stop offset="1" stop-color="#78602f"/></linearGradient>
+ <radialGradient id="warm"><stop stop-color="#fff0a6"/><stop offset=".5" stop-color="#e6ad4f"/><stop offset="1" stop-color="#5e3825"/></radialGradient>
+ <radialGradient id="shadow"><stop stop-color="#5a422e" stop-opacity=".2"/><stop offset="1" stop-color="#5a422e" stop-opacity="0"/></radialGradient>
+ <path id="petal" d="M90 83C84 95 83 107 90 117C97 107 96 95 90 83Z"/>
+ <style>
+ .glow{animation:glow 3s ease-in-out infinite}.steam{fill:none;stroke:#c3a76c;stroke-width:2.4;stroke-linecap:round;opacity:0;animation:aroma 3s ease-in-out infinite}.steam.second{animation-delay:.65s}.orbit{fill:none;stroke:#c1a361;stroke-width:1.5;stroke-dasharray:65 315;animation:orbit 3s linear infinite}.spark{fill:#f4d888;animation:glow 3s ease-in-out infinite}@keyframes glow{0%,100%{opacity:.35}50%{opacity:1}}@keyframes aroma{0%{opacity:0;transform:translateY(6px)}35%{opacity:.6}80%,100%{opacity:0;transform:translateY(-13px)}}@keyframes orbit{to{stroke-dashoffset:-380}}@media(prefers-reduced-motion:reduce){*{animation:none!important}.glow{opacity:.8}.steam{opacity:.4}}
+ </style>
+</defs>
+<ellipse cx="90" cy="201" rx="77" ry="10" fill="url(#shadow)"/>
+<!-- Brass foot stays still throughout the gentle loop. -->
+<path d="M25 177C25 167 155 167 155 177V192C155 206 25 206 25 192Z" fill="url(#brass)" stroke="#9a8047" stroke-width=".7"/>
+<ellipse cx="90" cy="177" rx="65" ry="9" fill="#c9b77d"/>
+<!-- Recognizable slightly tapered terracotta body and dark top bowl. -->
+<path d="M39 64C32 87 26 143 30 172C33 190 147 190 150 172C154 143 148 87 141 64Z" fill="url(#clay)" stroke="#a16b4d" stroke-width=".8"/>
+<ellipse cx="90" cy="64" rx="51" ry="9" fill="#5b3828" stroke="#a47750" stroke-width="2"/>
+<ellipse cx="90" cy="62" rx="48" ry="5" fill="#33251e"/>
+<path d="M47 62Q90 55 132 62" stroke="#d5b583" stroke-opacity=".65" fill="none"/>
+<g fill="#5f3927"><use href="#petal" transform="rotate(0 90 126)"/><use href="#petal" transform="rotate(36 90 126)"/><use href="#petal" transform="rotate(72 90 126)"/><use href="#petal" transform="rotate(108 90 126)"/><use href="#petal" transform="rotate(144 90 126)"/><use href="#petal" transform="rotate(180 90 126)"/><use href="#petal" transform="rotate(216 90 126)"/><use href="#petal" transform="rotate(252 90 126)"/><use href="#petal" transform="rotate(288 90 126)"/><use href="#petal" transform="rotate(324 90 126)"/><circle cx="90" cy="126" r="3.1"/></g>
+<g class="glow" fill="url(#warm)"><use href="#petal" transform="rotate(0 90 126)"/><use href="#petal" transform="rotate(36 90 126)"/><use href="#petal" transform="rotate(72 90 126)"/><use href="#petal" transform="rotate(108 90 126)"/><use href="#petal" transform="rotate(144 90 126)"/><use href="#petal" transform="rotate(180 90 126)"/><use href="#petal" transform="rotate(216 90 126)"/><use href="#petal" transform="rotate(252 90 126)"/><use href="#petal" transform="rotate(288 90 126)"/><use href="#petal" transform="rotate(324 90 126)"/></g>
+<circle cx="44" cy="159" r="2" fill="#76482e"/><circle cx="138" cy="159" r="2" fill="#76482e"/>
+<text x="90" y="177" text-anchor="middle" fill="#976245" font-size="8" font-family="Georgia,serif" letter-spacing="1">LUXURI</text>
+<ellipse class="orbit" cx="90" cy="185" rx="75" ry="12"/>
+<circle class="spark" cx="137" cy="194" r="2.2"/>
+<path class="steam" d="M78 53C61 41 96 34 81 18"/>
+<path class="steam second" d="M101 50C85 36 119 27 106 10"/>
+</svg>

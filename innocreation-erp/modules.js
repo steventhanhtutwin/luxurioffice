@@ -19,8 +19,9 @@ module.exports = [
     "subtitle": "ထုပ်ပိုးမှု စီမံခန့်ခွဲခြင်း",
     "description": "ထုပ်ပိုးရန် အစီအစဉ်နှင့် ပြီးစီးမှုကို စီမံရန်။",
     "menus": [
-      "Packaging Plan",
-      "Material Request",
+      "Packaging Warehouse",
+      "Packaging Operation",
+      "Stock Requisition",
       "Packaging Record",
       "Packaging QC"
     ],
@@ -33,7 +34,7 @@ module.exports = [
     "description": "ထုတ်လုပ်ရန် အစီအစဉ်နှင့် လုပ်ငန်းစဉ်များကို စီမံရန်။",
     "menus": [
       "Production Plan",
-      "Material Request",
+      "Stock Requisition",
       "Production Record",
       "Production QC",
       "Finished Goods Receipt"
