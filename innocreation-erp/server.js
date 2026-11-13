@@ -127,7 +127,8 @@ async function start() {
     app.use('/settings', createSettingsRouter({
         pool
     }));
-    app.use('/inventory', inventory.router);
+    app.use('/packaging',require('./packaging-routes').createPackagingRouter({pool}));
+ app.use('/inventory', inventory.router);
     app.get('/modules/:id', (req, res) => {
         if (!req.session.user) return res.redirect('/login');
         const selected = modules.find(m => m.id === req.params.id);
