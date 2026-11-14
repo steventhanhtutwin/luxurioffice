@@ -128,6 +128,9 @@ async function start() {
         pool
     }));
     app.use('/packaging',require('./packaging-routes').createPackagingRouter({pool}));
+ // INNOCREATION PURCHASING ROUTES
+ app.use('/purchasing',require('./purchasing-routes').createPurchasingRouter({pool:require('./db')}));
+ app.get('/modules/purchasing',(req,res)=>res.redirect('/purchasing/pr'));
  app.use('/inventory', inventory.router);
     app.get('/modules/:id', (req, res) => {
         if (!req.session.user) return res.redirect('/login');

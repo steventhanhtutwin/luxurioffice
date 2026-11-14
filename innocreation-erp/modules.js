@@ -47,9 +47,11 @@ module.exports = [
     "subtitle": "ဝယ်ယူမှု စီမံခန့်ခွဲခြင်း",
     "description": "ဝယ်ယူတောင်းခံမှုနှင့် Supplier များကို စီမံရန်။",
     "menus": [
-      "Purchase Request",
-      "Purchase Order",
-      "Goods Receipt",
+      "Purchase Requisition",
+      "RFQ & Quote Entry",
+      "Quote Comparison",
+      "Purchase Order (PO)",
+      "Goods Receipt (GRN)",
       "Suppliers"
     ],
     "icon": "<path d=\"M3 3h2l3 13h11l3-10H6M9 10h10\"/><circle cx=\"10\" cy=\"21\" r=\"1\"/><circle cx=\"18\" cy=\"21\" r=\"1\"/>"

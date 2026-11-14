@@ -16,7 +16,7 @@ function enforceApplicationAccess(req,res,next){
  const access=Array.isArray(user.app_access)?user.app_access:accessFor(user);user.app_access=access;
  res.locals ||= {};res.locals.applicationAccess=access;
  let app,url;try{url=decodeURIComponent(req.path||'/').toLowerCase();}catch{return res.status(400).send('Invalid URL');}
- if(/^\/settings(?:\/|$)/.test(url))app='settings';else if(/^\/inventory(?:\/|$)/.test(url))app='inventory';else if(/^\/modules(?:\/|$)/.test(url)){const id=url.split('/')[2];if(ids.includes(id))app=id;}
+ if(/^\/purchasing(?:\/|$)/.test(url))app='purchasing';else if(/^\/settings(?:\/|$)/.test(url))app='settings';else if(/^\/inventory(?:\/|$)/.test(url))app='inventory';else if(/^\/modules(?:\/|$)/.test(url)){const id=url.split('/')[2];if(ids.includes(id))app=id;}
  if(app&&!access.includes(app))return res.status(403).type('text').send('ဤ Application ကို အသုံးပြုခွင့် မရှိပါ။ Settings တာဝန်ခံကို ဆက်သွယ်ပါ။');next();
 }
 function applicationAccessGuard(pool){return async(req,res,next)=>{try{

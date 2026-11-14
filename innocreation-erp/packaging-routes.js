@@ -7,6 +7,7 @@ function createPackagingRouter({pool}){
  async function actor(db,id,lock=false){const [rows]=await db.execute('SELECT id,is_active,application_access FROM users WHERE id=?'+(lock?' FOR UPDATE':''),[id]);const u=rows[0];if(!u||Number(u.is_active)!==1||!accessFor(u).includes('packaging'))throw Object.assign(Error('Packaging အသုံးပြုခွင့် မရှိပါ။'),{status:403});return u;}
  router.use(run(async(req,res,next)=>{if(!req.session?.user)return res.redirect('/login');await actor(pool,req.session.user.id);next();}));
  router.get('/',(req,res)=>res.redirect('/packaging/operation/material-requirement'));
+ router.use('/purchase-requests',require('./purchasing-routes').createPurchasingRouter({pool,scope:'packaging',base:'/packaging/purchase-requests'}));
  router.use(require('./stock-requisition-routes').createRequisitionRouter({pool,packaging:true}));
  router.use(require('./packaging-requirement-routes').createRequirementRouter({pool}));
  const planned={record:'record',qc:'qc','warehouse/out':'stock-out'};
