@@ -1,0 +1,1 @@
+document.querySelectorAll('[data-category-void]').forEach(form=>form.addEventListener('submit',e=>{if(!confirm('ဒီ Supplier Category ကို Void လုပ်မှာ သေချာပါသလား? Linked supplier မှတ်တမ်းများ မပျက်ပါ။')){e.preventDefault();return;}form.elements.namedItem('confirmed').value='1';}));

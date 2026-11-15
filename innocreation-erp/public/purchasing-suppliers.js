@@ -18,3 +18,5 @@
  form.addEventListener('submit',()=>{form.querySelector('[type=submit]').disabled=true;});
  });
 })();
+
+ document.querySelectorAll('[data-supplier-void]').forEach(form=>form.addEventListener('submit',e=>{if(!window.confirm('ဒီ Supplier ကို Void လုပ်မှာ သေချာပါသလား? Supplier နှင့် ဆက်စပ်မှတ်တမ်းများကို မဖျက်ပါ။')){e.preventDefault();return;}form.elements.namedItem('confirmed').value='1';}));
