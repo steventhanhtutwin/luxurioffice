@@ -79,3 +79,5 @@
 #oil-entry-message details{max-height:240px;overflow:auto;padding:8px 0}
 #oil-entry-message summary{cursor:pointer;font-weight:600}
 #oil-import-file[hidden]{display:none}
+
+.oil-title-actions{display:flex;align-items:center;justify-content:flex-end;gap:12px;flex-wrap:wrap}.oil-stock-button{display:inline-flex;align-items:center;justify-content:center;padding:13px 18px;border-radius:12px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 3px 8px #233b2c08}.oil-stock-in{background:#303f32}.oil-stock-out{background:#855c40}.oil-stock-button:hover{filter:brightness(1.08);color:#fff}.oil-stock-button:focus-visible{outline:3px solid #abbdae;outline-offset:3px}.oil-title-divider{height:30px;width:1px;background:#dce3da;margin:0 3px}@media(max-width:1000px){.oil-title{flex-wrap:wrap;gap:20px}.oil-title-actions{justify-content:flex-start}}@media(max-width:600px){.oil-title-actions{width:100%;gap:8px}.oil-stock-button{flex:1;padding:12px 10px;font-size:11px}.oil-title-divider{display:none}.oil-title-actions .oil-unit{margin-top:4px}}
