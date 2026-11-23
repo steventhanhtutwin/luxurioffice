@@ -1,0 +1,2 @@
+const fs=require('node:fs'),path=require('node:path'),pool=require('../db');
+(async()=>{try{const source=fs.readFileSync(path.join(__dirname,'../inventory-items-migration.sql'),'utf8');for(const sql of source.split(';').map(s=>s.trim()).filter(Boolean))await pool.query(sql);console.log('Inventory Items setup complete. Existing inventory data was not changed. Restart the application and open /inventory/items.');}catch(e){console.error('Inventory Items setup failed:',e.code||'',e.message);process.exitCode=1;}finally{await pool.end();}})();

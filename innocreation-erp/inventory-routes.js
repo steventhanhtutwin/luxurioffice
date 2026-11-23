@@ -7,9 +7,10 @@ const groups = [
  {id:'raw-oil',name:'Raw Oil',subtitle:'ကုန်ကြမ်းဆီများ',description:'ကုန်ကြမ်းဆီစာရင်းနှင့် အဝင် / အထွက်',icon:'drop',menus:[{id:'summary',name:'Raw Oil Balance',description:'Warehouse အဝင်၊ အထွက်နှင့် လက်ကျန်'},{id:'transactions',name:'Raw Oil Transaction',description:'ဆီအဝင် / အထွက် မှတ်တမ်းအားလုံး'},{id:'adjustments',name:'Raw Oil Adjustment',description:'Supervisor နှင့် Accountant Approval'},{id:'in',name:'Raw Oil In',description:'ကုန်ကြမ်းဆီ အဝင်'},{id:'out',name:'Raw Oil Out',description:'ကုန်ကြမ်းဆီ အထွက်'}]},
  {id:'raw-materials',name:'Raw Materials',subtitle:'ကုန်ကြမ်းပစ္စည်းများ',description:'ကုန်ကြမ်းပစ္စည်းစာရင်းနှင့် အဝင် / အထွက်',icon:'layers',menus:[{id:'list',name:'Raw Material List',description:'ကုန်ကြမ်းပစ္စည်းစာရင်း'},{id:'in',name:'Raw Material In',description:'ကုန်ကြမ်းပစ္စည်း အဝင်'},{id:'out',name:'Raw Material Out',description:'ကုန်ကြမ်းပစ္စည်း အထွက်'}]}
 ];
-function renderInventory(req,res,group=null,page=null){if(!group)return res.redirect('/inventory/finished-goods/list');res.render('inventory',{user:req.session.user,groups,group,page});}
+function renderInventory(req,res,group=null,page=null){if(!group)return res.redirect('/inventory/items');res.render('inventory',{user:req.session.user,groups,group,page});}
 const router=express.Router();
 router.use((req,res,next)=>req.session.user?next():res.redirect('/login'));
+router.use('/items',require('./inventory-items').createInventoryItemsRouter({pool,groups}));
 router.use('/purchase-requests',require('./inventory-purchase-queue').createInventoryPurchaseQueue({pool,groups}));
 router.use('/purchase-requests',require('./purchasing-routes').createPurchasingRouter({pool,scope:'inventory',base:'/inventory/purchase-requests'}));
 router.use('/raw-materials',require('./raw-material-routes').createRawMaterialRouter({pool,groups}));
