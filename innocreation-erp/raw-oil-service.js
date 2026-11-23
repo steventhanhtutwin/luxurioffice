@@ -7,7 +7,7 @@ const {randomBytes}=require('node:crypto');
 const {saveRawOilItem}=require('./raw-oil-item-service');
 const aggregate=`SELECT item_id, SUM(CASE WHEN direction='IN' THEN qty_grams ELSE 0 END) stock_in, SUM(CASE WHEN direction='OUT' THEN qty_grams ELSE 0 END) stock_out FROM raw_oil_transactions WHERE ${activeTransactions} GROUP BY item_id`;
 const summarySQL=`SELECT i.*,COALESCE(t.stock_in,0) stock_in,COALESCE(t.stock_out,0) stock_out,CASE WHEN i.opening_grams IS NULL THEN NULL ELSE i.opening_grams+COALESCE(t.stock_in,0)-COALESCE(t.stock_out,0) END closing_grams FROM raw_oil_items i LEFT JOIN (${aggregate}) t ON t.item_id=i.id`;
-function createService(pool,{businessDate,clock=businessNow}={}){return {
+function createService(pool,{businessDate,clock=businessNow,warehouseSelection=false}={}){return {
  async getItem(code){const [rows]=await pool.execute(summarySQL+' WHERE i.code=?',[code]);return rows[0];},
  async postMovements(body,userId){
  if(!Array.isArray(body.items)||!body.items.length||body.items.length>500)throw new Error('Item 1 မှ 500 အထိ ထည့်ပါ။');
@@ -19,7 +19,7 @@ function createService(pool,{businessDate,clock=businessNow}={}){return {
  await conn.execute('SELECT id,role,is_active FROM users WHERE id=? FOR UPDATE',[userId]);
  for(const code of [...new Set(codes)].sort())await conn.execute('SELECT id FROM raw_oil_items WHERE code=? FOR UPDATE',[code]);
  const scoped={execute:(...args)=>conn.execute(...args),getConnection:async()=>({execute:(...args)=>conn.execute(...args),beginTransaction:async()=>{},commit:async()=>{},rollback:async()=>{},release:()=>{}})};
- const stamp=clock();const batchDate=businessDate?businessDate():stamp.day;const service=createService(scoped,{businessDate:()=>batchDate,clock:()=>stamp}),ids=[],pendingTotals=new Map();
+ const stamp=clock();const batchDate=businessDate?businessDate():stamp.day;const service=createService(scoped,{businessDate:()=>batchDate,clock:()=>stamp,warehouseSelection}),ids=[],pendingTotals=new Map();
  // Retry the original submission without allocating another number.
  const firstKey=require('node:crypto').createHash('sha256').update(body.request_key+':0').digest('hex');
  const [saved]=await conn.execute('SELECT id FROM raw_oil_transactions WHERE request_key=?',[firstKey]);
@@ -37,7 +37,7 @@ function createService(pool,{businessDate,clock=businessNow}={}){return {
  async postMovement(body,userId,sharedVoucher=null,pendingTotals=null){
  const code=text(body.code,'Item Code',100), direction=body.direction;if(!['IN','OUT'].includes(direction))throw new Error('Invalid direction');
  let category=transactionCategory(body.transaction_category);const qty=grams(body.qty);let day,voucher;const remark=text(body.remark||'','Remark',500,false);
- if(category.toLowerCase()!=='adjustment'&&!/^\d+$/.test(String(body.place_id)))throw new Error('From / To နေရာကို ရွေးပါ။');
+ if(category.toLowerCase()!=='adjustment'&&!/^\d+$/.test(String(warehouseSelection?body.warehouse_id:body.place_id)))throw new Error('From / To နေရာကို ရွေးပါ။');
  if(!/^[a-f0-9]{64}$/.test(body.request_key||''))throw new Error('Form expired. Reload and try again.');
  const conn=await pool.getConnection();try{await conn.beginTransaction();
  const [actors]=await conn.execute('SELECT id,role,is_active FROM users WHERE id=? FOR UPDATE',[userId]);const actor=actors[0];
@@ -53,6 +53,7 @@ function createService(pool,{businessDate,clock=businessNow}={}){return {
  if(body.imported_name!==undefined){const importedName=text(body.imported_name,'Excel Item Name',200,false);const normalize=value=>String(value).trim().toLowerCase().replace(/\s+/g,' ');if(importedName&&normalize(importedName)!==normalize(item.name))throw Error('Excel Item Name နှင့် System Item Name မကိုက်ပါ။ Error row ကို Remove လုပ်ပါ သို့မဟုတ် Excel ပြင်ပြီး ပြန် Import လုပ်ပါ။');}
 
  const [existing]=await conn.execute('SELECT id FROM raw_oil_transactions WHERE request_key=?',[body.request_key]);if(existing.length){await conn.commit();return existing[0].id;}
+ if(warehouseSelection&&category.toLowerCase()!=='adjustment')body={...body,place_id:await require('./raw-oil-warehouse-selection').resolveWarehousePlace(conn,body.warehouse_id)};
  const stamp=clock();day=date(businessDate?businessDate():stamp.day);
  if(item.opening_grams===null)throw new Error('အဖွင့်လက်ကျန်နှင့် စာရင်းစတင်ရက်ကို အရင်သတ်မှတ်ပါ။');
  const openingDate=String(item.opening_date).slice(0,10);if(day<openingDate)throw new Error('စာရင်းစတင်ရက်ထက် စောသော Transaction မထည့်နိုင်ပါ။');
