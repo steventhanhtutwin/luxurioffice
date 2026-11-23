@@ -38,7 +38,7 @@ function createRawOilRouter({pool,groups,pdfRenderer}){
  const formData=async(req,res,direction,body={},error='',status=200)=>{const [places]=await pool.query('SELECT * FROM raw_oil_places ORDER BY name');const categories=await loadTransactionCategories(pool);return render(req,res,direction==='IN'?'in':'out',{type:'movement',direction,places,transactionCategories:categories,values:{date:today(),...body,date:require('./raw-oil-datetime').businessNow().day,date_time:Object.values(require('./raw-oil-datetime').businessNow()).join(' '),voucher:'',request_key:body.request_key||newKey()},error},status);};
  for(const [path,direction]of [['in','IN'],['out','OUT']]){
  const canKeyIn=(req,res,next)=>req.session.user.role==='warehouse_accountant'?res.status(403).send('Warehouse Accountant သည် Raw Oil Stock In / Out ထည့်ခွင့်မရှိပါ။ Approval သာ လုပ်ဆောင်နိုင်ပါသည်။'):next();
- router.get('/'+path,canKeyIn,asyncRoute((req,res)=>formData(req,res,direction)));
+ router.get('/'+path,canKeyIn,asyncRoute((req,res)=>formData(req,res,direction,typeof req.query.code==='string'?{items:[{code:req.query.code.slice(0,100),qty:'',remark:''}]}:{})));
  router.post('/'+path,canKeyIn,csrf,asyncRoute(async(req,res)=>{
  // Support the application's extended:false URL-encoded parser without server changes.
  if(!Array.isArray(req.body.items)){
