@@ -7,3 +7,5 @@
 
 /* Compact rows and self-contained table scrolling. */
 .wl-table th{padding:14px 15px;line-height:1.4}.wl-table td{padding:12px 15px;line-height:1.5;vertical-align:middle}.wl-name{gap:8px}.wl-name strong{font-size:13px}.wl-table small{margin-top:3px;font-size:10px;line-height:1.4}.wl-badge{padding:3px 8px;font-size:10px}.wl-code{padding:5px 9px;line-height:1.4;font-size:11px}.wl-actions button{height:28px;width:28px;padding:4px;margin:0 2px}.wl-settings summary{width:44px;height:44px;border-color:#dce3ef;border-radius:12px}.wl-settings summary svg{width:23px;height:23px;display:block;flex:none;overflow:visible}.wl-settings summary:hover{background:#f8f9fe;border-color:#c6cce0;color:#6154bc}.wl-table td.wl-empty{padding:28px!important}.wl-page,.wl-card{min-width:0;max-width:100%}.wl-table-wrap{width:100%;max-width:100%;overflow-x:auto}.wl-table{min-width:950px!important}
+
+.wl-table tbody tr[data-locked='1']{cursor:default}.wl-permanent-lock{display:inline-flex;align-items:center;gap:5px;border-radius:8px;background:#f2f5f8;color:#8a98ac;font-size:10px;padding:7px 10px;white-space:nowrap}
