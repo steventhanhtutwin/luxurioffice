@@ -11,6 +11,7 @@ function renderInventory(req,res,group=null,page=null){if(!group)return res.redi
 const router=express.Router();
 router.use((req,res,next)=>req.session.user?next():res.redirect('/login'));
 router.use('/configuration/warehouses',require('./warehouse-location').createWarehouseRouter({pool,groups}));
+router.use('/scrap-management',require('./scrap-routes').createScrapRouter({pool,groups}));
 router.use('/items',require('./inventory-items').createInventoryItemsRouter({pool,groups}));
 router.use('/purchase-requests',require('./inventory-purchase-queue').createInventoryPurchaseQueue({pool,groups}));
 router.use('/purchase-requests',require('./purchasing-routes').createPurchasingRouter({pool,scope:'inventory',base:'/inventory/purchase-requests'}));

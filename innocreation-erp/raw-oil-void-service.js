@@ -10,7 +10,7 @@ function createLineVoidService(pool){return {async act(actorId,transactionId,act
  const conn=await pool.getConnection();try{await conn.beginTransaction();
  const [actors]=await conn.execute('SELECT id,role,is_active FROM users WHERE id=? FOR UPDATE',[actorId]);if(!actors[0]||actors[0].role!==role||Number(actors[0].is_active)!==1)throw Object.assign(Error('ဤလုပ်ဆောင်ချက်အတွက် သက်ဆိုင်ရာ Warehouse Role လိုအပ်ပါသည်။'),{status:403});
  const [items]=await conn.execute('SELECT * FROM raw_oil_items WHERE id=? FOR UPDATE',[lookup[0].item_id]);const item=items[0];if(!item)throw Error('Item မတွေ့ပါ။');
- const [transactions]=await conn.execute('SELECT *,DATE_FORMAT(transaction_date,\'%Y-%m-%d\') day FROM raw_oil_transactions WHERE id=? FOR UPDATE',[transactionId]);const tx=transactions[0];if(!tx)throw Error('Transaction မတွေ့ပါ။');
+ const [transactions]=await conn.execute('SELECT *,DATE_FORMAT(transaction_date,\'%Y-%m-%d\') day FROM raw_oil_transactions WHERE id=? FOR UPDATE',[transactionId]);const tx=transactions[0];if(!tx)throw Error('Transaction မတွေ့ပါ။');if(tx.transaction_category==='Scrap')throw Object.assign(Error('Posted Scrap သည် Lock ဖြစ်နေပါသည်။'),{status:409});
  const [approvals]=await conn.execute('SELECT status FROM raw_oil_adjustment_approvals WHERE transaction_id=?',[transactionId]);if(approvals.length&&approvals[0].status!=='APPROVED')throw Error('အတည်မပြုရသေးသော Adjustment ကို Void လုပ်၍မရပါ။');
  const [requests]=await conn.execute('SELECT * FROM raw_oil_void_requests WHERE transaction_id=? ORDER BY id DESC LIMIT 1 FOR UPDATE',[transactionId]);const request=requests[0];
  if(action==='request'){if(request?.status==='APPROVED')throw Error('ဤ Transaction သည် Void ဖြစ်ပြီးပါပြီ။');if(request?.status==='PENDING'){await conn.commit();return;}
