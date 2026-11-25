@@ -11,12 +11,15 @@ function searchClause(q){return q?{sql:" AND (r.item_code LIKE ? ESCAPE '!' OR r
 function decorate(r){Object.assign(r,progressStatus(r));r.remaining=null;if(r.order_qty!=null){const n=scaled(String(r.order_qty))-scaled(String(r.accepted_qty));r.remaining=dec(n>0n?n:0n);}return r;}
 async function loadWarehouseProgress(pool,input,options={}){const f=progressFilters(typeof input==='object'&&input?input:{history:input}),search=searchClause(f.q);
  const from=projection.slice(projection.indexOf(' FROM purchase_requisitions'));
- const counts={};for(const [key,sql] of Object.entries(statusFilters)){const [n]=await pool.query('SELECT COUNT(*) total'+from+search.sql+sql,search.args);counts[key]=Number(n[0].total);}
- const [total]=await pool.query('SELECT COUNT(*) total'+from);
+ let counts={all:0,pending:0,ready:0,ordered:0,completed:0};
+ if(!options.exporting){const [summary]=await pool.query("SELECT COUNT(*) all_count,COALESCE(SUM(CASE WHEN p.id IS NULL AND r.status IN ('READY_RFQ','RFQ_IN_PROGRESS','FINANCE_RESUBMIT','MD_RESUBMIT','PENDING_FINANCE','FINANCE_CHECKED','PENDING_APPROVAL') THEN 1 ELSE 0 END),0) pending,COALESCE(SUM(CASE WHEN p.status='ISSUED' THEN 1 ELSE 0 END),0) ready,COALESCE(SUM(CASE WHEN p.status IN ('SENT','PARTIAL') THEN 1 ELSE 0 END),0) ordered,COALESCE(SUM(CASE WHEN p.status='COMPLETED' THEN 1 ELSE 0 END),0) completed"+from+search.sql,search.args);counts={...summary[0],all:Number(summary[0].all_count)};for(const key of Object.keys(statusFilters))counts[key]=Number(counts[key]);}
  const totalPages=Math.max(1,Math.ceil(counts[f.status]/20)),page=Math.min(f.page,totalPages);
  const [rows]=await pool.query(projection+search.sql+statusFilters[f.status]+' ORDER BY r.id DESC'+(options.exporting?'':` LIMIT 20 OFFSET ${(page-1)*20}`),search.args);
  const byId=new Map(rows.filter(r=>!['REJECTED','CANCELLED'].includes(r.workflow_status)&&r.po_status!=='COMPLETED').map(r=>[String(r.id),progressStatus(r)]));
- for(const r of rows){decorate(r);r.events=[];if(!options.exporting){const [events]=await pool.execute('SELECT action,created_at FROM purchase_audit WHERE pr_id=? ORDER BY id',[r.id]);r.events=events.filter(e=>eventLabels[e.action]).map(e=>({label:eventLabels[e.action],at:e.created_at instanceof Date?new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Bangkok',dateStyle:'medium',timeStyle:'short'}).format(e.created_at):String(e.created_at)}));}}
- return {rows,more:page<totalPages,page,byId,counts,total:Number(total[0].total),q:f.q,status:f.status,totalPages};
+ const eventsById=new Map();
+ if(!options.exporting&&rows.length){const [events]=await pool.query('SELECT pr_id,action,created_at FROM purchase_audit WHERE pr_id IN ('+rows.map(()=>'?').join(',')+') ORDER BY id',rows.map(r=>r.id));for(const e of events){if(!eventLabels[e.action])continue;const key=String(e.pr_id);if(!eventsById.has(key))eventsById.set(key,[]);eventsById.get(key).push({label:eventLabels[e.action],at:e.created_at instanceof Date?new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Bangkok',dateStyle:'medium',timeStyle:'short'}).format(e.created_at):String(e.created_at)});}}
+ for(const r of rows){decorate(r);r.events=eventsById.get(String(r.id))||[];}
+
+ return {rows,more:page<totalPages,page,byId,counts,total:counts.all,q:f.q,status:f.status,totalPages};
 }
 module.exports={loadWarehouseProgress,progressStatus,progressFilters};
