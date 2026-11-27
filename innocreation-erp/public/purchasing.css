@@ -45,3 +45,5 @@
 .pu-order-qty-form{display:flex;align-items:center;gap:6px;white-space:nowrap}.purchase-app .pu-order-qty-form input[type=number]{width:85px;min-width:75px;padding:7px 8px;font-size:12px}.pu-order-qty-form span{font-size:11px;color:#71847a}.purchase-app .pu-order-qty-form button{font-size:11px;padding:8px 10px}
 
 .purchase-app label>.pu-field-title{display:block}.purchase-app .pu-field-title>.pu-red{display:inline}.pu-quote-fields>label:last-child{grid-column:1/-1}
+
+.pu-progress{grid-template-columns:repeat(7,minmax(0,1fr))}@media(max-width:1400px){.pu-progress{grid-template-columns:repeat(4,minmax(0,1fr))}}@media(max-width:1050px){.pu-progress{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:650px){.pu-progress{grid-template-columns:repeat(2,minmax(0,1fr))}}
